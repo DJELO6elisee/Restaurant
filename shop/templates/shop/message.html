@@ -1,0 +1,27 @@
+{% extends 'shop/base2.html' %}
+
+{% block message %}
+    <div class="content-wrapper">
+        <h2>Liste des Messages</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for message in messag %}
+                    <tr>
+                        <td>{{ message.nom }}</td>
+                        <td>{{ message.email }}</td>
+                        <td>{{ message.message }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+{% endblock %}

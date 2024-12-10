@@ -1,0 +1,645 @@
+{% extends "shop/base.html" %}
+
+
+{% load static %}
+
+
+{% block css1 %}
+<style>
+
+        /* Style global */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+}
+
+/* Breadcrumb */
+.breadcrumb-option {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.breadcrumb__links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.breadcrumb__links a {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.breadcrumb__links span {
+    color: #6c757d;
+    font-weight: normal;
+}
+
+.breadcrumb__links a:hover {
+    text-decoration: underline;
+}
+
+/* Checkout Section */
+.checkout {
+    padding: 50px 0;
+}
+
+.checkout .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.checkout h5 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.checkout__form__input {
+    margin-bottom: 15px;
+}
+
+.checkout__form__input p {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.checkout__form__input input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.checkout__form__input input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.checkout__order {
+    background-color: #ffffff;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.checkout__order h5 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.checkout__order__product {
+    margin-bottom: 20px;
+}
+
+.checkout__order__product ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.checkout__order__product li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.checkout__order__total ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.checkout__order__total li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.checkout__order__total li span {
+    font-weight: bold;
+    color: #333;
+}
+
+.checkout__order__widget {
+    margin-top: 30px;
+}
+
+.checkout__order__widget label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.checkout__order__widget input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.checkout__order__widget .checkmark {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.checkout__order__widget input[type="checkbox"]:checked + .checkmark {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Button */
+.site-btn {
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.site-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .checkout__form .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .checkout__form .col-lg-6 {
+        flex: 1 1 100%;
+    }
+
+    .checkout__order {
+        margin-top: 30px;
+    }
+}
+/* Style pour la section de commande */
+.checkout__order {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 30px;
+    transition: all 0.3s ease;
+}
+
+.checkout__order:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.checkout__order h5 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.checkout__order__product ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 2px solid #f1f1f1;
+    margin-bottom: 10px;
+}
+
+.checkout__order__product li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.checkout__order__product .top__text {
+    font-weight: bold;
+}
+
+.checkout__order__total ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.checkout__order__total li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.checkout__order__total li:last-child {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+}
+
+.checkout__order__widget {
+    margin: 20px 0;
+}
+
+.checkout__order__widget label {
+    font-size: 16px;
+    color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.checkout__order__widget input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.checkout__order__widget .checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #333;
+    border-radius: 50%;
+    margin-left: 10px;
+    background-color: #fff;
+}
+
+.checkout__order__widget input[type="checkbox"]:checked + .checkmark {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+/* Style pour le bouton de commande */
+.site-btn {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.site-btn:hover {
+    background-color: #45a049;
+}
+
+.site-btn:active {
+    transform: scale(0.98);
+}
+
+
+/* Style du popup */
+.confirmation-popup {
+    display: none; /* Caché par défaut */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fond sombre */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+
+.popup-content h2 {
+    margin: 0 0 15px;
+    color: #4CAF50;
+}
+
+.popup-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background-color: #45a049;
+}
+
+    </style>
+{% endblock css1 %}
+
+
+{% block caisse %}
+
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'shop' %}"><i class="fa fa-home"></i> Acceuil</a>
+                        <span>Panier d'achat</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Checkout Section Begin -->
+
+    <section class="checkout spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                
+            </div>
+        </div>
+        <form method="POST" class="checkout__form">
+            {% csrf_token %}
+
+            <input type="hidden" name="panier" id="hidden-panier">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h5>Détails de facturation</h5>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="checkout__form__input">
+                                <p>Nom<span>*</span></p>
+                                <input type="text" name="nom" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="checkout__form__input">
+                                <p>Prenom<span>*</span></p>
+                                <input type="text" name="prenom" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            
+                            <div class="checkout__form__input">
+                                <p>Ville <span>*</span></p>
+                                <input type="text" name="ville" required>
+                            </div>
+                            <div class="checkout__form__input">
+                                <p>Addresse <span>*</span></p>
+                                <input type="text" name="address" placeholder="Addresse de la Rue" required>
+                                <!-- <input type="text" name="maison" placeholder="Appartement, suite, unité, etc. (facultatif)"> -->
+                            </div>
+                            
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="checkout__form__input">
+                                <p>Numero de Telephone <span>*</span></p>
+                                <input type="text" name="contact" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="checkout__form__input">
+                                <p>Email <span>*</span></p>
+                                <input type="text" name="email" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="checkout__form__input">
+                                    <p>Total</p>
+                                    <input type="text" name="total" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="checkout__order">
+                        <h5>Votre Commande</h5>
+                        <div class="checkout__order__product">
+                            <ul id="order-summary">
+                                <li>
+                                    <span class="top__text">Produit</span>
+                                    <span class="top__text__right">Total</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="checkout__order__total">
+                            <ul>
+                                <li>Subtotal <span id="subtotal">$ 0.00</span></li>
+                                <li>Total <span id="total">$ 0.00</span></li>
+                            </ul>
+                        </div>
+                        <div class="checkout__order__widget">
+                            <label for="check-payment">
+                                Payement en Especes
+                                <input type="checkbox" id="check-payment">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <button type="submit" class="site-btn">Commander</button>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+    </div>
+
+    <!-- Modale de confirmation -->
+    <div id="confirmation-popup" class="confirmation-popup">
+        <div class="popup-content">
+            <h2>Merci pour votre commande !</h2>
+            <p>Votre commande a bien été reçue. Vous serez livré dans un délai de 1 jour. Nous avons hâte de vous revoir !</p>
+            <button id="close-popup" class="close-btn">Fermer</button>
+        </div>
+    </div>
+
+</section>
+
+
+        <!-- Checkout Section End -->
+
+    
+    
+        {% endblock caisse %}
+
+    {% block jss %}
+    <script>
+
+    
+document.addEventListener("DOMContentLoaded", function () {
+    // Vérifie si le panier existe dans localStorage
+    let panier = JSON.parse(localStorage.getItem('panier')) || {};
+
+    // Fonction pour afficher les éléments du panier
+    function renderCartItems() {
+    const orderSummary = document.getElementById("order-summary");
+    const subtotalElement = document.getElementById("subtotal");
+    const totalInputElement = document.querySelector('input[name="total"]'); // Le champ "total" dans le formulaire
+    const totalElement = document.getElementById("total");
+
+    let subtotal = 0;
+
+    // Vérifie si le panier est vide
+    if (Object.keys(panier).length === 0) {
+        console.warn("Le panier est vide.");
+        return;
+    }
+
+    // Vider le contenu de la liste des produits
+    orderSummary.innerHTML = `
+        <li>
+            <span class="top__text">Produit</span>
+            <span class="top__text__right">Total</span>
+        </li>
+    `;
+
+    // Parcourir les éléments du panier
+    for (const item_Id in panier) {
+        const item = panier[item_Id];
+
+        // Vérifier que l'élément contient les 4 propriétés nécessaires plus l'id du produit
+        if (!item || !item.nom || !item.prix || !item.quantite || !item.photo || !item.id) { 
+            console.warn(`Élément invalide dans le panier : ${item_Id}`);
+            continue; // Passer à l'élément suivant s'il manque des données
+        }
+
+        // Traitement du panier
+        const nom = item.nom;
+        const prix = item.prix;
+        const quantite = item.quantite;
+        const photoUrl = item.photo;
+        const productId = item.id;  // ID du produit
+        const prixTotal = prix * quantite;
+
+        // Ajouter une ligne pour chaque produit
+        const productRow = document.createElement("li");
+        productRow.innerHTML = `
+            <span>${nom}</span>
+            <span>${prixTotal.toFixed(2)} fcfa</span>
+        `;
+        orderSummary.appendChild(productRow);
+
+        // Mettre à jour le sous-total
+        subtotal += prixTotal;
+
+        // Vous pouvez également utiliser l'ID du produit dans l'affichage si nécessaire
+        console.log("ID produit :", productId); // Exemple d'utilisation de l'ID
+    }
+
+    // Mettre à jour le sous-total et le total
+    if (subtotalElement) {
+        subtotalElement.textContent = `${subtotal.toFixed(2)} fcfa`;
+    }
+
+    if (totalElement) {
+        totalElement.textContent = `${subtotal.toFixed(2)} fcfa`;
+    }
+
+    // Mettre à jour le champ total dans le formulaire
+    if (totalInputElement) {
+        totalInputElement.value = subtotal.toFixed(2);
+    }
+
+    console.log("Sous-total : ", subtotal.toFixed(2));
+
+    // Injecter les données du panier dans le champ caché
+    const hiddenPanier = document.getElementById("hidden-panier");
+    hiddenPanier.value = JSON.stringify(panier); // Convertir le panier en JSON
+}
+
+    // Appeler la fonction pour afficher les éléments du panier
+    renderCartItems();
+});
+
+
+
+document.querySelector("form.checkout__form").addEventListener("submit", function (event) {
+    // Empêcher l'envoi du formulaire avant la confirmation
+    event.preventDefault();
+
+    // Récupérer le panier depuis localStorage ou initialiser un panier vide
+    let panier = JSON.parse(localStorage.getItem('panier')) || {};
+    let panierData = [];
+
+    // Préparer les données à envoyer pour chaque élément du panier
+    for (const item_Id in panier) {
+        const item = panier[item_Id];
+
+        // Vérifier que l'élément contient les 4 propriétés nécessaires plus l'id du produit
+        if (!item || !item.nom || !item.prix || !item.quantite || !item.photo || !item.id) { 
+            console.warn(`Élément invalide dans le panier : ${item_Id}`);
+            continue; // Passer à l'élément suivant s'il manque des données
+        }
+
+        // Traitement du panier
+        const nom = item.nom;
+        const prix = item.prix;
+        const quantite = item.quantite;
+        const photoUrl = item.photo;
+        const productId = item.id;  // ID du produit
+        const prixTotal = prix * quantite;
+
+        // Ajouter les données de l'élément dans le tableau panierData
+        panierData.push({
+            nom: nom,
+            prix: prix,
+            quantite: quantite,
+            photo: photoUrl,  // Inclure l'URL de l'image
+            id: productId
+        });
+    }
+
+    // Ajouter les données du panier dans le champ caché pour l'envoyer avec le formulaire
+    document.getElementById('hidden-panier').value = JSON.stringify(panierData);
+
+    // Afficher le popup de confirmation
+    document.getElementById("confirmation-popup").style.display = "flex";
+
+    // Fermer le popup et soumettre le formulaire lorsque l'utilisateur clique sur "Fermer"
+    document.getElementById("close-popup").addEventListener("click", function() {
+        document.getElementById("confirmation-popup").style.display = "none";  // Fermer le popup
+        
+        // Soumettre le formulaire après la fermeture du popup
+        event.target.submit();
+    });
+});
+
+</script>    
+
+    {% endblock jss %}
+

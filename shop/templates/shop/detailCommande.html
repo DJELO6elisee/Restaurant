@@ -1,0 +1,42 @@
+{% extends 'shop/base2.html' %}
+
+{% block contt %}
+    <div class="content-wrapper">
+        <h2>Détails de la Commande #{{ commande.id }}</h2>
+
+        <p><strong>Nom:</strong> {{ commande.nom }}</p>
+        <p><strong>Prénom:</strong> {{ commande.prenom }}</p>
+        <p><strong>Email:</strong> {{ commande.email }}</p>
+        <p><strong>Adresse:</strong> {{ commande.address }}</p>
+        <p><strong>Contact:</strong> {{ commande.contact }}</p>
+        <p><strong>Ville:</strong> {{ commande.ville }}</p>
+        <p><strong>Total:</strong> {{ commande.total }}</p>
+        <p><strong>Date Commande:</strong> {{ commande.date_commande }}</p>
+
+        <h3>Détails des Produits Commandés :</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix Unitaire</th>
+                    <th>Prix Total</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in details_commande %}
+                    <tr>
+                        <td>{{ detail.product.name }}</td>
+                        <td>{{ detail.quantite }}</td>
+                        <td>{{ detail.prix }}</td>
+                        <td>{{ detail.prix_total }}</td>
+                        <td><img src="{{ detail.image }}" alt="{{ detail.product.name }}" width="50"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'commande' %}" class="btn btn-secondary">Retour à la Liste des Commandes</a>
+    </div>
+{% endblock %}

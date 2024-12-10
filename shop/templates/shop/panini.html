@@ -1,0 +1,476 @@
+{% extends "shop/base.html" %}
+
+{% load static %}
+
+
+{% block css %}
+
+<style>
+    /* Style global */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Section principale */
+.shop-cart {
+    padding: 40px 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.shop__cart__table {
+    margin-bottom: 20px;
+}
+
+/* Tableau principal */
+.shop__cart__table table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.shop__cart__table thead th {
+    background-color: #f4f4f4;
+    padding: 15px;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+}
+
+.shop__cart__table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.shop__cart__table td {
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Mode vertical pour mobile */
+@media (max-width: 768px) {
+    .shop__cart__table table,
+    .shop__cart__table thead,
+    .shop__cart__table tbody,
+    .shop__cart__table tr,
+    .shop__cart__table th,
+    .shop__cart__table td {
+        display: block;
+    }
+
+    .shop__cart__table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    .shop__cart__table th {
+        display: none; /* Cache les en-têtes */
+    }
+
+    .shop__cart__table td {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        border-bottom: 1px solid #ddd;
+        padding: 10px 15px;
+    }
+
+    .shop__cart__table td:last-child {
+        border-bottom: none;
+    }
+
+    .shop__cart__table td:before {
+        content: attr(data-label); /* Ajoute l'en-tête comme pseudo-élément */
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #555;
+    }
+}
+
+/* Section boutons */
+.cart__btn {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cart__btn a {
+    display: inline-block;
+    padding: 12px 25px;
+    color: #fff;
+    background: #007bff;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cart__btn a:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Section codes de réduction */
+.discount__content {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.discount__content h6 {
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+}
+
+.discount__content input {
+    width: calc(100% - 110px); /* Ajustement pour bouton */
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.discount__content button {
+    padding: 10px 15px;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.discount__content button:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+/* Section total panier */
+.cart__total__procced {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cart__total__procced h6 {
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.cart__total__procced ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.cart__total__procced ul li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.cart__total__procced ul li span {
+    font-weight: bold;
+    color: #333;
+}
+
+.cart__total__procced a {
+    display: inline-block;
+    width: 100%;
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    background: #007bff;
+    border-radius: 25px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cart__total__procced a:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+    .discount__content input {
+        width: 100%; /* Pleine largeur sur mobile */
+        margin-bottom: 10px;
+    }
+
+    .discount__content button {
+        width: 100%;
+    }
+
+    .cart__btn {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
+/* Bouton Supprimer */
+.table-responsive .btn-delete {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-responsive .btn-delete:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+.table-responsive .btn-delete:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* Bouton Supprimer dans la responsivité */
+@media (max-width: 768px) {
+    .table-responsive .btn-delete {
+        width: 100%; /* Pleine largeur sur mobile */
+        text-align: center;
+    }
+}
+
+
+</style>
+{% endblock css %}
+
+{% block cart %}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="{% url 'shop' %}"><i class="fa fa-home"></i> Acceuil</a>
+                    <span>Panier d'achat</span>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
+<!-- Breadcrumb End -->
+
+<section class="shop-cart spad">
+        <div class="container">
+            <div class="shop__cart__table">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>photo</th>
+                                <th>Produit</th>
+                                <th>Prix</th>
+                                <th>Quantité</th>
+                                <th>Total</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cart-items">
+                            <!-- Les éléments du panier seront ajoutés ici dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="cart__btn">
+                    <a href="{% url 'produit' %}">
+                        <i class="fas fa-shopping-cart"></i> Continuer mes achats
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 text-end">
+                <div class="cart__btn update__btn">
+                    <a href="{% url 'panini' %}" id="update-cart">
+                        <i class="fas fa-sync-alt"></i> Mettre à jour le panier
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="discount__content">
+                    <h6><i class="fas fa-tags"></i> Codes de réduction</h6>
+                    <form action="#">
+                        <input type="text" placeholder="Entrez votre code de réduction" class="form-control">
+                        <button type="submit" class="btn btn-success">Soumettre</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="cart__total__procced">
+                    <h6><i class="fas fa-money-bill-alt"></i> Total du panier</h6>
+                    <ul>
+                        <li>Sous-total: <span id="subtotal">$0.00</span></li>
+                        <li>Total: <span id="total">$0.00</span></li>
+                    </ul>
+                    <a href="{% url 'elisee' %}">
+                        <i class="fas fa-credit-card"></i> Placer une commande
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+</section>
+
+
+
+{% endblock cart %}
+
+
+
+{% block js %}
+
+<script>
+// Fonction pour afficher les données du panier dans le tableau HTML
+function renderCartTable() {
+    const cartItemsContainer = document.getElementById("cart-items");
+    const subtotalElement = document.getElementById("subtotal");
+    const totalElement = document.getElementById("total");
+
+    if (!cartItemsContainer || !subtotalElement || !totalElement) {
+        console.error("Un ou plusieurs éléments du DOM sont introuvables !");
+        return;
+    }
+
+    // Vider le tableau existant
+    cartItemsContainer.innerHTML = "";
+    let subtotal = 0;
+
+    // Parcourir les éléments du panier
+    for (const item_Id in panier) {
+        const item = panier[item_Id];
+        
+        // Vérifier que l'élément contient les 4 propriétés nécessaires plus l'id du produit
+        if (!item || !item.nom || !item.prix || !item.quantite || !item.photo || !item.id) { 
+            console.warn(`Élément invalide dans le panier : ${item_Id}`);
+            continue; // Passer à l'élément suivant s'il manque des données
+        }
+
+        // Traitement du panier
+        const nom = item.nom;
+        const prix = item.prix;
+        const quantite = item.quantite;
+        const photoUrl = item.photo;
+        const productId = item.id;  // ID du produit
+        const prixTotal = prix * quantite;
+        
+        subtotal += prixTotal;
+
+        // Ajouter une ligne au tableau avec la photo
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td><img src="${photoUrl}" alt="${nom}" class="img-fluid rounded-3" style="width: 60px; height: 60px;"></td> <!-- Affichage de la photo -->
+            <td>${nom}</td>
+            <td>${prix.toFixed(2)} fcfa</td>
+            <td>
+                <input type="number" value="${quantite}" min="1" data-id="${productId}" class="quantite-input">
+            </td>
+            <td>${prixTotal.toFixed(2)} fcfa</td>
+            <td>
+                <button class="btn-delete" data-id="${productId}">Supprimer</button>
+            </td>
+        `;
+        cartItemsContainer.appendChild(row);
+    }
+
+    // Mettre à jour les totaux
+    subtotalElement.textContent = `${subtotal.toFixed(2)} fcfa`;
+    totalElement.textContent = `${subtotal.toFixed(2)} fcfa`;
+}
+
+// Fonction pour supprimer un produit
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("btn-delete")) {
+        const item_Id = e.target.getAttribute("data-id");
+
+        // Vérifier que l'ID existe dans le panier
+        if (panier[item_Id]) {
+            // Supprimer l'élément du panier
+            delete panier[item_Id];
+            // Sauvegarder dans le localStorage
+            localStorage.setItem("panier", JSON.stringify(panier));
+            // Rafraîchir l'affichage du panier
+            renderCartTable();
+        } else {
+            console.warn(`L'élément avec l'ID ${item_Id} n'existe pas dans le panier.`);
+        }
+    }
+});
+
+// Gestion de la modification des quantités
+document.addEventListener("input", function (e) {
+    if (e.target.classList.contains("quantite-input")) {
+        const item_Id = e.target.getAttribute("data-id");
+        const nouvelleQuantite = parseInt(e.target.value);
+
+        // Vérifier que la nouvelle quantité est valide
+        if (isNaN(nouvelleQuantite) || nouvelleQuantite <= 0) {
+            alert("La quantité doit être un nombre supérieur à zéro !");
+            e.target.value = panier[item_Id] ? panier[item_Id][2] : 1; // Remettre la quantité précédente en cas de saisie invalide
+            return;
+        }
+
+        // Vérifier que l'élément existe dans le panier
+        if (panier[item_Id]) {
+            // Mettre à jour la quantité et le prix
+            panier[item_Id][2] = nouvelleQuantite;
+            // Sauvegarder dans le localStorage
+            localStorage.setItem("panier", JSON.stringify(panier));
+            // Rafraîchir l'affichage du panier
+            renderCartTable();
+        } else {
+            console.warn(`L'élément avec l'ID ${item_Id} n'existe pas dans le panier.`);
+        }
+    }
+});
+
+// Initialisation
+document.addEventListener("DOMContentLoaded", function () {
+    renderCartTable(); // Afficher le contenu du panier
+});
+</script>
+{% endblock js %}

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+
+
+    <style>
+        /* Général */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9fafc;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+/* Conteneur principal */
+.form-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
+}
+
+/* En-tête */
+.form-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-header h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+/* Champs de formulaire */
+.form-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+/* Icône pour afficher/masquer le mot de passe */
+.toggle-password {
+    position: absolute;
+    top: 35px;
+    right: 15px;
+    cursor: pointer;
+    color: #aaa;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.toggle-password:hover {
+    color: #007bff;
+}
+
+/* Bouton de connexion */
+.btn-submit {
+    width: 100%;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-submit:hover {
+    background: linear-gradient(45deg, #2575fc, #6a11cb);
+}
+
+/* Pied de formulaire */
+.form-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.forgot-link,
+.register-link {
+    display: inline-block;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+    margin: 5px 0;
+    transition: color 0.3s;
+}
+
+.forgot-link:hover,
+.register-link:hover {
+    color: #0056b3;
+}
+
+.form-footer p {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+    </style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1>Connexion</h1>
+        </div>
+        <form method="POST" class="login-form">
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }} mt-3" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        
+
+
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+                <span class="toggle-password" onclick="togglePassword('password')">👁</span>
+            </div>
+            <button type="submit" class="btn-submit">Se connecter</button>
+        </form>
+        <div class="form-footer">
+            <a href="{% url 'verification' %}" class="forgot-link">Mot de passe oublié ?</a>
+            <p>Pas encore de compte ? <a href="{% url 'create' %}" class="register-link">Créer un compte</a></p>
+        </div>
+    </div>
+    <script>
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (field.type === "password") {
+                field.type = "text";
+            } else {
+                field.type = "password";
+            }
+        }
+
+    </script>
+</body>
+</html>

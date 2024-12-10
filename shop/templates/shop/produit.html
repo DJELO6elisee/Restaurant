@@ -1,0 +1,248 @@
+{% extends 'shop/base.html' %}
+
+{% load static %}
+
+
+{% block dd %}
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Section générale */
+#testimonial {
+    background-color: #f8f9fa;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Titre principal */
+#testimonial h5 {
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.4;
+    color: #333;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre des catégories aligné à gauche */
+#testimonial h4 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #2c3e50;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: left; /* Aligner à gauche */
+    padding-left: 15px; /* Un peu d'espacement sur la gauche pour ne pas être collé au bord */
+    text-transform: capitalize;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Description des produits */
+#testimonial .card-title {
+    font-size: 1.1rem;  
+    font-weight: 600;
+    color: #444;
+    transition: color 0.3s ease;
+}
+
+#testimonial .card-title:hover {
+    color: #e74c3c;
+}
+
+/* Description courte des produits */
+#testimonial .text-warning {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #f39c12;
+    margin-bottom: 10px;
+}
+
+/* Prix des produits */
+#testimonial .card-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Bouton COMMANDER */
+/* Conteneur des témoignages */
+#testimonial {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne suivante */
+    gap: 15px; /* Augmente l'espacement entre les éléments */
+    justify-content: space-between; /* Répartition uniforme des éléments */
+}
+
+/* Style des boutons */
+#testimonial .btn-danger {
+    background-color: #e74c3c;
+    color: white;
+    font-weight: bold;
+    padding: 14px 15px;  /* Augmente légèrement le padding pour donner plus de taille au bouton */
+    border-radius: 5px;
+    font-size: 1rem; /* Taille de police ajustée */
+    transition: background-color 0.3s ease;
+    flex: 1 1 calc(48% - 7px); /* Augmente la largeur des boutons à 48% avec un espacement de 7px */
+    box-sizing: border-box; /* Inclut les marges et padding dans la largeur */
+    min-width: 160px; /* Largeur minimale pour les boutons */
+    text-align: center;
+}
+
+/* Changer la couleur du bouton au survol */
+#testimonial .btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* Media Queries pour les écrans plus larges */
+@media (min-width: 576px) {
+    #testimonial .btn-danger {
+        flex: 1 1 calc(48% - 10px); /* Garde la largeur des boutons à 48% avec un espacement de 10px */
+        padding: 8px 14px; /* Réduit légèrement le padding pour les petits écrans */
+        font-size: 0.9rem; /* Réduit la taille de la police sur les petits écrans */
+        margin-top: 8px;
+      }
+}
+
+@media (min-width: 768px) {
+    #testimonial .btn-danger {
+        font-size: 1.1rem; /* Taille de la police légèrement augmentée */
+        padding: 12px 20px;
+    }
+}
+
+@media (min-width: 992px) {
+    #testimonial .btn-danger {
+        font-size: 1.2rem; /* Augmentation de la taille de la police sur les grands écrans */
+        padding: 8px 18px;
+        margin-top: 7px;
+    }
+}
+
+
+#testimonial .btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* Section des produits, ajustement de l'espacement */
+.card-span {
+    background: #fff;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card-span:hover {
+    transform: translateY(-5px);
+}
+
+/* Mise en forme des images de produits */
+.card-img-top {
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.card-img-top:hover {
+    transform: scale(1.05);
+}
+
+/* Espacement entre les éléments */
+.card-body {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 10px;
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+    #testimonial h5 {
+        font-size: 1.5rem;
+    }
+
+    #testimonial h4 {
+        font-size: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+
+    .btn-danger {
+        padding: 10px 15px;
+    }
+}
+
+
+.d-grid {
+  width: 100%;
+}
+
+/* Lorsque l'écran est plus petit que 576px (taille typique des téléphones), réduire la largeur */
+@media (max-width: 576px) {
+  .btn-lg, .btn-group-lg > .btn {
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
+    border-radius: 0.35rem;
+    margin-right: 200px;
+  }
+
+}
+</style>
+{% endblock dd %}
+
+{% block index %}
+
+<section id="testimonial" class="py-4 overflow-hidden">
+  <div class="container">
+
+    <div class="row h-100 mt-3">
+      <!-- <div class="col-lg-7 mx-auto text-center mt-7 mb-3">
+        <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Produits sains, délicieux.</h5>
+      </div> -->
+      
+      {% for category_data in categories_with_products %}
+        <div class="col-12">
+          <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">{{ category_data.category.nom }}</h4> 
+          <div data-bs-touch="false" data-bs-interval="false">
+            <div class="carousel-inner">
+              <div class="row gx-3 h-100 align-items-center">
+                {% for product in category_data.products %}
+                  <div class="col-6 col-sm-4 col-md-3 col-lg-3 mb-1 h-100">
+                    <div class="card card-span h-100 rounded-3">
+                      <img id="pp{{ product.id }}" class="img-fluid rounded-3 h-80" src="{{ product.photo.url }}" alt="..." />
+                      <div class="card-body ps-0">
+                        <span id="aa{{ product.id }}" class="card-title">{{ product.name }}</span><br>
+                        <span class="text-warning me-2">{{ product.smalldescription }}</span><br>
+                        <span id="price{{ product.id }}" style="color:black" class="card-text">{{ product.price }}</span>
+
+                      </div>
+                    </div>
+                    <div class="d-grid gap-2 mb-3"> 
+                      <a class="btn btn-lg btn-danger ted" href="#" id="{{ product.id }}" role="button">AJOUTER</i></a>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+  </section>
+
+
+{% endblock index %}

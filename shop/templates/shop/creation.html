@@ -1,0 +1,148 @@
+{% extends 'shop/base2.html' %}
+
+  {% load static %}
+
+  {% block crea %}  
+
+  <style>
+  /* Conteneur global */
+  .form-container {
+      background-color: #ffffff; /* Fond blanc pour contraster avec le fond bleu */
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: 20px auto;
+  }
+  
+  /* Titres */
+  .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: #2d87f0; /* Texte en bleu pour harmoniser avec le fond */
+  }
+  
+  /* Champs de formulaire */
+  .form-container input,
+  .form-container select,
+  .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #333333; /* Texte en gris foncé pour contraster avec le fond */
+      background-color: #ffffff; /* Fond blanc */
+  }
+  
+  /* Placeholder (texte par défaut dans les champs) */
+  .form-container input::placeholder,
+  .form-container textarea::placeholder {
+      color: #888888; /* Texte placeholder en gris clair */
+      font-style: italic;
+  }
+  
+  /* Liste déroulante */
+  .form-container select {
+      color: #333333; /* Texte en gris foncé */
+      background-color: #ffffff; /* Fond blanc */
+      border: 1px solid #ccc;
+      cursor: pointer;
+      appearance: none;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path d="M0 0h10L5 6z" fill="gray"/></svg>') no-repeat right 10px center;
+      background-size: 12px;
+  }
+  
+  /* Options dans la liste déroulante */
+  .form-container select option {
+      color: #333333; /* Texte en gris foncé */
+      background-color: #ffffff; /* Fond blanc */
+  }
+  
+  /* Bouton de soumission */
+  .btn-submit {
+      background-color: #2d87f0; /* Bleu pour le bouton */
+      color: white;
+      font-weight: 600;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  
+  .btn-submit:hover {
+      background-color: #235b9e; /* Bleu foncé au survol */
+  }
+</style>  
+
+    </style>
+
+    {% endblock crea %}  
+
+
+  {% block creation %}  
+<div class="content-wrapper">
+    <div class="form-container">
+        <h2>Créer un Produit</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Nom -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Nom du Produit</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+
+            <!-- Prix -->
+            <div class="mb-3">
+                <label for="price" class="form-label">Prix</label>
+                <input type="number" step="0.01" id="price" name="price" class="form-control" required>
+            </div>
+
+            <!-- Catégorie -->
+            <div class="mb-3">
+                <label for="category" class="form-label">Catégorie</label>
+                <select id="category" name="category" class="form-select" required>
+                    <option value="">Sélectionnez une catégorie</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Petite description -->
+            <div class="mb-3">
+                <label for="smalldescription" class="form-label">Petite Description</label>
+                <input type="text" id="smalldescription" name="smalldescription" class="form-control" maxlength="300" required>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <!-- Photo -->
+            <div class="mb-3">
+                <label for="photo" class="form-label">Photo</label>
+                <input type="file" id="photo" name="photo" class="form-control" accept="image/*">
+            </div>
+
+            <!-- Statut -->
+            <div class="mb-3">
+                <label for="status" class="form-label">Statut</label>
+                <input type="text" id="status" name="status" class="form-control" placeholder="Entrez le statut du produit" required>
+            </div>
+
+            <!-- Bouton de soumission -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-submit">Créer le Produit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock creation %}  
+
+

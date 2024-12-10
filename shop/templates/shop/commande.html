@@ -1,0 +1,135 @@
+{% extends 'shop/base2.html' %}
+
+{% block d %}
+<style>
+    /* Global body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; /* Fond gris clair pour la page */
+    color: #333; /* Texte gris foncé pour une meilleure lisibilité */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+}
+
+/* Wrapper for the content */
+.content-wrapper {
+    background-color: #ffffff; /* Fond blanc pour la section principale */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 79%;
+    max-width: 1200px;
+    color: #333; /* Texte sombre pour une bonne lisibilité */
+    margin-top: 70px; /* Ajouter un peu d'espace en haut */
+}
+
+/* Heading styles */
+h2 {
+    text-align: center;
+    color: #333; /* Titre en gris foncé */
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Table styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #fff;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Table header styles with a beautiful color */
+.table thead {
+    background-color: #4caf50; /* Fond vert vibrant pour les en-têtes */
+    color: white; /* Texte blanc pour les en-têtes */
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    color: #333; /* Texte sombre pour les cellules */
+}
+
+/* Table row hover effect */
+.table tbody tr:hover {
+    background-color: #f5f5f5; /* Légère couleur de survol pour les lignes */
+}
+
+/* Button styles */
+.btn {
+    padding: 8px 16px;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Info button color */
+.btn-info {
+    background-color: #17a2b8;
+    border: 1px solid #17a2b8;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+    border-color: #138496;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .table {
+        font-size: 12px;
+    }
+}
+
+</style>
+{% endblock d %}
+
+{% block contt %}
+    <div class="content-wrapper">
+        <h2>Liste des Commandes</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID Commande</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Ville</th>
+                    <th>Adresse</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Détails</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commande in commandes %}
+                    <tr>
+                        <td>{{ commande.id }}</td>
+                        <td>{{ commande.nom }}</td>
+                        <td>{{ commande.prenom }}</td>
+                        <td>{{ commande.ville }}</td>
+                        <td>{{ commande.address }}</td>
+                        <td>{{ commande.contact }}</td>
+                        <td>{{ commande.email }}</td>
+                        <td>
+                            <a href="{% url 'detailComande' commande.id %}" class="btn btn-info">Voir Détails</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+{% endblock %}

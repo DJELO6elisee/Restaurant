@@ -1,0 +1,211 @@
+{% extends 'shop/base2.html' %}
+
+{% load static %}
+
+
+{% block ac %}
+<style>
+    /* Mise en page générale pour le contenu */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 50px;
+    justify-content: flex-start; /* Aligne les éléments à gauche */
+}
+
+/* Card principale */   
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
+    padding: 20px;
+    flex: 1 1 calc(100% - 40px); /* Prend la largeur disponible, mais avec marge */
+    margin-bottom: 20px;
+    max-width: 81%; /* Limite la largeur maximale de la carte */
+    width: 100%; /* La carte prend 100% de l'espace disponible jusqu'à 900px */
+    box-sizing: border-box; /* Assure que la largeur inclut le padding */
+    margin-left: auto; /* Cette ligne place la carte à droite */
+    margin-right: 0; /* Aucune marge à droite */
+}
+
+/* Header de la Card */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2d87f0;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.card-header .card-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Menu déroulant dans le header */
+.card-action {
+    position: relative;
+}
+
+.dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Table responsive */
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+/* En-têtes de la table */
+.table th {
+    background-color: #f4f6f9;
+    color: #555;
+    text-align: left;
+    padding: 12px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Cellules de la table */
+.table td {
+    padding: 12px;
+    font-size: 14px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f4f6f9;
+    color: #333;
+}
+
+.table td .product-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+/* Progress bar */
+.progress {
+    height: 5px;
+    background-color: #f4f6f9;
+    border-radius: 3px;
+}
+
+.progress-bar {
+    background-color: #2d87f0;
+    border-radius: 3px;
+}
+
+/* Effet hover pour les lignes de la table */
+.table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Bouton de menu dans le dropdown */
+.dropdown-toggle {
+    color: white;
+    font-size: 16px;
+}
+
+/* Responsivité */
+@media (max-width: 992px) {
+    .card {
+        flex: 1 1 100%; /* Prend 100% de la largeur pour les écrans plus petits */
+    }
+
+    .table th, .table td {
+        font-size: 12px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column; /* Empile les éléments en colonne sur petits écrans */
+    }
+
+    .card {
+        margin: 10px 0;
+    }
+
+    .table th, .table td {
+        font-size: 10px;
+        padding: 8px;
+    }
+}
+
+</style>
+{% endblock ac %}
+
+
+{% block product %}
+
+<div class="row">
+    <div class="col-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Liste des Produits</h3>
+                <div class="card-action">
+                    <div class="dropdown">
+                        <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
+                            <i class="icon-options"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="javascript:void();">Action</a>
+                            <a class="dropdown-item" href="javascript:void();">Another action</a>
+                            <a class="dropdown-item" href="javascript:void();">Something else here</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javascript:void();">Separated link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush table-borderless">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Nom</th>
+                            <th>Prix</th>
+                            <th>SmallDescription</th>
+                            <!-- <th>Categorie</th> -->
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pro in product %}
+                        <tr>
+                            <td>
+                                <img src="{{ pro.photo.url}}" class="product-img" alt="product img">
+                            </td>
+                            <td>{{ pro.name }}</td>
+
+                            <td>{{ pro.price }}</td>
+                            <td>{{ pro.smalldescription }}</td>
+                            <!-- <td>{{ pro.category }}</td> -->
+                            <td>{{ pro.date_creation }}</td>
+                            <td>
+                                <a href="{% url 'modification' product_id=pro.id %}"><button class="btn btn-primary">modifier</button></a>
+                                <a href="{% url 'delete_product' pro.id %}"><button class="btn btn-danger">supprimer</button></a>
+                            </td>
+                            <td>
+                                <div class="progress shadow" style="height: 5px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 90%;"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+   {% endblock product %}
+

@@ -167,12 +167,12 @@
 
                         <p><strong>Total de la commande : </strong><span id="total">0.00 fcfa</span></p>
                     </div>
-
                     <h3>Adresse de livraison</h3>
-                    <p><strong>Nom : </strong> {{ user.first_name }} {{ user.last_name }}</p>
-                    <p><strong>Adresse : </strong> {{ user.profile.address }}</p>
-                    <p><strong>Téléphone : </strong> {{ user.profile.contact }}</p>
-                    <p><strong>Email : </strong> {{ user.email }}</p>
+                    <p><strong>Nom : </strong> {{ commande.nom|default:"N/A" }} {{ commande.prenom|default:"N/A" }}</p>
+                    <p><strong>Adresse : </strong> {{ commande.address|default:"Non spécifiée" }}</p>
+                    <p><strong>Téléphone : </strong> {{ commande.contact|default:"Non spécifié" }}</p>
+                    <p><strong>Email : </strong> {{ commande.email|default:"Non spécifié" }}</p>
+
 
                     <div class="confirmation__button">
                         <a href="{% url 'shop' %}" class="site-btn">Retour à la page d'accueil</a>
@@ -182,6 +182,7 @@
         </div>
     </div>
 </section>
+
 {% endblock yy %}
 
 {% block zz %}
@@ -222,7 +223,6 @@
         productRow.innerHTML = `
             <span>${nom}</span>
             <span>${prixTotal.toFixed(2)} fcfa</span>
-            <span>ID du produit : ${productId}</span>  <!-- Afficher l'ID du produit -->
         `;
         orderSummary.appendChild(productRow);
 

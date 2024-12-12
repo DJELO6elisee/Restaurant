@@ -72,7 +72,7 @@ $(function () {
         $(".right-sidebar").toggleClass("right-toggled");
     });
 	
-	$('#theme1').click(theme1);
+	  $('#theme1').click(theme1);
     $('#theme2').click(theme2);
     $('#theme3').click(theme3);
     $('#theme4').click(theme4);

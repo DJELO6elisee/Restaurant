@@ -1,0 +1,120 @@
+{% extends 'shop/base2.html' %}
+
+{% block bb %}
+<style>
+    /* Style pour le body avec un fond bleu */
+body {
+    display: flex;
+    flex-direction: row;
+    /* background-color: #007bff; Fond bleu */
+    color: white; /* Couleur du texte blanche pour contraster */
+}
+
+/* La sidebar */
+.sidebar {
+    width: 220px; /* Ajuste la largeur selon tes besoins */
+    /* background-color: #343a40; */
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Style du contenu principal */
+.main-content {
+    margin-left: 220px; /* Laisse de l'espace pour la sidebar */
+    padding: 20px;
+    flex-grow: 1;
+}
+
+/* Style pour la page de liste */
+.table {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #f8f9fa; /* Fond clair pour la table */
+    color: #333; /* Texte sombre pour la table */
+}
+
+/* En-tête du tableau */
+.table thead {
+    background-color: #007bff;
+    font-weight: bold;
+}
+
+/* Personnalisation des boutons */
+.btn-primary {
+    background-color: green;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Alignement et espacement du tableau */
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px;
+}
+
+/* Ligne alternée pour les lignes du tableau */
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+/* Espacement autour du titre et du bouton */
+.d-flex {
+    margin-bottom: 20px;
+}
+
+</style>
+{% endblock bb %}
+
+{% block ad %}
+    <div class="sidebar">
+        <!-- Sidebar content ici -->
+        <!-- <h3>Menu</h3> -->
+        <!-- Ajoute ici les liens ou autres éléments de ta sidebar -->
+    </div>
+    <div class="main-content">
+        <div class="container mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>Liste des Catégories</h1>
+                <a href="{% url 'create_cat' %}" class="btn btn-primary">Créer une Catégorie</a>
+            </div>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom de la Catégorie</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Boucle pour afficher les catégories -->
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ category.nom }}</td>
+                        <td>
+                            <a href="{% url 'modif_cat' category.id %}"><button class="btn btn-primary">modifier</button></a>
+                            <a href="{% url 'sup_catego' category.id %}"><button class="btn btn-danger">supprimer</button></a>
+                        </td>
+                        
+                    </tr>
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock ad %}

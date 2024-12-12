@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseBadRequest
 from django.db.models import Sum
+# import logging
 
 from django.contrib import messages
 
@@ -12,6 +13,7 @@ from .models import Product, Category, Commande, DetailCommande, Message
 import json
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
+from Connexion.models import CustomUser
 
 
 # Create your views here.
@@ -19,13 +21,16 @@ from django.http import HttpResponseBadRequest
 def panini(request):
     return render(request, 'shop/panini.html')
 
+# logger = logging.getLogger(__name__)
+
 @login_required(login_url='connexion')
-def confirmation(request):
-    user = request.user
-    return render(request, 'shop/confirmation.html', {'user': user})
+def confirmation(request, conf_id):
+    commande = get_object_or_404(Commande, id=conf_id)
+    return render(request, 'shop/confirmation.html', {'commande': commande})
 
 @login_required(login_url='connexion')
 def elisee(request):
+    user = request.user
     if request.method == "POST":
         # Récupérer les informations du formulaire
         nom = request.POST.get('nom')
@@ -92,9 +97,9 @@ def elisee(request):
                 continue
 
         # Rediriger vers la page de confirmation
-        return redirect('confirmation')
+        return redirect('confirmation', conf_id=commande.id)
 
-    return render(request, 'shop/checkout.html')
+    return render(request, 'shop/checkout.html', {'user': user})
 
 @login_required(login_url='connexion')
 def contact(request):
@@ -138,7 +143,7 @@ def produit(request):
 
 
 @login_required(login_url='connexion')
-def admin(request):
+def adminp(request):
     command = Commande.objects.all()[:7]
     commandes = Commande.objects.all()
     messag = Message.objects.all()
@@ -149,10 +154,10 @@ def admin(request):
     # Compter le nombre de commandes
     total_commandes = commandes.count()
     somme_totaux = commandes.aggregate(Sum('total'))['total__sum'] or 0
-
+    total_users = CustomUser.objects.count()
 
     # Renvoyer les données au template
-    return render(request, 'shop/indexx.html', {'command': command, 'commandes': commandes, 'total_commandes': total_commandes, 'somme_totaux': somme_totaux, 'messag': messag, 'total_messages': total_messages})
+    return render(request, 'shop/indexx.html', {'command': command, 'commandes': commandes, 'total_commandes': total_commandes, 'somme_totaux': somme_totaux, 'messag': messag, 'total_messages': total_messages, 'total_users': total_users})
 
 @login_required(login_url='connexion')
 def table(request):
@@ -384,6 +389,22 @@ def delete_product(request, product_id):
     # Si la méthode est GET, afficher une confirmation
     return render(request, 'shop/confirm_delete.html', {'product': product})
 
+
+@login_required(login_url='connexion')
+def delete_commande(request, commande_id):
+    # Récupérer le produit à supprimer
+    del_commande = get_object_or_404(Commande, id=commande_id)
+
+    if request.method == 'POST':
+        # Supprimer le produit
+        del_commande.delete()
+        return redirect('commande')  # Rediriger vers la liste des produits après suppression
+
+    # Si la méthode est GET, afficher une confirmation
+    return render(request, 'shop/delete_commande.html', {'del_commande': del_commande})
+
+
+
 @login_required(login_url='connexion')
 def commande(request):
     commandes = Commande.objects.all()  # Récupérer toutes les commandes
@@ -409,3 +430,35 @@ def detailCommande(request, commande_id):
 
     # Rendre le template avec les données
     return render(request, 'shop/detailCommande.html', context)
+
+def category(request):
+    categories = Category.objects.all()
+
+    return render(request, 'shop/category.html', {'categories': categories})
+
+def create_cat(request):
+    if request.method == 'POST':
+        nom = request.POST.get('nom')
+
+        categori = Category(nom=nom)
+        categori.save()
+    return render(request, 'shop/create_categorie.html')
+
+def modif_cat(request, cat_id):
+    catego = get_object_or_404(Category, id=cat_id)
+
+    if request.method == 'POST':
+        nom = request.POST.get('nom')
+
+        catego.nom = nom
+        catego.save()
+        return redirect('category')
+
+    return render(request, 'shop/modif_categorie.html', {'catego': catego})
+
+def sup_catego(request, delsup_id):
+    del_cat = get_object_or_404(Category, id=delsup_id)
+    if request.method == 'POST':
+        del_cat.delete()
+        return redirect('category')
+    return render(request, 'shop/sup_categorie.html', {'del_cat': del_cat})

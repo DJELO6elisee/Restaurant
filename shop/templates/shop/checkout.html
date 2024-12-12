@@ -398,43 +398,44 @@ body {
                 <div class="col-lg-8">
                     <h5>Détails de facturation</h5>
                     <div class="row">
+
+                        {% if user.is_authenticated %}
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="checkout__form__input">
                                 <p>Nom<span>*</span></p>
-                                <input type="text" name="nom" required>
+                                <input type="text" name="nom" value="{{ user.first_name }}" required>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="checkout__form__input">
-                                <p>Prenom<span>*</span></p>
-                                <input type="text" name="prenom" required>
+                                <p>Prénom<span>*</span></p>
+                                <input type="text" name="prenom" value="{{ user.username }}" required>
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            
                             <div class="checkout__form__input">
-                                <p>Ville <span>*</span></p>
+                                <p>Ville<span>*</span></p>
                                 <input type="text" name="ville" required>
                             </div>
                             <div class="checkout__form__input">
-                                <p>Addresse <span>*</span></p>
-                                <input type="text" name="address" placeholder="Addresse de la Rue" required>
-                                <!-- <input type="text" name="maison" placeholder="Appartement, suite, unité, etc. (facultatif)"> -->
+                                <p>Adresse<span>*</span></p>
+                                <input type="text" name="address" placeholder="Adresse de la Rue" required>
                             </div>
-                            
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="checkout__form__input">
-                                <p>Numero de Telephone <span>*</span></p>
+                                <p>Numéro de Téléphone<span>*</span></p>
                                 <input type="text" name="contact" required>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="checkout__form__input">
-                                <p>Email <span>*</span></p>
-                                <input type="text" name="email" required>
+                                <p>Email<span>*</span></p>
+                                <input type="email" name="email" value="{{ user.email }}" required>
                             </div>
                         </div>
+                        {% endif %}
+
                         <div class="col-lg-12">
                             
                             <div class="col-lg-6 col-md-6 col-sm-6">
@@ -479,14 +480,7 @@ body {
         </form>
     </div>
 
-    <!-- Modale de confirmation -->
-    <div id="confirmation-popup" class="confirmation-popup">
-        <div class="popup-content">
-            <h2>Merci pour votre commande !</h2>
-            <p>Votre commande a bien été reçue. Vous serez livré dans un délai de 1 jour. Nous avons hâte de vous revoir !</p>
-            <button id="close-popup" class="close-btn">Fermer</button>
-        </div>
-    </div>
+    
 
 </section>
 
@@ -628,16 +622,16 @@ document.querySelector("form.checkout__form").addEventListener("submit", functio
     document.getElementById('hidden-panier').value = JSON.stringify(panierData);
 
     // Afficher le popup de confirmation
-    document.getElementById("confirmation-popup").style.display = "flex";
+    //document.getElementById("confirmation-popup").style.display = "flex";
 
     // Fermer le popup et soumettre le formulaire lorsque l'utilisateur clique sur "Fermer"
-    document.getElementById("close-popup").addEventListener("click", function() {
-        document.getElementById("confirmation-popup").style.display = "none";  // Fermer le popup
+    //document.getElementById("close-popup").addEventListener("click", function() {
+        //document.getElementById("confirmation-popup").style.display = "none";  // Fermer le popup
         
         // Soumettre le formulaire après la fermeture du popup
         event.target.submit();
     });
-});
+// });
 
 </script>    
 

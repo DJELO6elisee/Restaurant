@@ -14,6 +14,7 @@ $.sidebarMenu = function(menu) {
 			});
 			checkElement.parent("li").removeClass("active");
 		}
+		
 		//If the menu is not visible
 		else if ((checkElement.is(subMenuSelector)) && (!checkElement.is(':visible'))) {
 			//Get the parent menu

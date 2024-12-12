@@ -5,28 +5,30 @@
   {% block crea %}  
 
   <style>
+
   /* Conteneur global */
-  .form-container {
-      background-color: #ffffff; /* Fond blanc pour contraster avec le fond bleu */
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      margin: 20px auto;
+  .main-content {
+    margin-left: 220px; /* Décalage pour la sidebar */
+    padding: 70px;
+    flex-grow: 1;
+    /* height: 90vh; */
+    /* overflow-y: auto; */
   }
-  
+  h2, .form-label {
+    color: white !important;
+    /* Forcer la couleur blanche sur fond bleu */ 
+}
   /* Titres */
-  .form-container h2 {
-      text-align: center;
+   .container h2 {
       margin-bottom: 20px;
       font-weight: 700;
-      color: #2d87f0; /* Texte en bleu pour harmoniser avec le fond */
-  }
+      color: #ffffff; /* Texte en bleu pour harmoniser avec le fond */
+   } 
   
   /* Champs de formulaire */
-  .form-container input,
-  .form-container select,
-  .form-container textarea {
+  .container input,
+  .container select,
+  .container textarea {
       width: 100%;
       padding: 10px;
       margin: 10px 0 20px;
@@ -34,9 +36,22 @@
       border-radius: 5px;
       font-size: 16px;
       color: #333333; /* Texte en gris foncé pour contraster avec le fond */
-      background-color: #ffffff; /* Fond blanc */
+      background-color: #ccc; /* Fond blanc
+   } 
+  .form-label {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+  h2, .form-label {
+    color: white !important;
+    /* Forcer la couleur blanche sur fond bleu */ 
+}
+
+  /* .form-container label {
+    color: #ffffff;
   }
-  
+   */
   /* Placeholder (texte par défaut dans les champs) */
   .form-container input::placeholder,
   .form-container textarea::placeholder {
@@ -45,8 +60,8 @@
   }
   
   /* Liste déroulante */
-  .form-container select {
-      color: #333333; /* Texte en gris foncé */
+  .container select {
+      color: #ffffff; /* Texte en gris foncé */
       background-color: #ffffff; /* Fond blanc */
       border: 1px solid #ccc;
       cursor: pointer;
@@ -56,14 +71,14 @@
   }
   
   /* Options dans la liste déroulante */
-  .form-container select option {
+  .container select option {
       color: #333333; /* Texte en gris foncé */
       background-color: #ffffff; /* Fond blanc */
   }
   
   /* Bouton de soumission */
   .btn-submit {
-      background-color: #2d87f0; /* Bleu pour le bouton */
+      background-color: green; /* Bleu pour le bouton */
       color: white;
       font-weight: 600;
       border: none;
@@ -71,10 +86,30 @@
       border-radius: 5px;
       cursor: pointer;
   }
+  .container {
+    max-width: 900px;
+}
   
   .btn-submit:hover {
       background-color: #235b9e; /* Bleu foncé au survol */
   }
+
+  /* Mise en page responsive */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+
 </style>  
 
     </style>
@@ -83,9 +118,11 @@
 
 
   {% block creation %}  
-<div class="content-wrapper">
-    <div class="form-container">
-        <h2>Créer un Produit</h2>
+<div class="main-content">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Créer un Produit</h2>
+        </div>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <!-- Nom -->

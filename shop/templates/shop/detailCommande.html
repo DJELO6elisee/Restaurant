@@ -1,20 +1,148 @@
 {% extends 'shop/base2.html' %}
 
+{% block hh %}
+<style>
+.order-details-container {
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 1000px; /* Réduction de la largeur */
+    margin-right: 45px; /* Pas de marge à droite */
+    margin-left: auto; /* Pousse le conteneur complètement à droite */
+    margin-top: 5rem; /* Espacement vers le haut */
+    margin-bottom: 5rem; /* Ajout d'un espacement vers le bas */
+
+}
+
+
+.order-header h2 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.order-date {
+    font-size: 16px;
+    color: #333;
+
+}
+
+.order-info {
+    margin-top: 1.5rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.info-row p {
+    font-size: 16px;
+    color: #333;
+}
+
+.order-total {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #16a085;
+}
+
+.total-price {
+    color: #27ae60;
+}
+
+.product-header {
+    margin-top: 2rem;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.order-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.order-table th, .order-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.order-table th {
+    background-color: #34495e;
+    color: white;
+}
+
+.order-table td {
+    background-color: #ecf0f1;
+    color: #333;
+}
+
+.product-image {
+    max-width: 50px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.action-buttons {
+    margin-top: 2rem;
+    text-align: right;
+    margin-bottom: 50px;
+}
+
+.btn-return {
+    padding: 10px 20px;
+    background-color: blue;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-return:hover {
+    background-color: #1abc9c;
+}
+
+
+</style>
+{% endblock hh %}
+
 {% block contt %}
-    <div class="content-wrapper">
+
+<div class="order-details-container">
+    <div class="order-header">
         <h2>Détails de la Commande #{{ commande.id }}</h2>
+        <p class="order-date">Date de Commande : {{ commande.date_commande }}</p>
+    </div>
 
-        <p><strong>Nom:</strong> {{ commande.nom }}</p>
-        <p><strong>Prénom:</strong> {{ commande.prenom }}</p>
-        <p><strong>Email:</strong> {{ commande.email }}</p>
-        <p><strong>Adresse:</strong> {{ commande.address }}</p>
-        <p><strong>Contact:</strong> {{ commande.contact }}</p>
-        <p><strong>Ville:</strong> {{ commande.ville }}</p>
-        <p><strong>Total:</strong> {{ commande.total }}</p>
-        <p><strong>Date Commande:</strong> {{ commande.date_commande }}</p>
+    <div class="order-info">
+        <div class="info-row">
+            <p><strong>Nom:</strong> {{ commande.nom }}</p>
+            <p><strong>Prénom:</strong> {{ commande.prenom }}</p>
+        </div>
+        <div class="info-row">
+            <p><strong>Email:</strong> {{ commande.email }}</p>
+            <p><strong>Adresse:</strong> {{ commande.address }}</p>
+        </div>
+        <div class="info-row">
+            <p><strong>Contact:</strong> {{ commande.contact }}</p>
+            <p><strong>Ville:</strong> {{ commande.ville }}</p>
+        </div>
+        <div class="order-total">
+            <p><strong>Total:</strong> <span class="total-price">{{ commande.total }}</span> FCFA</p>
+        </div>
+    </div>
 
-        <h3>Détails des Produits Commandés :</h3>
-        <table class="table">
+    <h3 class="product-header">Détails des Produits Commandés</h3>
+    <div class="order-table">
+        <table>
             <thead>
                 <tr>
                     <th>Produit</th>
@@ -26,17 +154,22 @@
             </thead>
             <tbody>
                 {% for detail in details_commande %}
-                    <tr>
-                        <td>{{ detail.product.name }}</td>
-                        <td>{{ detail.quantite }}</td>
-                        <td>{{ detail.prix }}</td>
-                        <td>{{ detail.prix_total }}</td>
-                        <td><img src="{{ detail.image }}" alt="{{ detail.product.name }}" width="50"></td>
-                    </tr>
+                <tr>
+                    <td>{{ detail.product.name }}</td>
+                    <td>{{ detail.quantite }}</td>
+                    <td>{{ detail.prix }} FCFA</td>
+                    <td>{{ detail.prix_total }} FCFA</td>
+                    <td><img src="{{ detail.image }}" alt="{{ detail.product.name }}" class="product-image"></td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
-
-        <a href="{% url 'commande' %}" class="btn btn-secondary">Retour à la Liste des Commandes</a>
     </div>
+
+    <div class="action-buttons">
+        <a href="{% url 'commande' %}" class="btn-return">Retour à la Liste des Commandes</a>
+    </div>
+</div>
+
 {% endblock %}
+

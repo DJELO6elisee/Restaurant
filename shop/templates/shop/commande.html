@@ -5,7 +5,7 @@
     /* Global body styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4; /* Fond gris clair pour la page */
+    /* background-color: #f4f4f4; Fond gris clair pour la page */
     color: #333; /* Texte gris foncé pour une meilleure lisibilité */
     margin: 0;
     padding: 0;
@@ -103,28 +103,28 @@ h2 {
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID Commande</th>
                     <th>Nom</th>
-                    <th>Prenom</th>
                     <th>Ville</th>
                     <th>Adresse</th>
                     <th>Contact</th>
                     <th>Email</th>
                     <th>Détails</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for commande in commandes %}
                     <tr>
-                        <td>{{ commande.id }}</td>
                         <td>{{ commande.nom }}</td>
-                        <td>{{ commande.prenom }}</td>
                         <td>{{ commande.ville }}</td>
                         <td>{{ commande.address }}</td>
                         <td>{{ commande.contact }}</td>
                         <td>{{ commande.email }}</td>
                         <td>
                             <a href="{% url 'detailComande' commande.id %}" class="btn btn-info">Voir Détails</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'delete_commande' commande.id %}" class="btn btn-danger">Supprimer</a>
                         </td>
                     </tr>
                 {% endfor %}

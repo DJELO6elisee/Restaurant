@@ -1,10 +1,10 @@
-{% extends 'shop/base.html' %}
+ {% extends 'shop/base.html' %} 
 
-{% load static %}
+ {% load static %} 
 
 
-{% block dd %}
-<style>
+ {% block dd %} 
+ <!-- <style>
   body {
     font-family: 'Roboto', sans-serif;
     background-color: #f4f7fc;
@@ -200,49 +200,412 @@
   }
 
 }
+</style> -->
+<!-- <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.product-card {
+    width: 200px;
+    height: auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+    margin: 15px;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-content {
+    padding: 15px;
+    text-align: center;
+}
+
+.product-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.product-price {
+    font-size: 1rem;
+    color: #007BFF;
+    margin: 10px 0;
+}
+
+.product-rating {
+    margin: 5px 0;
+}
+
+.star {
+    color: #FFD700;
+    font-size: 1.2rem;
+}
+
+.comment-field {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: none;
+}
+
+.view-details,
+.add-to-cart {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.product-card:hover .view-details,
+.product-card:hover .add-to-cart {
+    display: inline-block;
+}
+
+.add-to-cart {
+    background-color: #28a745;
+}
+
+.add-to-cart:hover {
+    background-color: #218838;
+}
+
+.view-details:hover {
+    background-color: #0056b3;
+}
+
+</style> -->
+
+<style>
+  /* Style général pour la page des produits */
+.product-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-img {
+  max-height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.product-price {
+  font-size: 1.1rem;
+}
+
+.rating .star {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #ddd;
+  transition: color 0.3s;
+}
+
+.rating .star.filled {
+  color: #ffc107;
+}
+
+.comment-field {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 8px;
+  resize: none;
+}
+
+.view-details, .add-to-cart {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+}
+
+/* Réagir à la navbar fixe */
+body {
+  padding-top: 100px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
+}
+
+/* Adaptation de l'affichage des boutons au survol */
+.view-details,
+.add-to-cart {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 25px;
+  background-color: #007BFF;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.product-card:hover .view-details,
+.product-card:hover .add-to-cart {
+  display: inline-block;
+  
+}
+
+.add-to-cart {
+  background-color: #28a745;
+}
+
+.add-to-cart:hover {
+  background-color: #218838;
+}
+
+.view-details:hover {
+  background-color: #0056b3;
+}
+
+/* Ajustement des étoiles */
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ddd; /* Couleur des étoiles vides */
+  transition: color 0.3s;
+}
+
+.star.filled {
+  color: #ffc107; /* Couleur des étoiles remplies */
+}
+
+
+/* Media Queries pour différents écrans */
+@media (max-width: 768px) {
+  .view-details,
+  .add-to-cart {
+    font-size: 0.9rem; /* Réduction de la taille sur les tablettes */
+    padding: 12px 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .view-details,
+  .add-to-cart {
+    font-size: 0.8rem; /* Réduction de la taille sur les petits écrans */
+    padding: 15px 50px;
+  }
+}
+
+/* Adaptation de la disposition sur mobile */
+@media (max-width: 480px) {
+  body {
+    padding-top: 120px; /* Ajuster selon la hauteur de votre navbar */
+  }
+
+  .product-card {
+    padding: 10px; /* Réduire le padding pour les petits écrans */
+  }
+
+  .product-img {
+    max-height: 150px; /* Réduire la taille de l'image */
+  }
+}
+
+/* Style général pour les cartes de catégories */
+.category-card {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 20px;
+}
+
+.category-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.category-title {
+  font-size: 1rem;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #333;
+  text-transform: capitalize;
+}
+
+/* Style de survol */
+.category-card:hover .category-circle {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles de responsive */
+@media (max-width: 768px) {
+  .category-title {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-title {
+    font-size: 0.9rem;
+  }
+}
+
+
+
+
 </style>
-{% endblock dd %}
 
-{% block index %}
+{% endblock dd %} 
 
-<section id="testimonial" class="py-4 overflow-hidden">
+{% block index %} 
+
+<section id="categories" class="py-4">
   <div class="container">
+    <h2 class="text-center mb-2">Nos Catégories</h2>
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
+        <a href="#" class="category-card">
+          <div class="category-circle">
+            <img src="{% static 'img/gallery/chowmein.png' %}" alt="Cosmétique Bio" class="category-img">
+          </div>
+          <h5 class="category-title">Cosmétique Bio</h5>
+        </a>
+      </div>
+      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
+        <a href="#" class="category-card">
+          <div class="category-circle">
+            <img src="{% static 'img/gallery/steak.png' %}" alt="Hygiène soins bio" class="category-img">
+          </div>
+          <h5 class="category-title">Hygiène soins bio</h5>
+        </a>
+      </div>
+      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
+        <a href="#" class="category-card">
+          <div class="category-circle">
+            <img src="{% static 'img/gallery/search-pizza.png' %}" alt="Santé vitalité" class="category-img">
+          </div>
+          <h5 class="category-title">Santé vitalité</h5>
+        </a>
+      </div>
+      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
+        <a href="#" class="category-card">
+          <div class="category-circle">
+            <img src="{% static 'img/gallery/chowmein.png' %}" alt="Huile essentielle" class="category-img">
+          </div>
+          <h5 class="category-title">Huile essentielle</h5>
+        </a>
+      </div>
+      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
+        <a href="#" class="category-card">
+          <div class="category-circle">
+            <img src="{% static 'img/gallery/noodles.png' %}" alt="Alimentation Bio" class="category-img">
+          </div>
+          <h5 class="category-title">Alimentation Bio</h5>
+        </a>
+      </div>
+      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
+        <a href="#" class="category-card">
+          <div class="category-circle">
+            <img src="{% static 'img/gallery/sub-sandwich.png' %}" alt="Thé, Café & Boisson bio" class="category-img">
+          </div>
+          <h5 class="category-title">Thé, Café & Boisson bio</h5>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div class="row h-100 mt-3">
-      <!-- <div class="col-lg-7 mx-auto text-center mt-7 mb-3">
-        <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Produits sains, délicieux.</h5>
-      </div> -->
+
+
+
+<section id="testimonial" class="py-4 overflow-hidden no-scroll">
+  <div class="container">
+    <div class="row h-100 mt-1">
       
+
+      <!-- Boucle pour afficher les produits par catégorie -->
       {% for category_data in categories_with_products %}
         <div class="col-12">
           <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">{{ category_data.category.nom }}</h4> 
-          <div data-bs-touch="false" data-bs-interval="false">
-            <div class="carousel-inner">
-              <div class="row gx-3 h-100 align-items-center">
-                {% for product in category_data.products %}
-                  <div class="col-6 col-sm-4 col-md-3 col-lg-3 mb-1 h-100">
-                    <div class="card card-span h-100 rounded-3">
-                      <img id="pp{{ product.id }}" class="img-fluid rounded-3 h-80" src="{{ product.photo.url }}" alt="..." />
-                      <div class="card-body ps-0">
-                        <span id="aa{{ product.id }}" class="card-title">{{ product.name }}</span><br>
-                        <span class="text-warning me-2">{{ product.smalldescription }}</span><br>
-                        <span id="price{{ product.id }}" style="color:black" class="card-text">{{ product.price }}</span>
-
-                      </div>
+          <div class="row gx-4 gy-5">
+            {% for product in category_data.products %}
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <!-- Carte de produit -->
+                <div class="product-card shadow">
+                  <div class="card-content">
+                    <img id="pp{{ product.id }}" class="product-img img-fluid rounded" src="{{ product.photo.url }}" alt="{{ product.name }}">
+                    <h3 id="aa{{ product.id }}" class="product-name text-center mt-3">{{ product.name }}</h3>
+                    <p id="price{{ product.id }}" class="product-price text-center text-success fw-bold">{{ product.price }}</p>
+                    
+                    <div class="rating d-flex justify-content-center" data-product-id="{{ product.id }}">
+                      {% for i in "12345" %}
+                        <span 
+                          class="star {% if forloop.counter <= product.rating %}filled{% else %}empty{% endif %}" 
+                          data-value="{{ forloop.counter }}">
+                          ★
+                        </span>
+                      {% endfor %}
                     </div>
-                    <div class="d-grid gap-2 mb-3"> 
-                      <a class="btn btn-lg btn-danger ted" href="#" id="{{ product.id }}" role="button">AJOUTER</i></a>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                      <a class="view-details btn btn-primary btn-sm" href="#" role="button">Voir + </a>
+                      <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" href="#" id="{{ product.id }}" role="button">Ajouter 🛒</i></a>
                     </div>
                   </div>
-                {% endfor %}
+                </div>
               </div>
-            </div>
+            {% endfor %}
           </div>
         </div>
       {% endfor %}
     </div>
-    
-  </section>
+  </div>
+</section>
 
 
-{% endblock index %}
+
+
+
+
+
+ {% endblock index %} 

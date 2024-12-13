@@ -1,0 +1,94 @@
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" data-navbar-on-scroll="data-navbar-on-scroll">
+    <div class="container"><a class="navbar-brand d-inline-flex" ><img class="d-inline-block" src="{% static 'img/gallery/logo.svg' %}" alt="logo" /><span class="text-1000 fs-3 fw-bold ms-2 text-gradient">Diétetique</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
+      <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
+        <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
+            <a href="" class="mb-0 fw-bold text-lg-center">Acceuil</a>
+        </div>
+        <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
+            <a href="" class="mb-0 fw-bold text-lg-center">Nos Produit</a>
+          </div>
+          <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
+            <a href="" class="mb-0 fw-bold text-lg-center">Contact</a>
+          </div>
+          <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
+            <i class="fas fa-shopping-cart"></i> <a href=""  class="mb-0 fw-bold text-lg-center">Panier(0)</a>
+          </div>
+          <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
+            <a href="#" class="mb-0 fw-bold text-lg-center">Qui sommes-nous?</a>
+          </div>
+        <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">
+          <div class="input-group-icon pe-2"><i class="fas fa-search input-box-icon text-primary"></i>
+            <input class="form-control border-0 input-box bg-100" type="search" placeholder="Rechercher un produit" aria-label="Search" />
+          </div>
+          <!-- <button class="btn btn-white shadow-warning text-warning" type="submit"> <i class="fas fa-user me-2"></i>Login</button> -->
+        </form>
+      </div>
+      {% if user.is_authenticated %}
+      <div class="dropdown">
+        <button>{{ request.user.first_name }} ▼</button> <!-- Affiche le nom de l'utilisateur -->
+        <div class="dropdown-content">
+            <a href="{% url 'deconnexion' %}">Déconnexion</a> <!-- Lien de déconnexion -->
+        </div>
+    </div>
+    {% endif %}
+
+    </div>
+  </nav>
+
+
+
+
+
+
+  <!-- <section id="testimonial" class="py-4 overflow-hidden">
+  <div class="container">
+
+    <div class="row h-100 mt-3"> 
+      <div class="col-lg-7 mx-auto text-center mt-7 mb-3">
+        <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">Produits sains, délicieux.</h5>
+      </div> 
+      
+       {% for category_data in categories_with_products %}
+        <div class="col-12">
+          <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">{{ category_data.category.nom }}</h4> 
+          <div data-bs-touch="false" data-bs-interval="false">
+            <div class="carousel-inner">
+              <div class="row gx-3 h-100 align-items-center">
+                {% for product in category_data.products %}
+                  <div class="col-6 col-sm-4 col-md-3 col-lg-3 mb-1 h-100">
+                    <div class="card card-span h-100 rounded-3">
+                      <img id="pp{{ product.id }}" class="img-fluid rounded-3 h-80" src="{{ product.photo.url }}" alt="..." />
+                      <div class="card-body ps-0">
+                        <span id="aa{{ product.id }}" class="card-title">{{ product.name }}</span><br>
+                        <span class="text-warning me-2">{{ product.smalldescription }}</span><br>
+                        <span id="price{{ product.id }}" style="color:black" class="card-text">{{ product.price }}</span> 
+
+                       </div>
+                    </div>
+                    <div class="d-grid gap-2 mb-3"> 
+                      <a class="btn btn-lg btn-danger ted" href="#" id="{{ product.id }}" role="button">AJOUTER</i></a>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+  </section> -->
+ 

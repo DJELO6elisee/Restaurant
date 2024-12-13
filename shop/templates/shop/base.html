@@ -58,67 +58,312 @@
 
 <style>
 
+/* Général */
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f7fc;
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fc;
+  margin: 0;
+  padding-top: 80px; /* Ajoute un espacement en haut pour que le contenu ne soit pas masqué par la navbar */
+
 }
 
-   /* Par défaut, la div prendra toute la largeur disponible
-.d-grid {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Header */
+header {
+  position: fixed; /* Garde la navbar fixée en haut */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Assure que la navbar est au-dessus du reste du contenu */
+  background-color: #2e8b57; /* Couleur de fond de la navbar */
+  color: white;
+  padding: 10px 30px; /* Réduit un peu la taille du padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px; /* Ajoute un espace entre les éléments de la navbar */
   width: 100%;
-} */
+}
 
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
-    
-        /* Style du menu déroulant */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
+/* Logo */
+.logo a {
+  font-size: 1.8rem;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            right: 0;
-            border-radius: 5px;
-        }
+/* Navigation */
+.navbar {
+  display: flex;
+  gap: 20px;
+}
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
+.nav-list {
+  display: flex;
+  gap: 15px; /* Marge entre les éléments du menu */
+  list-style: none;
+}
 
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
+.nav-list li {
+  position: relative;
+}
 
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
+.nav-list a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
 
-        /* Style du bouton de déconnexion */
-        .dropdown button {
-            background-color: #333; 
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-        }
+.nav-list a:hover {
+  background-color: #3cb371;
+}
 
-        .dropdown button:hover {
-            background-color: #45a049;
-        }
-    
+/* Dropdown */
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #333;
+  padding: 10px 0;
+  list-style: none;
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.dropdown li {
+  padding: 5px 15px;
+}
+
+.dropdown li a {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-list li:hover .dropdown {
+  display: block;
+}
+
+/* Recherche */
+.search {
+  display: flex;
+  gap: 10px;
+  margin-right: 20px; /* Ajoute une marge à droite de la barre de recherche */
+
+}
+
+.search input {
+  padding: 5px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+}
+
+.search button {
+  background-color: #3cb371;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search button:hover {
+  background-color: #2e8b57;
+}
+
+/* Boutons d'entête */
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.header-buttons a {
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  background-color: #3cb371;
+  color: white;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.header-buttons a:hover {
+  background-color: #2e8b57;
+}
+
+.cart {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  font-size: 0.8rem;
+  padding: 3px 6px;
+  border-radius: 50%;
+}
+
+/* Menu toggle pour mobile */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .search {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .search input {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Retirer la position fixe pour la navbar sur mobile */
+  header {
+    position: relative; /* Cela rétablit la position normale du header */
+    padding: 10px 15px;
+  }
+
+  /* Ajouter un padding au body ou au conteneur pour éviter que le contenu ne soit caché sous la navbar */
+  body {
+    padding-top: 0; /* Pas de padding en haut puisque la navbar ne sera plus fixe */
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+  }
+
+  .menu-toggle {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+  }
+
+  .navbar {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar.active {
+    display: flex;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+  }
+
+  .nav-list li {
+    margin: 0;
+  }
+
+  .nav-list a {
+    font-size: 1rem;
+    padding: 8px 10px;
+  }
+
+  .search {
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .search input {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .search button {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 6px 0;
+  }
+
+  .header-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .header-buttons a {
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .cart {
+    font-size: 1.2rem;
+  }
+
+  .cart-count {
+    font-size: 0.7rem;
+    top: -3px;
+    right: -3px;
+    padding: 2px 4px;
+  }
+
+  /* Ajuster la taille de la navbar pour qu'elle prenne moins de place sur les petits écrans */
+  header .logo a {
+    font-size: 1.4rem; /* Réduit la taille de la police pour les petits écrans */
+  }
+}
+
 
 
 @font-face {
@@ -131,186 +376,100 @@ h4.gotham-black {
   font-style: italic;
 }
 
-/* Section Shop Cart */
-/* .shop-cart {
-    padding: 40px 0;
-    background-color: #f9f9f9;
-    font-family: Arial, sans-serif;
-} */
-
-/* .shop__cart__table table {
+/* Général */
+/* header {
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    overflow: hidden;
-} */
-
-/* .shop__cart__table th, .shop__cart__table td {
-    text-align: center;
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
-    font-size: 16px;
-} */
-
-/* .shop__cart__table th {
-    background-color: #ff6f61;
-    color: #fff;
-    font-weight: bold;
-    text-transform: uppercase;
-} */
-
-/* .shop__cart__table tbody tr:last-child td {
-    border-bottom: none;
-} */
-
-/* .shop__cart__table td {
-    color: #555;
-} */
-
-/* .shop__cart__table td img {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: 5px;
-} */
-
-/* .cart__btn, .cart__btn.update__btn, .cart__total__procced .primary-btn {
-    display: inline-block;
-    text-align: center;
+    background-color: #f8f9fa;
     padding: 10px 20px;
-    color: #fff;
-    background-color: #ff6f61;
-    border-radius: 5px;
-    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+} */
+
+/* .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+} */
+
+/* Logo */
+/* .logo a {
+    font-size: 1.5rem;
     font-weight: bold;
-    transition: background-color 0.3s ease;
-} */
-
-/* .cart__btn:hover, .cart__btn.update__btn:hover, .cart__total__procced .primary-btn:hover {
-    background-color: #e55550;
-} */
-
-/* .cart__btn {
-    margin-top: 20px;
-} */
-
-/* .cart__total__procced {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-} */
-
-/* .cart__total__procced h6 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px;
     color: #333;
+    text-decoration: none;
 } */
 
-/* .cart__total__procced ul {
+/* Navigation */
+/* .navbar {
+    flex: 1;
+} */
+
+/* .nav-list {
+    display: flex;
+    gap: 20px;
     list-style: none;
     padding: 0;
     margin: 0;
 } */
 
-/* .cart__total__procced ul li {
-    font-size: 16px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-} */
-
-/* .discount__content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-} */
-
-/* .discount__content h6 {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-} */
-
-/* .discount__content form {
-    display: flex;
-    gap: 10px;
-} */
-
-/* .discount__content input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-} */
-
-/* .discount__content button {
-    padding: 10px 20px;
-    background-color: #ff6f61;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-} */
-
-/* .discount__content button:hover {
-    background-color: #e55550;
-} */
 
 
 </style>
+
   <body>
 
     <!-- ===============================================-->
     <!--    Main Content-->
     <!-- ===============================================-->
     <main class="main" id="top">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" data-navbar-on-scroll="data-navbar-on-scroll">
-        <div class="container"><a class="navbar-brand d-inline-flex" href="{% url 'shop' %}"><img class="d-inline-block" src="{% static 'img/gallery/logo.svg' %}" alt="logo" /><span class="text-1000 fs-3 fw-bold ms-2 text-gradient">Diétetique</span></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
-          <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
-            <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-                <a href="{% url 'shop' %}" class="mb-0 fw-bold text-lg-center">Acceuil</a>
-            </div>
-            <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-                <a href="{% url 'produit' %}" class="mb-0 fw-bold text-lg-center">Nos Produit</a>
-              </div>
-              <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-                <a href="{% url 'contact' %}" class="mb-0 fw-bold text-lg-center">Contact</a>
-              </div>
-              <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-                <i class="fas fa-shopping-cart"></i> <a href="{% url 'panini' %}" id="panier" class="mb-0 fw-bold text-lg-center">Panier(0)</a>
-              </div>
-              <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-                <a href="#" class="mb-0 fw-bold text-lg-center">Qui sommes-nous?</a>
-              </div>
-            <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">
-              <div class="input-group-icon pe-2"><i class="fas fa-search input-box-icon text-primary"></i>
-                <input class="form-control border-0 input-box bg-100" type="search" placeholder="Rechercher un produit" aria-label="Search" />
-              </div>
-              <!-- <button class="btn btn-white shadow-warning text-warning" type="submit"> <i class="fas fa-user me-2"></i>Login</button> -->
-            </form>
-          </div>
-          {% if user.is_authenticated %}
-          <div class="dropdown">
-            <button>{{ request.user.first_name }} ▼</button> <!-- Affiche le nom de l'utilisateur -->
-            <div class="dropdown-content">
-                <a href="{% url 'deconnexion' %}">Déconnexion</a> <!-- Lien de déconnexion -->
-            </div>
-        </div>
-        {% endif %}
 
+      <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="{% url 'shop' %}">O'VIN_CANAN</a>
+            </div>
+    
+            <nav class="navbar">
+                <ul class="nav-list">
+                    <li><a href="{% url 'shop' %}">Accueil</a></li>
+                    <li><a href="{% url 'produit' %}">Produits</a></li>
+                    <li>
+                        <a href="#">Catégories</a>
+                        <ul class="dropdown">
+                            <li><a href="#">Alimentation</a></li>
+                            <li><a href="#">Maison</a></li>
+                            <li><a href="#">Santé</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </nav>
+    
+            <div class="search">
+                <input type="text" placeholder="Rechercher...">
+                <button>Rechercher</button>
+            </div>
+    
+            <div class="header-buttons">
+                <a href="#" class="login-button">Login</a>
+                <a href="{% url 'panini' %}" id="panier" class="cart">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+    
+            <!-- Bouton pour les petits écrans -->
+            <div class="menu-toggle" id="menuToggle">
+                ☰
+            </div>
         </div>
-      </nav>
+    </header>
+    
       
 
         {% block index %}
@@ -443,63 +602,130 @@ h4.gotham-black {
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap" rel="stylesheet">
   
     <script>
-    // Initialiser ou récupérer le panier
-let panier = localStorage.getItem('panier') ? JSON.parse(localStorage.getItem('panier')) : {};
+      // Initialiser ou récupérer le panier
+      let panier = localStorage.getItem('panier') ? JSON.parse(localStorage.getItem('panier')) : {};
+  
+      // Gestionnaire d'événement pour l'ajout au panier
+      $(document).on('click', '.ted', function () {
+          console.log('Ajouter');
+  
+          // Récupérer l'ID du produit
+          let item_Id = this.id.toString();
+          console.log("ID produit :", item_Id);
+  
+          // Vérifier si le produit existe déjà dans le panier
+          if (panier[item_Id] !== undefined) {
+              // Mettre à jour la quantité
+              panier[item_Id].quantite += 1;
+  
+              // Mettre à jour le prix si nécessaire
+              let priceElement = document.getElementById("price" + item_Id);
+              if (priceElement) {
+                  let prix = parseFloat(priceElement.innerHTML.trim());
+                  panier[item_Id].prix = prix; // Mettre à jour le prix dans le panier
+              } else {
+                  console.error("Prix introuvable pour l'ID :", item_Id);
+              }
+          } else {
+              // Ajouter un nouveau produit au panier
+              let priceElement = document.getElementById("price" + item_Id);
+              let nameElement = document.getElementById("aa" + item_Id);
+              let imgElement = document.getElementById("pp" + item_Id);
+  
+              if (priceElement && nameElement && imgElement) {
+                  let prix = parseFloat(priceElement.innerHTML.trim());
+                  let nom = nameElement.innerHTML.trim();
+                  let photoUrl = imgElement.src;
+  
+                  // Ajouter au panier, en incluant l'ID
+                  panier[item_Id] = {
+                      id: item_Id,
+                      nom: nom,
+                      prix: prix,
+                      quantite: 1,
+                      photo: photoUrl
+                  };
+              } else {
+                  console.error("Nom, prix ou image introuvable pour l'ID :", item_Id);
+              }
+          }
+  
+          // Sauvegarder le panier dans le localStorage
+          console.log("Panier actuel :", panier[item_Id]);
+          localStorage.setItem('panier', JSON.stringify(panier));
+  
+          // Mettre à jour l'indicateur de panier
+          try {
+              const cartIcon = document.getElementById("panier");
+              const cartCountElement = cartIcon.querySelector(".cart-count");
+  
+              if (!cartIcon || !cartCountElement) {
+                  console.error("Élément d'icône du panier ou du compteur introuvable !");
+                  return;
+              }
+  
+              // Calculer le nombre total d'articles dans le panier
+              const totalItems = Object.values(panier).length;
+  
+              // Mise à jour de la valeur du compteur
+              cartCountElement.textContent = totalItems;
+          } catch (error) {
+              console.error("Erreur lors de la mise à jour de l'affichage du panier :", error);
+          }
+      });
+  </script>
 
-// Gestionnaire d'événement pour l'ajout au panier
-$(document).on('click', '.ted', function () {
-    console.log('Ajouter');
+<script>
+  const dropdown = document.querySelectorAll('.dropdown');
+  dropdown.forEach(item => {
+      item.parentElement.addEventListener('mouseenter', () => {
+          item.style.display = 'block';
+      });
+      item.parentElement.addEventListener('mouseleave', () => {
+          item.style.display = 'none';
+      });
+  });
 
-    // Récupérer l'ID du produit
-    let item_Id = this.id.toString();
-    console.log("ID produit :", item_Id);
+  document.addEventListener('DOMContentLoaded', () => {
+    // Sélectionner toutes les sections de notes (rating)
+    const ratings = document.querySelectorAll('.rating');
 
-    // Vérifier si le produit existe déjà dans le panier
-    if (panier[item_Id] !== undefined) {
-        // Mettre à jour la quantité
-        panier[item_Id].quantite += 1;
+    ratings.forEach(rating => {
+        // Sélectionner les étoiles pour chaque produit
+        const stars = rating.querySelectorAll('.star');
+        
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const value = parseInt(star.getAttribute('data-value'));
+                
+                // Réinitialiser toutes les étoiles de cette section seulement
+                stars.forEach(s => s.classList.remove('filled'));
 
-        // Mettre à jour le prix si nécessaire
-        let priceElement = document.getElementById("price" + item_Id);
-        if (priceElement) {
-            let prix = parseFloat(priceElement.innerHTML.trim());
-            panier[item_Id].prix = prix; // Mettre à jour le prix dans le panier
-        } else {
-            console.error("Prix introuvable pour l'ID :", item_Id);
-        }
-    } else {
-        // Ajouter un nouveau produit au panier
-        let priceElement = document.getElementById("price" + item_Id);
-        let nameElement = document.getElementById("aa" + item_Id);
-        let imgElement = document.getElementById("pp" + item_Id);
+                // Remplir les étoiles jusqu'à la valeur sélectionnée
+                stars.forEach(s => {
+                    if (parseInt(s.getAttribute('data-value')) <= value) {
+                        s.classList.add('filled');
+                    }
+                });
 
-        if (priceElement && nameElement && imgElement) {
-            let prix = parseFloat(priceElement.innerHTML.trim());
-            let nom = nameElement.innerHTML.trim();
-            let photoUrl = imgElement.src;
-
-            // Ajouter au panier, en incluant l'ID
-            panier[item_Id] = {
-                id: item_Id,
-                nom: nom,
-                prix: prix,
-                quantite: 1,
-                photo: photoUrl
-            };
-        } else {
-            console.error("Nom, prix ou image introuvable pour l'ID :", item_Id);
-        }
-    }
-
-    // Sauvegarder le panier dans le localStorage
-    console.log("Panier actuel :", panier[item_Id]);
-    localStorage.setItem('panier', JSON.stringify(panier));
-
-    // Mettre à jour l'indicateur de panier
-    document.getElementById("panier").innerHTML = "Panier(" + Object.keys(panier).length + ")";
+                // Facultatif : Envoyer la valeur sélectionnée au serveur ou l'afficher
+                console.log(`Produit ${rating.getAttribute('data-product-id')} - Note : ${value}`);
+            });
+        });
+    });
 });
 
-</script>    
+document.getElementById('menuToggle').addEventListener('click', function () {
+    const navbar = document.querySelector('.navbar');
+    navbar.classList.toggle('active');
+});
+
+
+
+
+</script>
+
+    
   {% block js %}
   {% endblock js %}
   {% block jss %}

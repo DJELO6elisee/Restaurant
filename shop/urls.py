@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, produit, panini, sup_catego, elisee, contact, confirmation, adminp, table, creation, productlist, modification, delete_product, commande, detailCommande, message, delete_commande, category, create_cat, modif_cat
+from .views import index, produit, panini, sup_catego, detailPro, elisee, contact, confirmation, adminp, table, creation, productlist, modification, delete_product, commande, detailCommande, message, delete_commande, category, create_cat, modif_cat
 
 
 urlpatterns = [
@@ -18,6 +18,7 @@ urlpatterns = [
     path('message/', message, name='message'),
     path('category/', category, name='category'),
     path('create_cat/', create_cat, name='create_cat'),
+    path('detailPro/<int:de_id>/', detailPro, name='detailPro'),
 
     
     path('detailComande/<int:commande_id>/', detailCommande, name='detailComande'),

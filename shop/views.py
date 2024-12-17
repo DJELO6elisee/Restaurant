@@ -7,6 +7,8 @@ from django.db.models import Sum
 # import logging
 
 from django.contrib import messages
+from collections import Counter
+from .models import Order
 
 
 from .models import Product, Category, Commande, DetailCommande, Message
@@ -17,7 +19,6 @@ from Connexion.models import CustomUser
 
 
 # Create your views here.
-@login_required(login_url='connexion')
 def panini(request):
     return render(request, 'shop/panini.html')
 
@@ -101,7 +102,6 @@ def elisee(request):
 
     return render(request, 'shop/checkout.html', {'user': user})
 
-@login_required(login_url='connexion')
 def contact(request):
     saveMessage = None  # Initialisation de la variable pour éviter les erreurs
     if request.method == 'POST':
@@ -114,33 +114,88 @@ def contact(request):
 
     return render(request, 'shop/contact.html', {'saveMessage': saveMessage})
 
-@login_required(login_url='connexion')
 def message(request):
     messag = Message.objects.all()
 
     # Renvoyer les données au template
     return render(request, 'shop/message.html', {'messag': messag})
 
-@login_required(login_url='connexion')
 def index(request):
     produits_sous = Product.objects.filter(status='acceuil')
 
     return render(request, 'shop/index.html', {'produits_sous': produits_sous})
 
-@login_required(login_url='connexion')
-def produit(request):
-    # produits_sous = Product.objects.filter(status='sous')[:4]
+def get_recommendations_based_on_history(user):
+    # Récupérer les achats de l'utilisateur
+    orders = Order.objects.filter(user=user)
+    
+    if not orders:
+        return []  # Retourner une liste vide si l'utilisateur n'a pas d'achats
+    
+    product_ids = [order.product.id for order in orders]
 
+    # Trouver les catégories des produits achetés
+    categories = Product.objects.filter(id__in=product_ids).values_list('category', flat=True)
+    
+    # Compter les catégories les plus fréquentes
+    category_counts = Counter(categories)
+    most_common_category_id = category_counts.most_common(1)[0][0]
+
+    # Recommander des produits de la même catégorie
+    recommended_products = Product.objects.filter(category_id=most_common_category_id).exclude(id__in=product_ids)
+
+    return recommended_products
+
+def produit(request):
+    # Récupérer toutes les catégories sauf la première
     categories = Category.objects.all()[1:]
 
-    # Récupérer les produits associés à chaque catégorie
+    # Récupérer les régimes alimentaires et les filtres depuis l'URL
+    regimes = request.GET.getlist('regime') or []  # Si aucun régime n'est sélectionné, utiliser une liste vide
+    produit_frais = request.GET.get('produit_frais')
+    produit_bio = request.GET.get('produit_bio')
+    produit_vegan = request.GET.get('produit_vegan')
+    produit_sans_gluten = request.GET.get('produit_sans_gluten')
+
+    # Préparer une liste pour stocker les catégories avec leurs produits filtrés
     categories_with_products = []
+
     for category in categories:
+        # Récupérer les produits associés à la catégorie
         produits_in_category = Product.objects.filter(category=category)
-        categories_with_products.append({'category': category, 'products': produits_in_category})
 
-    return render(request, 'shop/produit.html', {'categories_with_products': categories_with_products})
+        # Appliquer les filtres des régimes alimentaires
+        if regimes:
+            produits_in_category = produits_in_category.filter(regime__nom__in=regimes)
 
+        # Appliquer les filtres de produit frais, bio, vegan, sans gluten
+        if produit_frais:
+            produits_in_category = produits_in_category.filter(produit_frais=True)
+        if produit_bio:
+            produits_in_category = produits_in_category.filter(produit_bio=True)
+        if produit_vegan:
+            produits_in_category = produits_in_category.filter(produit_vegan=True)
+        if produit_sans_gluten:
+            produits_in_category = produits_in_category.filter(produit_sans_gluten=True)
+
+        # Si des produits existent dans cette catégorie après le filtrage, on ajoute la catégorie et ses produits
+        if produits_in_category.exists():
+            categories_with_products.append({
+                'category': category,
+                'products': produits_in_category
+            })
+
+    # Optionnel : si tu souhaites recommander des produits basés sur l'historique des achats
+    user = request.user
+    recommended_products = []
+    if user.is_authenticated:
+        recommended_products = get_recommendations_based_on_history(user)  # Appel à la fonction de recommandations
+
+    # Rendre le template avec les données
+    return render(request, 'shop/produit.html', {
+        'categories_with_products': categories_with_products,
+        'recommended_products': recommended_products,  # Passer les produits recommandés si nécessaire
+    })
 
 @login_required(login_url='connexion')
 def adminp(request):
@@ -462,3 +517,8 @@ def sup_catego(request, delsup_id):
         del_cat.delete()
         return redirect('category')
     return render(request, 'shop/sup_categorie.html', {'del_cat': del_cat})
+
+def detailPro(request, de_id):
+    detailpro = get_object_or_404(Product, id=de_id)
+    return render(request, 'shop/detailPro.html', {'detailpro': detailpro})
+

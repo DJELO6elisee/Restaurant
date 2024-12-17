@@ -88,14 +88,10 @@ def connexion(request):
             login(request, user)  # Connexion de l'utilisateur
             
             # Vérifier si l'utilisateur est un superutilisateur
-            if user.is_superuser:
-                return redirect('admin')  # Remplacer par l'URL de la page superutilisateur
+            if user.is_staff:
+                return redirect('adminp')  # Remplacer par l'URL de la page superutilisateur
             # Vérifier si l'utilisateur est un administrateur
-            elif user.is_staff:
-                return redirect('adminp')  # Remplacer par l'URL de la page admin
-            else:
-                return redirect('shop')  # Remplacer par l'URL de la page client
-                
+        
         else:
             messages.error(request, "Email ou mot de passe incorrect")
             return redirect('connexion')  # Rediriger vers la page de connexion en cas d'erreur

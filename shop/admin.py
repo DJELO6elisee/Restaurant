@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category, Commande, DetailCommande, Message
+from .models import Product, Category, Commande, DetailCommande, Message, RegimeAlimentaire
 
 class AdminProduct(admin.ModelAdmin):
     list_display = ('name', 'price', 'category', 'smalldescription', 'description', 'date_creation', 'photo')
@@ -15,6 +15,7 @@ class AdminMessage(admin.ModelAdmin):
 
 admin.site.register(Product, AdminProduct)
 admin.site.register(Category)
+admin.site.register(RegimeAlimentaire)
 admin.site.register(Commande, AdminCommande)
 
 admin.site.register(DetailCommande)

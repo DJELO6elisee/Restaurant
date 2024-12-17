@@ -368,7 +368,7 @@ body {
 .add-to-cart {
   display: none;
   margin-top: 10px;
-  padding: 10px 25px;
+  padding: 10px 20px;
   background-color: #007BFF;
   border: none;
   color: white;
@@ -438,8 +438,13 @@ body {
   .product-img {
     max-height: 150px; /* Réduire la taille de l'image */
   }
-}
+  .view-details,
+  .add-to-cart {
+    display: inline-block;
 
+  }
+  
+}
 /* Style général pour les cartes de catégories */
 .category-card {
   display: block;
@@ -447,6 +452,10 @@ body {
   text-decoration: none;
   color: inherit;
   margin-bottom: 20px;
+}
+.category-card:hover {
+  transform: translateY(-10px);
+
 }
 
 .category-circle {
@@ -502,54 +511,54 @@ body {
 
 <section id="categories" class="py-4">
   <div class="container">
-    <h2 class="text-center mb-2">Nos Catégories</h2>
+    <h2 class="text-center mb-4">Régime Alimentaire</h2>
     <div class="row d-flex justify-content-center">
       <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="#" class="category-card">
+        <a href="{% url 'produit' %}?regime=végétarien" class="category-card">
           <div class="category-circle">
-            <img src="{% static 'img/gallery/chowmein.png' %}" alt="Cosmétique Bio" class="category-img">
+            <img src="{% static 'img/gallery/vegetarien.jpg' %}" alt="Cosmétique Bio" class="category-img">
           </div>
-          <h5 class="category-title">Cosmétique Bio</h5>
+          <h5 class="category-title">Régime végétarien</h5>
         </a>
       </div>
       <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="#" class="category-card">
+        <a href="{% url 'produit' %}?regime=végan" class="category-card">
           <div class="category-circle">
-            <img src="{% static 'img/gallery/steak.png' %}" alt="Hygiène soins bio" class="category-img">
+            <img src="{% static 'img/gallery/vegan.webp' %}" alt="Hygiène soins bio" class="category-img">
           </div>
-          <h5 class="category-title">Hygiène soins bio</h5>
+          <h5 class="category-title">Régime végan</h5>
         </a>
       </div>
       <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="#" class="category-card">
+        <a href="{% url 'produit' %}?regime=sans_gluten" class="category-card">
           <div class="category-circle">
-            <img src="{% static 'img/gallery/search-pizza.png' %}" alt="Santé vitalité" class="category-img">
+            <img src="{% static 'img/gallery/sans_gluen.jpg' %}" alt="Santé vitalité" class="category-img">
           </div>
-          <h5 class="category-title">Santé vitalité</h5>
+          <h5 class="category-title">Régime sans gluten</h5>
         </a>
       </div>
       <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="#" class="category-card">
+        <a href="{% url 'produit' %}?regime=cétogène_(Keto)" class="category-card">
           <div class="category-circle">
-            <img src="{% static 'img/gallery/chowmein.png' %}" alt="Huile essentielle" class="category-img">
+            <img src="{% static 'img/gallery/keto.jpg' %}" alt="Huile essentielle" class="category-img">
           </div>
-          <h5 class="category-title">Huile essentielle</h5>
+          <h5 class="category-title">Régime cétogène (Keto)</h5>
         </a>
       </div>
       <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="#" class="category-card">
+        <a href="{% url 'produit' %}?regime=paléolithique_(Paleo)" class="category-card">
           <div class="category-circle">
-            <img src="{% static 'img/gallery/noodles.png' %}" alt="Alimentation Bio" class="category-img">
+            <img src="{% static 'img/gallery/paleo.jpg' %}" alt="Alimentation Bio" class="category-img">
           </div>
-          <h5 class="category-title">Alimentation Bio</h5>
+          <h5 class="category-title">Régime paléolithique (Paleo)</h5>
         </a>
       </div>
       <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="#" class="category-card">
+        <a href="{% url 'produit' %}?regime=méditerranéen" class="category-card">
           <div class="category-circle">
-            <img src="{% static 'img/gallery/sub-sandwich.png' %}" alt="Thé, Café & Boisson bio" class="category-img">
+            <img src="{% static 'img/gallery/meditera.webp' %}" alt="Thé, Café & Boisson bio" class="category-img">
           </div>
-          <h5 class="category-title">Thé, Café & Boisson bio</h5>
+          <h5 class="category-title">Régime méditerranéen</h5>
         </a>
       </div>
     </div>
@@ -559,15 +568,51 @@ body {
 
 
 
+
 <section id="testimonial" class="py-4 overflow-hidden no-scroll">
   <div class="container">
     <div class="row h-100 mt-1">
       
-
+      <!-- Afficher les produits recommandés -->
+      {% if recommended_products %}
+        <div class="col-12">
+          <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">Produits recommandés pour vous</h4>
+          <div class="row gx-4 gy-5">
+            {% for product in recommended_products %}
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <!-- Carte de produit -->
+                <div class="product-card shadow">
+                  <div class="card-content">
+                    <img id="pp{{ product.id }}" class="product-img img-fluid rounded" src="{{ product.photo.url }}" alt="{{ product.name }}">
+                    <h3 id="aa{{ product.id }}" class="product-name text-center mt-3">{{ product.name }}</h3>
+                    <p id="price{{ product.id }}" class="product-price text-center text-success fw-bold">{{ product.price }}</p>
+                    
+                    <div class="rating d-flex justify-content-center" data-product-id="{{ product.id }}">
+                      {% for i in "12345" %}
+                        <span 
+                          class="star {% if forloop.counter <= product.rating %}filled{% else %}empty{% endif %}" 
+                          data-value="{{ forloop.counter }}">
+                          ★
+                        </span>
+                      {% endfor %}
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                      <a class="view-details btn btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir + </a>
+                      <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" href="#" id="{{ product.id }}" role="button">Ajouter 🛒</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <p>Faites un achat pour obtenir des recommandations.</p>
+      {% endif %}      
       <!-- Boucle pour afficher les produits par catégorie -->
       {% for category_data in categories_with_products %}
         <div class="col-12">
-          <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">{{ category_data.category.nom }}</h4> 
+          <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">{{ category_data.category.nom }}</h4>
           <div class="row gx-4 gy-5">
             {% for product in category_data.products %}
               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -588,8 +633,8 @@ body {
                       {% endfor %}
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
-                      <a class="view-details btn btn-primary btn-sm" href="#" role="button">Voir + </a>
-                      <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" href="#" id="{{ product.id }}" role="button">Ajouter 🛒</i></a>
+                      <a class="view-details btn btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir + </a>
+                      <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" href="#" id="{{ product.id }}" role="button">Ajouter 🛒</a>
                     </div>
                   </div>
                 </div>
@@ -601,6 +646,7 @@ body {
     </div>
   </div>
 </section>
+
 
 
 

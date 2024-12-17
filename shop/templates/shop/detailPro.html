@@ -1,0 +1,379 @@
+{% extends "shop/base.html" %}
+
+
+{% load static %}
+
+{% block cb %}
+<style>
+    /* Breadcrumb styles */
+.breadcrumb-option {
+    background-color: #f9f9f9;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+.breadcrumb__links a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    margin-right: 10px;
+}
+.breadcrumb__links a:hover {
+    text-decoration: underline;
+}
+.breadcrumb__links span {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Product details styles */
+.product-details {
+    padding: 30px 0;
+}
+.product__details__pic {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.product__big__img {
+    width: 100%;
+    border-radius: 5px;
+}
+.product__details__text h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
+.product__details__price {
+    font-size: 28px;
+    color: #e74c3c;
+    margin: 20px 0;
+}
+.product__details__button {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+.cart-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.cart-btn:hover {
+    background-color: #0056b3;
+}
+.product__details__widget ul {
+    list-style: none;
+    padding: 0;
+}
+.product__details__widget ul li {
+    margin-bottom: 10px;
+}
+.product__details__widget span {
+    font-weight: bold;
+}
+
+/* Tabs styles */
+.product__details__tab .nav-tabs .nav-link {
+    color: #333;
+    font-weight: bold;
+    margin: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+.product__details__tab .nav-tabs .nav-link.active {
+    background-color: #007bff;
+    color: #fff;
+}
+.product__details__tab .tab-content {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Related products styles */
+.related__title h5 {
+    font-size: 22px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.product__item {
+    margin-bottom: 30px;
+    text-align: center;
+}
+.product__item__pic {
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.product__item__pic img {
+    width: 100%;
+    transition: transform 0.3s;
+}
+.product__item__pic:hover img {
+    transform: scale(1.05);
+}
+.product__item__text h6 a {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+}
+.product__item__text h6 a:hover {
+    color: #007bff;
+}
+.product__price {
+    font-size: 18px;
+    color: #e74c3c;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+</style>
+{% endblock cb %}
+  
+{% block detail %}
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'shop' %}"><i class="fa fa-home"></i>Acceuil</a>
+                        <a href="#">Femmes</a>
+                        <span>Blazer structuré essentiel</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="product__details__pic">
+                        
+                        <div class="product__details__slider__content">
+                            <div class="product__details__pic__slider owl-carousel">
+                                <img data-hash="product-1" class="product__big__img" src="{{ detailpro.photo.url }}" alt="{{ detailpro.name}}">
+                                <!-- <img data-hash="product-2" class="product__big__img" src="{% static 'img/product/details/product-3.jpg' %}" alt="">
+                                <img data-hash="product-3" class="product__big__img" src="{% static 'img/product/details/product-2.jpg' %}" alt="">
+                                <img data-hash="product-4" class="product__big__img" src="{% static 'img/product/details/product-4.jpg' %}" alt=""> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="product__details__text">
+                        <!-- <h3 id="aa{{ product.id }}" >nom</h3> -->
+                        <h3><span></span>{{ detailpro.smalldescription }}</h3>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <span>( 138 reviews )</span>
+                        </div>
+                        <div class="product__details__price" id="price{{ detailpro.id }}"> {{ detailpro.price }} <span>fcfa</span></div>
+                        <p>Nemo enim ipsam voluptatem quia aspernatur aut odit aut loret fugit, sed quia consequuntur
+                        magni lores eos qui ratione voluptatem sequi nesciunt.</p>
+                        <div class="product__details__button">
+                            
+                            </div>
+                            <a class="cart-btn ted" id="{{ detailpro.id }}" href="#">Ajouter au panier</a>
+                            <ul>
+                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__details__widget">
+                            <ul>
+                                <li>
+                                    <span>Disponibilité:</span>
+                                    <div class="stock__checkbox">
+                                        <label for="stockin">
+                                            En Stock
+                                            <input type="checkbox" id="stockin">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </li>
+                                
+                                
+                                <li>
+                                    <span>Promotions:</span>
+                                    <p>Livraison Gratuite</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Description</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Specification</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Revue ( 2 )</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <h6>Description</h6>
+                                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
+                                    quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
+                                    Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
+                                    voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
+                                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
+                                consequat massa quis enim.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                                    dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
+                                    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+                                quis, sem.</p>
+                            </div>
+                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                                <h6>Specification</h6>
+                                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
+                                    quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
+                                    Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
+                                    voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
+                                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
+                                consequat massa quis enim.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                                    dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
+                                    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+                                quis, sem.</p>
+                            </div>
+                            <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                <h6>Reviews ( 2 )</h6>
+                                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed
+                                    quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt loret.
+                                    Neque porro lorem quisquam est, qui dolorem ipsum quia dolor si. Nemo enim ipsam
+                                    voluptatem quia voluptas sit aspernatur aut odit aut loret fugit, sed quia ipsu
+                                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Nulla
+                                consequat massa quis enim.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                                    dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
+                                    nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium
+                                quis, sem.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="related__title">
+                        <h5>PRODUITS SIMILAIRES</h5>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/related/rp-1.jpg' %}">
+                            <div class="label new">Nouveau</div>
+                            <ul class="product__hover">
+                                <li><a href="{% static 'img/product/related/rp-1.jpg' %}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">Blazer en tweed à boutons</a></h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/related/rp-2.jpg' %}">
+                            <ul class="product__hover">
+                                <li><a href="{% static 'img/product/related/rp-2.jpg' %}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">Jupe fluide à rayures</a></h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 49.0</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/related/rp-3.jpg' %}">
+                            <div class="label stockout">Rupture de stock</div>
+                            <ul class="product__hover">
+                                <li><a href="{% static 'img/product/related/rp-3.jpg' %}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">T-Shirt Coton</a></h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="{% static 'img/product/related/rp-4.jpg' %}">
+                            <ul class="product__hover">
+                                <li><a href="{% static 'img/product/related/rp-4.jpg' %}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">Chemise slim à rayures avec poche</a></h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">$ 59.0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+    {% endblock detail %}

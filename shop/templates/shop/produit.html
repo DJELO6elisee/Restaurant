@@ -1,503 +1,224 @@
- {% extends 'shop/base.html' %} 
+{% extends 'shop/base.html' %}
 
- {% load static %} 
-
-
- {% block dd %} 
- <!-- <style>
-  body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f7fc;
-    margin: 0;
-    padding: 0;
-}
+{% load static %}
 
 
-/* Section générale */
-#testimonial {
-    background-color: #f8f9fa;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Titre principal */
-#testimonial h5 {
-    font-size: 2rem;
-    font-weight: bold;
-    line-height: 1.4;
-    color: #333;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Titre des catégories aligné à gauche */
-#testimonial h4 {
-    font-size: 1.75rem;
-    font-weight: 600;
-    line-height: 1.3;
-    color: #2c3e50;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    text-align: left; /* Aligner à gauche */
-    padding-left: 15px; /* Un peu d'espacement sur la gauche pour ne pas être collé au bord */
-    text-transform: capitalize;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Description des produits */
-#testimonial .card-title {
-    font-size: 1.1rem;  
-    font-weight: 600;
-    color: #444;
-    transition: color 0.3s ease;
-}
-
-#testimonial .card-title:hover {
-    color: #e74c3c;
-}
-
-/* Description courte des produits */
-#testimonial .text-warning {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #f39c12;
-    margin-bottom: 10px;
-}
-
-/* Prix des produits */
-#testimonial .card-text {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-/* Bouton COMMANDER */
-/* Conteneur des témoignages */
-#testimonial {
-    display: flex;
-    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne suivante */
-    gap: 15px; /* Augmente l'espacement entre les éléments */
-    justify-content: space-between; /* Répartition uniforme des éléments */
-}
-
-/* Style des boutons */
-#testimonial .btn-danger {
-    background-color: #e74c3c;
-    color: white;
-    font-weight: bold;
-    padding: 14px 15px;  /* Augmente légèrement le padding pour donner plus de taille au bouton */
-    border-radius: 5px;
-    font-size: 1rem; /* Taille de police ajustée */
-    transition: background-color 0.3s ease;
-    flex: 1 1 calc(48% - 7px); /* Augmente la largeur des boutons à 48% avec un espacement de 7px */
-    box-sizing: border-box; /* Inclut les marges et padding dans la largeur */
-    min-width: 160px; /* Largeur minimale pour les boutons */
-    text-align: center;
-}
-
-/* Changer la couleur du bouton au survol */
-#testimonial .btn-danger:hover {
-    background-color: #c0392b;
-}
-
-/* Media Queries pour les écrans plus larges */
-@media (min-width: 576px) {
-    #testimonial .btn-danger {
-        flex: 1 1 calc(48% - 10px); /* Garde la largeur des boutons à 48% avec un espacement de 10px */
-        padding: 8px 14px; /* Réduit légèrement le padding pour les petits écrans */
-        font-size: 0.9rem; /* Réduit la taille de la police sur les petits écrans */
-        margin-top: 8px;
-      }
-}
-
-@media (min-width: 768px) {
-    #testimonial .btn-danger {
-        font-size: 1.1rem; /* Taille de la police légèrement augmentée */
-        padding: 12px 20px;
-    }
-}
-
-@media (min-width: 992px) {
-    #testimonial .btn-danger {
-        font-size: 1.2rem; /* Augmentation de la taille de la police sur les grands écrans */
-        padding: 8px 18px;
-        margin-top: 7px;
-    }
-}
-
-
-#testimonial .btn-danger:hover {
-    background-color: #c0392b;
-}
-
-/* Section des produits, ajustement de l'espacement */
-.card-span {
-    background: #fff;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.card-span:hover {
-    transform: translateY(-5px);
-}
-
-/* Mise en forme des images de produits */
-.card-img-top {
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-}
-
-.card-img-top:hover {
-    transform: scale(1.05);
-}
-
-/* Espacement entre les éléments */
-.card-body {
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: 10px;
-}
-
-/* Responsivité */
-@media (max-width: 768px) {
-    #testimonial h5 {
-        font-size: 1.5rem;
-    }
-
-    #testimonial h4 {
-        font-size: 1.5rem;
-    }
-
-    .card-title {
-        font-size: 1rem;
-    }
-
-    .card-text {
-        font-size: 1rem;
-    }
-
-    .btn-danger {
-        padding: 10px 15px;
-    }
-}
-
-
-.d-grid {
-  width: 100%;
-}
-
-/* Lorsque l'écran est plus petit que 576px (taille typique des téléphones), réduire la largeur */
-@media (max-width: 576px) {
-  .btn-lg, .btn-group-lg > .btn {
-    padding: 0.5rem 2rem;
-    font-size: 1rem;
-    border-radius: 0.35rem;
-    margin-right: 200px;
-  }
-
-}
-</style> -->
-<!-- <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-}
-
-.product-card {
-    width: 200px;
-    height: auto;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    position: relative;
-    margin: 15px;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-}
-
-.card-content {
-    padding: 15px;
-    text-align: center;
-}
-
-.product-img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.product-name {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.product-price {
-    font-size: 1rem;
-    color: #007BFF;
-    margin: 10px 0;
-}
-
-.product-rating {
-    margin: 5px 0;
-}
-
-.star {
-    color: #FFD700;
-    font-size: 1.2rem;
-}
-
-.comment-field {
-    width: 100%;
-    height: 50px;
-    margin-top: 10px;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    resize: none;
-}
-
-.view-details,
-.add-to-cart {
-    display: none;
-    margin-top: 10px;
-    padding: 10px 15px;
-    background-color: #007BFF;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.product-card:hover .view-details,
-.product-card:hover .add-to-cart {
-    display: inline-block;
-}
-
-.add-to-cart {
-    background-color: #28a745;
-}
-
-.add-to-cart:hover {
-    background-color: #218838;
-}
-
-.view-details:hover {
-    background-color: #0056b3;
-}
-
-</style> -->
-
+{% block dd %}
 <style>
-  /* Style général pour la page des produits */
+ /* Style général pour la page des produits */
 .product-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
+ background: #fff;
+ border-radius: 10px;
+ padding: 15px;
+ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ transition: transform 0.3s ease, box-shadow 0.3s ease;
+
 }
 
 .product-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+ transform: translateY(-10px);
+ box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .product-img {
-  max-height: 200px;
-  object-fit: cover;
-  width: 100%;
+ max-height: 200px;
+ object-fit: cover;
+ width: 100%;
 }
 
 .product-name {
-  font-size: 1.2rem;
-  font-weight: 600;
+ font-size: 1.2rem;
+ font-weight: 600;
 }
 
 .product-price {
-  font-size: 1.1rem;
+ font-size: 1.1rem;
 }
 
 .rating .star {
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: #ddd;
-  transition: color 0.3s;
+ font-size: 1.2rem;
+ cursor: pointer;
+ color: #ddd;
+ transition: color 0.3s;
 }
 
 .rating .star.filled {
-  color: #ffc107;
+ color: #ffc107;
 }
 
 .comment-field {
-  width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 8px;
-  resize: none;
+ width: 100%;
+ border: 1px solid #ddd;
+ border-radius: 5px;
+ padding: 8px;
+ resize: none;
 }
 
 .view-details, .add-to-cart {
-  font-size: 0.9rem;
-  padding: 8px 12px;
+ font-size: 0.9rem;
+ padding: 8px 12px;
 }
 
 /* Réagir à la navbar fixe */
 body {
-  padding-top: 100px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
+ padding-top: 100px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
 }
 
 /* Adaptation de l'affichage des boutons au survol */
-.view-details,
+.view-details {
+ display: none;
+ margin-top: 10px;
+ padding: 10px 20px;
+ background-color: #007BFF;
+ border: none;
+ color: white;
+ border-radius: 5px;
+ cursor: pointer;
+ font-size: 1rem;
+}
 .add-to-cart {
-  display: none;
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #007BFF;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
+ display: none;
+ margin-top: 10px;
+ padding: 10px 20px;
+ background-color: #007BFF;
+ border: none;
+ color: white;
+ border-radius: 5px;
+ cursor: pointer;
+ font-size: 1rem;
 }
 
 .product-card:hover .view-details,
 .product-card:hover .add-to-cart {
-  display: inline-block;
-  
+ display: inline-block;
+
 }
 
 .add-to-cart {
-  background-color: #28a745;
+ background-color: #28a745;
 }
 
 .add-to-cart:hover {
-  background-color: #218838;
+ background-color: #218838;
 }
 
 .view-details:hover {
-  background-color: #0056b3;
+ background-color: #0056b3;
 }
 
 /* Ajustement des étoiles */
 .star {
-  font-size: 2rem;
-  cursor: pointer;
-  color: #ddd; /* Couleur des étoiles vides */
-  transition: color 0.3s;
+ font-size: 2rem;
+ cursor: pointer;
+ color: #ddd; /* Couleur des étoiles vides */
+ transition: color 0.3s;
 }
 
 .star.filled {
-  color: #ffc107; /* Couleur des étoiles remplies */
+ color: #ffc107; /* Couleur des étoiles remplies */
 }
 
 
 /* Media Queries pour différents écrans */
 @media (max-width: 768px) {
-  .view-details,
-  .add-to-cart {
-    font-size: 0.9rem; /* Réduction de la taille sur les tablettes */
-    padding: 12px 30px;
-  }
+ .view-details,
+ .add-to-cart {
+   font-size: 0.9rem; /* Réduction de la taille sur les tablettes */
+   padding: 12px 30px;
+ }
 }
 
 @media (max-width: 576px) {
-  .view-details,
-  .add-to-cart {
-    font-size: 0.8rem; /* Réduction de la taille sur les petits écrans */
-    padding: 15px 50px;
-  }
+ .view-details,
+ .add-to-cart {
+   font-size: 0.9rem; /* Taille ajustée pour une meilleure lisibilité */
+   padding: 10px 20px; /* Réduction de l'espacement pour éviter les débordements */
+   margin: 5px 2px; /* Ajout d'un espacement entre les boutons */
+   width: 48%; /* Chaque bouton occupe environ la moitié de la largeur */
+ }
+
+ .product-card .d-flex {
+   display: flex;
+   /*flex-wrap: wrap; /* Permet aux boutons de passer sur deux lignes si nécessaire
+   justify-content: space-between; /* Espace égal entre les boutons */
+   gap: 5px; /* Espacement supplémentaire entre les boutons */
+ }
+ .view-details,
+ .add-to-cart {
+   display: inline-block;
+
+ }
 }
 
 /* Adaptation de la disposition sur mobile */
 @media (max-width: 480px) {
-  body {
-    padding-top: 120px; /* Ajuster selon la hauteur de votre navbar */
-  }
+ body {
+   padding-top: 120px; /* Ajuster selon la hauteur de votre navbar */
+ }
 
-  .product-card {
-    padding: 10px; /* Réduire le padding pour les petits écrans */
-  }
+ .product-card {
+   padding: 10px; /* Réduire le padding pour les petits écrans */
+ }
 
-  .product-img {
-    max-height: 150px; /* Réduire la taille de l'image */
-  }
-  .view-details,
-  .add-to-cart {
-    display: inline-block;
+ .product-img {
+   max-height: 200px; /* Réduire la taille de l'image */
+ }
 
-  }
-  
+
 }
 /* Style général pour les cartes de catégories */
 .category-card {
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  color: inherit;
-  margin-bottom: 20px;
+ display: block;
+ text-align: center;
+ text-decoration: none;
+ color: inherit;
+ margin-bottom: 20px;
 }
 .category-card:hover {
-  transform: translateY(-10px);
+ transform: translateY(-10px);
 
 }
 
 .category-circle {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin: 0 auto;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ width: 120px;
+ height: 120px;
+ border-radius: 50%;
+ overflow: hidden;
+ margin: 0 auto;
+ background-color: #fff;
+ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .category-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
 }
 
 .category-title {
-  font-size: 1rem;
-  margin-top: 10px;
-  font-weight: bold;
-  color: #333;
-  text-transform: capitalize;
+ font-size: 1rem;
+ margin-top: 10px;
+ font-weight: bold;
+ color: #333;
+ text-transform: capitalize;
 }
 
 /* Style de survol */
 .category-card:hover .category-circle {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+ box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Styles de responsive */
 @media (max-width: 768px) {
-  .category-title {
-    font-size: 1rem;
-  }
+ .category-title {
+   font-size: 1rem;
+ }
 }
 
 @media (max-width: 480px) {
-  .category-title {
-    font-size: 0.9rem;
-  }
+ .category-title {
+   font-size: 0.9rem;
+ }
 }
 
 
@@ -505,146 +226,211 @@ body {
 
 </style>
 
-{% endblock dd %} 
+{% endblock dd %}
 
-{% block index %} 
+{% block index %}
 
 <section id="categories" class="py-4">
-  <div class="container">
-    <h2 class="text-center mb-4">Régime Alimentaire</h2>
-    <div class="row d-flex justify-content-center">
-      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="{% url 'produit' %}?regime=végétarien" class="category-card">
-          <div class="category-circle">
-            <img src="{% static 'img/gallery/vegetarien.jpg' %}" alt="Cosmétique Bio" class="category-img">
-          </div>
-          <h5 class="category-title">Régime végétarien</h5>
-        </a>
-      </div>
-      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="{% url 'produit' %}?regime=végan" class="category-card">
-          <div class="category-circle">
-            <img src="{% static 'img/gallery/vegan.webp' %}" alt="Hygiène soins bio" class="category-img">
-          </div>
-          <h5 class="category-title">Régime végan</h5>
-        </a>
-      </div>
-      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="{% url 'produit' %}?regime=sans_gluten" class="category-card">
-          <div class="category-circle">
-            <img src="{% static 'img/gallery/sans_gluen.jpg' %}" alt="Santé vitalité" class="category-img">
-          </div>
-          <h5 class="category-title">Régime sans gluten</h5>
-        </a>
-      </div>
-      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="{% url 'produit' %}?regime=cétogène_(Keto)" class="category-card">
-          <div class="category-circle">
-            <img src="{% static 'img/gallery/keto.jpg' %}" alt="Huile essentielle" class="category-img">
-          </div>
-          <h5 class="category-title">Régime cétogène (Keto)</h5>
-        </a>
-      </div>
-      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="{% url 'produit' %}?regime=paléolithique_(Paleo)" class="category-card">
-          <div class="category-circle">
-            <img src="{% static 'img/gallery/paleo.jpg' %}" alt="Alimentation Bio" class="category-img">
-          </div>
-          <h5 class="category-title">Régime paléolithique (Paleo)</h5>
-        </a>
-      </div>
-      <div class="col-12 col-sm-4 col-md-2 col-lg-2 mb-4">
-        <a href="{% url 'produit' %}?regime=méditerranéen" class="category-card">
-          <div class="category-circle">
-            <img src="{% static 'img/gallery/meditera.webp' %}" alt="Thé, Café & Boisson bio" class="category-img">
-          </div>
-          <h5 class="category-title">Régime méditerranéen</h5>
-        </a>
-      </div>
-    </div>
-  </div>
+ <div class="container">
+   <h2 class="text-center mb-4">Régime Alimentaire</h2>
+   <div class="row d-flex justify-content-center">
+     <div class="col-6 col-sm-4 col-md-2 col-lg-2 mb-4">
+       <a href="{% url 'produit' %}?regime=végétarien" class="category-card">
+         <div class="category-circle">
+           <img src="{% static 'img/gallery/vegetarien.jpg' %}" alt="Cosmétique Bio" class="category-img">
+         </div>
+         <h5 class="category-title text-center">Régime végétarien</h5>
+       </a>
+     </div>
+     <div class="col-6 col-sm-4 col-md-2 col-lg-2 mb-4">
+       <a href="{% url 'produit' %}?regime=végan" class="category-card">
+         <div class="category-circle">
+           <img src="{% static 'img/gallery/vegan.webp' %}" alt="Hygiène soins bio" class="category-img">
+         </div>
+         <h5 class="category-title text-center">Régime végan</h5>
+       </a>
+     </div>
+     <div class="col-6 col-sm-4 col-md-2 col-lg-2 mb-4">
+       <a href="{% url 'produit' %}?regime=sans_gluten" class="category-card">
+         <div class="category-circle">
+           <img src="{% static 'img/gallery/sans_gluen.jpg' %}" alt="Santé vitalité" class="category-img">
+         </div>
+         <h5 class="category-title text-center">Régime sans gluten</h5>
+       </a>
+     </div>
+     <div class="col-6 col-sm-4 col-md-2 col-lg-2 mb-4">
+       <a href="{% url 'produit' %}?regime=cétogène_(Keto)" class="category-card">
+         <div class="category-circle">
+           <img src="{% static 'img/gallery/keto.jpg' %}" alt="Huile essentielle" class="category-img">
+         </div>
+         <h5 class="category-title text-center">Régime cétogène (Keto)</h5>
+       </a>
+     </div>
+     <div class="col-6 col-sm-4 col-md-2 col-lg-2 mb-4">
+       <a href="{% url 'produit' %}?regime=paléolithique_(Paleo)" class="category-card">
+         <div class="category-circle">
+           <img src="{% static 'img/gallery/paleo.jpg' %}" alt="Alimentation Bio" class="category-img">
+         </div>
+         <h5 class="category-title text-center">Régime paléolithique (Paleo)</h5>
+       </a>
+     </div>
+     <div class="col-6 col-sm-4 col-md-2 col-lg-2 mb-4">
+       <a href="{% url 'produit' %}?regime=méditerranéen" class="category-card">
+         <div class="category-circle">
+           <img src="{% static 'img/gallery/meditera.webp' %}" alt="Thé, Café & Boisson bio" class="category-img">
+         </div>
+         <h5 class="category-title text-center">Régime méditerranéen</h5>
+       </a>
+     </div>
+   </div>
+ </div>
 </section>
-
-
-
 
 
 <section id="testimonial" class="py-4 overflow-hidden no-scroll">
-  <div class="container">
-    <div class="row h-100 mt-1">
-      
-      <!-- Afficher les produits recommandés -->
-      {% if recommended_products %}
-        <div class="col-12">
-          <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">Produits recommandés pour vous</h4>
-          <div class="row gx-4 gy-5">
-            {% for product in recommended_products %}
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <!-- Carte de produit -->
-                <div class="product-card shadow">
-                  <div class="card-content">
-                    <img id="pp{{ product.id }}" class="product-img img-fluid rounded" src="{{ product.photo.url }}" alt="{{ product.name }}">
-                    <h3 id="aa{{ product.id }}" class="product-name text-center mt-3">{{ product.name }}</h3>
-                    <p id="price{{ product.id }}" class="product-price text-center text-success fw-bold">{{ product.price }}</p>
-                    
-                    <div class="rating d-flex justify-content-center" data-product-id="{{ product.id }}">
-                      {% for i in "12345" %}
-                        <span 
-                          class="star {% if forloop.counter <= product.rating %}filled{% else %}empty{% endif %}" 
-                          data-value="{{ forloop.counter }}">
-                          ★
-                        </span>
-                      {% endfor %}
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <a class="view-details btn btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir + </a>
-                      <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" href="#" id="{{ product.id }}" role="button">Ajouter 🛒</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-      {% else %}
-        <p>Faites un achat pour obtenir des recommandations.</p>
-      {% endif %}      
-      <!-- Boucle pour afficher les produits par catégorie -->
-      {% for category_data in categories_with_products %}
-        <div class="col-12">
-          <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">{{ category_data.category.nom }}</h4>
-          <div class="row gx-4 gy-5">
-            {% for product in category_data.products %}
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <!-- Carte de produit -->
-                <div class="product-card shadow">
-                  <div class="card-content">
-                    <img id="pp{{ product.id }}" class="product-img img-fluid rounded" src="{{ product.photo.url }}" alt="{{ product.name }}">
-                    <h3 id="aa{{ product.id }}" class="product-name text-center mt-3">{{ product.name }}</h3>
-                    <p id="price{{ product.id }}" class="product-price text-center text-success fw-bold">{{ product.price }}</p>
-                    
-                    <div class="rating d-flex justify-content-center" data-product-id="{{ product.id }}">
-                      {% for i in "12345" %}
-                        <span 
-                          class="star {% if forloop.counter <= product.rating %}filled{% else %}empty{% endif %}" 
-                          data-value="{{ forloop.counter }}">
-                          ★
-                        </span>
-                      {% endfor %}
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                      <a class="view-details btn btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir + </a>
-                      <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" href="#" id="{{ product.id }}" role="button">Ajouter 🛒</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
+ <div class="container">
+   <div class="row h-100 mt-1">
+
+       {% if query %}
+       <h2>Résultats pour "{{ query }}" :</h2>
+       <div class="row">
+       {% for product in search_results %}
+       <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+           <!-- Carte de produit -->
+           <div class="product-card shadow">
+               <div class="card-content">
+                   <!-- Image du produit -->
+                   <img id="pp{{ product.id }}" class="product-img img-fluid rounded" src="{{ product.photo.url }}" alt="{{ product.name }}">
+
+                   <!-- Nom du produit -->
+                   <h3 id="aa{{ product.id }}" class="product-name text-center mt-3">{{ product.name }}</h3>
+
+                   <!-- Prix -->
+                   <p id="price{{ product.id }}" class="product-price text-center text-success fw-bold">
+                       {{ product.price|floatformat:0 }} fcfa
+                   </p>
+
+                   <!-- Évaluation -->
+                   <div class="rating d-flex justify-content-center" data-product-id="{{ product.id }}">
+                       {% for i in "12345" %}
+                           <span
+                             class="star {% if forloop.counter <= product.rating %}filled{% else %}empty{% endif %}"
+                             data-value="{{ forloop.counter }}">
+                             ★
+                           </span>
+                       {% endfor %}
+                   </div>
+
+                   <!-- Boutons d'action -->
+                   <div class="d-flex justify-content-between align-items-center mt-3">
+                       {% if product.id %}
+                           <a class="view-details btn btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir +</a>
+                       {% else %}
+                           <span>Produit non disponible</span>
+                       {% endif %}
+                       <a class="add-to-cart btn btn-danger btn-sm ted" href="#" id="{{ product.id }}" role="button">Ajouter <i class="fas fa-shopping-cart"></i></a>
+                   </div>
+               </div>
+           </div>
+       </div>
+       {% if forloop.counter|divisibleby:4 and not forloop.last %}
+           <!-- Insérer un saut de ligne pour chaque groupe de 4 produits -->
+           <div class="w-100"></div>
+       {% endif %}
+       {% empty %}
+       <p>Aucun produit trouvé.</p>
+       {% endfor %}
+       </div>
+
+       {% endif %}
+
+
+     <!-- Afficher les produits recommandés -->
+     {% if recommended_products %}
+       <div class="col-12">
+         <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">Produits recommandés pour vous</h4>
+         <div class="row gx-4 gy-5">
+           {% for product in recommended_products %}
+             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+               <!-- Carte de produit -->
+               <div class="product-card shadow">
+                 <div class="card-content">
+                   <img id="pp{{ product.id }}" class="product-img img-fluid rounded" src="{{ product.photo.url }}" alt="{{ product.name }}">
+                   <h3 id="aa{{ product.id }}" class="product-name text-center mt-3">{{ product.name }}</h3>
+                   <p id="price{{ product.id }}" class="product-price text-center text-success fw-bold">
+                       {{ product.price|floatformat:0 }}
+                   </p>
+
+                   <div class="rating d-flex justify-content-center" data-product-id="{{ product.id }}">
+                     {% for i in "12345" %}
+                       <span
+                         class="star {% if forloop.counter <= product.rating %}filled{% else %}empty{% endif %}"
+                         data-value="{{ forloop.counter }}">
+                         ★
+                       </span>
+                     {% endfor %}
+                   </div>
+                   <div class="d-flex justify-content-between align-items-center mt-3">
+                   {% if product.id %}
+                     <a class="view-details btn btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir + </a>
+                   {% else %}
+                     <!-- Afficher un message ou un lien de remplacement si l'ID est manquant -->
+                     <span>Produit non disponible</span>
+                   {% endif %}
+                   <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" href="#" id="{{ product.id }}" role="button">Ajouter 🛒</a>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           {% endfor %}
+         </div>
+       </div>
+     {% else %}
+       <p></p>
+     {% endif %}
+     <!-- Boucle pour afficher les produits par catégorie -->
+     {% for category_data in categories_with_products %}
+       <div class="col-12">
+         <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">{{ category_data.category.nom }}</h4>
+         <div class="row gx-4 gy-5">
+           {% for product in category_data.products %}
+             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+               <!-- Carte de produit -->
+               <div class="product-card shadow">
+                 <div class="card-content">
+                   <img id="pp{{ product.id }}" class="product-img img-fluid rounded" src="{{ product.photo.url }}" alt="{{ product.name }}">
+                   <h3 id="aa{{ product.id }}" class="product-name text-center mt-3">{{ product.name }}</h3>
+                   <p id="price{{ product.id }}" class="product-price text-center text-success fw-bold">
+                       {{ product.price|floatformat:0 }} fcfa
+                   </p>
+
+                   <div class="rating d-flex justify-content-center" data-product-id="{{ product.id }}">
+                     {% for i in "12345" %}
+                       <span
+                         class="star {% if forloop.counter <= product.rating %}filled{% else %}empty{% endif %}"
+                         data-value="{{ forloop.counter }}">
+                         ★
+                       </span>
+                     {% endfor %}
+                   </div>
+                   <div class="d-flex justify-content-between align-items-center mt-3">
+                   {% if product.id %}
+                     <a class="view-details btn btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir + </a>
+                   {% else %}
+                     <!-- Afficher un message ou un lien de remplacement si l'ID est manquant -->
+                     <span>Produit non disponible</span>
+                   {% endif %}
+                   <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" href="#" id="{{ product.id }}" role="button">Ajouter 🛒</a>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           {% endfor %}
+         </div>
+       </div>
+     {% endfor %}
+   </div>
+ </div>
 </section>
 
 
@@ -654,4 +440,4 @@ body {
 
 
 
- {% endblock index %} 
+{% endblock index %}

@@ -2,13 +2,156 @@
 
 {% load static %}
 
+{% block ff %}
+<style>
+    .product-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product-img {
+  max-height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.product-price {
+  font-size: 1.1rem;
+}
+
+.rating .star {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #ddd;
+  transition: color 0.3s;
+}
+
+.rating .star.filled {
+  color: #ffc107;
+}
+
+.comment-field {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 8px;
+  resize: none;
+}
+
+.view-details, .add-to-cart {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+}
+
+/* Réagir à la navbar fixe */
+body {
+  padding-top: 100px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
+}
+
+/* Adaptation de l'affichage des boutons au survol */
+.view-details,
+.add-to-cart {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.product-card:hover .view-details,
+.product-card:hover .add-to-cart {
+  display: inline-block;
+
+}
+
+.add-to-cart {
+  background-color: #28a745;
+}
+
+.add-to-cart:hover {
+  background-color: #218838;
+}
+
+.view-details:hover {
+  background-color: #0056b3;
+}
+
+/* Ajustement des étoiles */
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ddd; /* Couleur des étoiles vides */
+  transition: color 0.3s;
+}
+
+.star.filled {
+  color: #ffc107; /* Couleur des étoiles remplies */
+}
+
+
+/* Media Queries pour différents écrans */
+@media (max-width: 768px) {
+  .view-details,
+  .add-to-cart {
+    font-size: 0.9rem; /* Réduction de la taille sur les tablettes */
+    padding: 12px 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .view-details,
+  .add-to-cart {
+    font-size: 0.8rem; /* Réduction de la taille sur les petits écrans */
+    padding: 15px 50px;
+  }
+}
+
+/* Adaptation de la disposition sur mobile */
+@media (max-width: 480px) {
+  body {
+    padding-top: 120px; /* Ajuster selon la hauteur de votre navbar */
+  }
+
+  .product-card {
+    padding: 10px; /* Réduire le padding pour les petits écrans */
+  }
+
+  .product-img {
+    max-height: 200px; /* Réduire la taille de l'image */
+  }
+  .view-details,
+  .add-to-cart {
+    display: inline-block;
+
+  }
+
+}
+</style>
+{% endblock ff %}
 {% block index %}
-  
+
 
 
      <section class="py-5 overflow-hidden bg-primary" id="home">
-      
+
         <div class="container">
           <div class="row flex-center">
             <div class="col-md-5 col-lg-6 order-0 order-md-1 mt-8 mt-md-0"><a class="img-landing-banner" href="#!"><img class="img-fluid" src="{% static 'img/gallery/dietetique-transformed.jpeg' %}" alt="hero-header" style="border-radius: 50px;"/></a></div>
@@ -24,7 +167,7 @@
                   </nav>
                   <div class="tab-content mt-3" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                      
+
                     </div>
                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                       <form class="row gx-4 gy-2 align-items-center">
@@ -47,6 +190,64 @@
         </div>
       </section>
 
+    <section class="pb-3 pt-5">
+
+        <div class="container">
+        {% if query %}
+        <h2 class="mt-3">Résultats pour "{{ query }}" :</h2>
+        <div class="row">
+        {% for product in search_results %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+            <!-- Carte de produit -->
+            <div class="product-card shadow">
+                <div class="card-content">
+                    <!-- Image du produit -->
+                    <img id="pp{{ product.id }}" class="product-img img-fluid rounded" src="{{ product.photo.url }}" alt="{{ product.name }}">
+
+                    <!-- Nom du produit -->
+                    <h3 id="aa{{ product.id }}" class="product-name text-center mt-3">{{ product.name }}</h3>
+
+                    <!-- Prix -->
+                    <p id="price{{ product.id }}" class="product-price text-center text-success fw-bold">
+                        {{ product.price|floatformat:0 }}
+                    </p>
+
+                    <!-- Évaluation -->
+                    <div class="rating d-flex justify-content-center" data-product-id="{{ product.id }}">
+                        {% for i in "12345" %}
+                            <span
+                              class="star {% if forloop.counter <= product.rating %}filled{% else %}empty{% endif %}"
+                              data-value="{{ forloop.counter }}">
+                              ★
+                            </span>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Boutons d'action -->
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        {% if product.id %}
+                            <a class="view-details btn btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir +</a>
+                        {% else %}
+                            <span>Produit non disponible</span>
+                        {% endif %}
+                        <a class="add-to-cart btn btn-danger btn-sm ted" href="#" id="{{ product.id }}" role="button">Ajouter <i class="fas fa-shopping-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:4 and not forloop.last %}
+            <!-- Insérer un saut de ligne pour chaque groupe de 4 produits -->
+            <div class="w-100"></div>
+        {% endif %}
+        {% empty %}
+        <p>Aucun produit trouvé.</p>
+        {% endfor %}
+        </div>
+        {% endif %}
+
+        </div>
+    </section>
+
     {% for product in produits_sous %}
     <section class="pb-3 pt-5">
 
@@ -61,21 +262,21 @@
                       <h1 class="card-title mt-xl-5 mb-4" id="aa{{ product.id }}">{{ product.smalldescription }}</h1>
                       <h1><span class="text-primary"> {{ product.name }}</span></h1>
                       <p class="fs-1">Profitez de la grande taille des sandwiches. Complétez votre repas avec une tranche parfaite. of sandwiches.</p>
-                      <span id="price{{ product.id }}" style="color:black" class="card-text">{{ product.price }}</span> fcfa
+                      <span id="price{{ product.id }}" style="color:black" class="card-text">    {{ product.price|floatformat:0 }}</span> fcfa
 
                       <div class="d-grid bottom-0"><a class="btn btn-lg btn-primary mt-xl-6 ted" href="#" id="{{ product.id }}">AJOUTER AU <i class="fas fa-shopping-cart"></i><i class="fas fa-chevron-right ms-2"></i></a></div>
-                    </div> 
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
+
 
     </section>
     {% endfor %}
-     
+
       <section class="py-0 overflow-hidden">
 
         <div class="container">
@@ -94,44 +295,44 @@
               <div class="carousel slide" id="carouselSearchByFood" data-bs-touch="false" data-bs-interval="false">
                 <div class="carousel-inner">
                   <div class="carousel-item active" data-bs-interval="10000">
-                    <div class="row h-100 align-items-center">
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="{% static 'img/gallery/search-pizza.png' %}" alt="..." />
+                    <div class="row h-60 align-items-center">
+                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
+                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/search-pizza.png' %}" alt="..." />
                           <div class="card-body ps-0">
                             <h5 class="text-center fw-bold text-1000 text-truncate mb-2">pizza</h5>
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="{% static 'img/gallery/burger.png' %}" alt="..." />
+                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
+                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/burger.png' %}" alt="..." />
                           <div class="card-body ps-0">
                             <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Burger</h5>
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="{% static 'img/gallery/noodles.png' %}" alt="..." />
+                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
+                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/noodles.png' %}" alt="..." />
                           <div class="card-body ps-0">
                             <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Noodles</h5>
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="{% static 'img/gallery/sub-sandwich.png' %}" alt="..." />
+                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
+                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/sub-sandwich.png' %}" alt="..." />
                           <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Sub-sandwiches</h5>
+                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">sandwiches</h5>
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="{% static 'img/gallery/chowmein.png' %}" alt="..." />
+                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
+                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/chowmein.png' %}" alt="..." />
                           <div class="card-body ps-0">
                             <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Chowmein</h5>
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="{% static 'img/gallery/steak.png' %}" alt="..." />
+                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
+                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/steak.png' %}" alt="..." />
                           <div class="card-body ps-0">
                             <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Steak</h5>
                           </div>
@@ -284,12 +485,12 @@
         </div><!-- end of .container-->
 
       </section>
-      
+
       <section class="py-0">
         <div class="bg-holder" style="background-image:url({% static 'img/gallery/cta-two-bg.png' %});background-position:center;background-size:cover;">
             </div>
             <!--/.bg-holder-->
-    
+
             <div class="container">
               <div class="row flex-center">
                 <div class="col-xxl-9 py-7 text-center">
@@ -298,6 +499,6 @@
               </div>
             </div>
           </section>
-    
-    
+
+
 {% endblock index %}

@@ -5,77 +5,73 @@
     /* Global body styles */
 body {
     font-family: 'Arial', sans-serif;
-    /* background-color: #f4f4f4; Fond gris clair pour la page */
-    color: #333; /* Texte gris foncé pour une meilleure lisibilité */
+    color: #333;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    height: 100vh;
+    min-height: 100vh;
+    background-color: #f4f4f4;
 }
 
-/* Wrapper for the content */
 .content-wrapper {
-    background-color: #ffffff; /* Fond blanc pour la section principale */
-    padding: 30px;
+    background-color: #ffffff;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 79%;
+    width: 95%;
     max-width: 1200px;
-    color: #333; /* Texte sombre pour une bonne lisibilité */
-    margin-top: 70px; /* Ajouter un peu d'espace en haut */
+    color: #333;
+    margin-top: 70px;
+    position: relative;
 }
 
-/* Heading styles */
 h2 {
     text-align: center;
-    color: #333; /* Titre en gris foncé */
-    font-size: 2rem;
-    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
     font-weight: 600;
 }
 
-/* Table styles */
 .table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 15px 0;
     background-color: #fff;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
 }
 
-/* Table header styles with a beautiful color */
 .table thead {
-    background-color: #4caf50; /* Fond vert vibrant pour les en-têtes */
-    color: white; /* Texte blanc pour les en-têtes */
+    background-color: #4caf50;
+    color: white;
 }
 
 .table th, .table td {
-    padding: 12px;
+    padding: 10px;
     text-align: left;
     border: 1px solid #ddd;
-    font-size: 14px;
-    color: #333; /* Texte sombre pour les cellules */
+    font-size: 13px;
+    color: #333;
+    white-space: nowrap;
 }
 
-/* Table row hover effect */
 .table tbody tr:hover {
-    background-color: #f5f5f5; /* Légère couleur de survol pour les lignes */
+    background-color: #f5f5f5;
 }
 
-/* Button styles */
 .btn {
-    padding: 8px 16px;
+    padding: 6px 12px;
     color: white;
     text-decoration: none;
     border-radius: 4px;
     display: inline-block;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
 }
 
-/* Info button color */
 .btn-info {
     background-color: #17a2b8;
     border: 1px solid #17a2b8;
@@ -86,11 +82,135 @@ h2 {
     border-color: #138496;
 }
 
-/* Responsive styles */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+    width: 10%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+    width: 10%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+    width: 20%;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+    width: 12%;
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+    width: 20%;
+}
+
+
+.table th:nth-child(6),
+.table td:nth-child(6) {
+    width: 10%;
+}
+
+.table th:nth-child(7),
+.table td:nth-child(7) {
+   width: 7%;
+}
+
+.table th:nth-child(8),
+.table td:nth-child(8) {
+   width: 15%;  /* Increased initial width */
+}
+
+.table td select {
+    padding: 5px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 150px;
+}
+
+.table td .details-container {
+    display: flex;  /* Use flexbox for layout */
+    flex-direction: column; /* Stack dropdown and button vertically */
+    align-items: flex-start; /* Align items to the start */
+    width: 100%;
+}
+
+
+.table td .btn-update {
+  margin-top: 5px;
+  padding: 4px;
+  font-size: 10px;
+  background-color: purple;
+  border: 1px solid purple;
+}
+
+.table td .btn-update:hover {
+    background-color: darkmagenta;
+    border-color: darkmagenta;
+}
+
+
+  /* Options dans la liste déroulante */
+  .form-select option {
+      color: #333333; /* Texte en gris foncé */
+      background-color: #ffffff; /* Fond blanc */
+  }
+
 @media (max-width: 768px) {
-    .table {
-        font-size: 12px;
+    .content-wrapper {
+        padding: 15px;
     }
+    h2 {
+        font-size: 1.5rem;
+    }
+    .table th, .table td {
+        padding: 8px;
+        font-size: 11px;
+    }
+      .table td select {
+          font-size: 10px;
+          padding: 3px;
+           max-width: 100px;
+    }
+     .table td .btn-update{
+          font-size: 8px;
+         }
+     .table th:nth-child(8),
+     .table td:nth-child(8) {
+        width: 20%;  /* Increased for tablets */
+    }
+    .btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 576px) {
+        .content-wrapper {
+            width: 98%;
+        }
+        .table th, .table td {
+            font-size: 10px;
+         }
+        .table td select {
+          font-size: 9px;
+          max-width: 80px;
+        }
+           .table td .btn-update{
+          font-size: 7px;
+         }
+         .table th:nth-child(8),
+         .table td:nth-child(8) {
+           width: 25%; /* Increased for mobile */
+        }
+        .btn {
+          font-size: 10px;
+        }
 }
 
 </style>
@@ -98,38 +218,54 @@ h2 {
 
 {% block contt %}
     <div class="content-wrapper">
-        <h2>Liste des Commandes</h2>
+    <h2>Liste des Commandes</h2>
 
-        <table class="table">
-            <thead>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Ville</th>
+                <th>Adresse</th>
+                <th>Contact</th>
+                <th>Email</th>
+                <th>Statut</th>
+                <th>Action</th>
+                <th>Détails</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commande in commandes %}
                 <tr>
-                    <th>Nom</th>
-                    <th>Ville</th>
-                    <th>Adresse</th>
-                    <th>Contact</th>
-                    <th>Email</th>
-                    <th>Détails</th>
-                    <th>Action</th>
+                    <td>{{ commande.nom }}</td>
+                    <td>{{ commande.ville }}</td>
+                    <td>{{ commande.address }}</td>
+                    <td>{{ commande.contact }}</td>
+                    <td>{{ commande.email }}</td>
+                    <td>
+                        <a href="{% url 'detailComande' commande.id %}" class="btn btn-info">Voir Détails</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'delete_commande' commande.id %}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                    <td>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="commande_id" value="{{ commande.id }}">
+                            <div class="details-container">
+                                <select name="status" class="form-select">
+                                    <option value="pending" {% if commande.status == 'pending' %}selected{% endif %}>En attente</option>
+                                    <option value="processing" {% if commande.status == 'processing' %}selected{% endif %}>En cours de traitement</option>
+                                    <option value="shipped" {% if commande.status == 'shipped' %}selected{% endif %}>Expédiée</option>
+                                    <option value="delivered" {% if commande.status == 'delivered' %}selected{% endif %}>Livrée</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary mt-1">Mettre à jour</button>
+                            </div>
+                        </form>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for commande in commandes %}
-                    <tr>
-                        <td>{{ commande.nom }}</td>
-                        <td>{{ commande.ville }}</td>
-                        <td>{{ commande.address }}</td>
-                        <td>{{ commande.contact }}</td>
-                        <td>{{ commande.email }}</td>
-                        <td>
-                            <a href="{% url 'detailComande' commande.id %}" class="btn btn-info">Voir Détails</a>
-                        </td>
-                        <td>
-                            <a href="{% url 'delete_commande' commande.id %}" class="btn btn-danger">Supprimer</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
+            {% endfor %}
+        </tbody>
+    </table>
     </div>
+
 {% endblock %}

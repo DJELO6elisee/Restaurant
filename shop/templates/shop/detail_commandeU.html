@@ -1,0 +1,118 @@
+{% extends 'shop/base.html' %}
+
+{% block d %}
+<style>
+   /* Global styling for the content */
+    .content-wrapper {
+        background-color: #ffffff;
+        padding: 30px;
+        margin-top: 50px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Title styling */
+    h2 {
+        text-align: center;
+        color: #333;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    /* Paragraph styling for details */
+    p {
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    p strong {
+        font-weight: bold;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        color: #333;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    /* Table styling */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    /* Table header style */
+    .table thead {
+        background-color: #4caf50;
+        color: white;
+    }
+
+    /* Table row hover effect */
+    .table tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .content-wrapper {
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .table th, .table td {
+            font-size: 0.9rem;
+            padding: 8px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block contt %}
+    <div class="content-wrapper">
+        <h2>Détails de la commande </h2>
+        <p><strong>Date de commande :</strong> {{ commande.date_commande }}</p>
+        <p><strong>Total :</strong> {{ commande.total }} fcfa</p>
+        <p><strong>Statut :</strong> {{ commande.get_status_display }}</p>
+
+        <h3>Produits associés à la commande :</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom du produit</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Prix total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in details_commande %}
+                    <tr>
+                        <td>{{ detail.product.name }}</td>
+                        <td>{{ detail.quantite }}</td>
+                        <td>{{ detail.prix }} fcfa</td>
+                        <td>{{ detail.prix_total }} fcfa</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

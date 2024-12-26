@@ -1,0 +1,122 @@
+{% extends 'shop/base.html' %}
+
+{% block d %}
+<style>
+   /* Global styling for the content */
+    .content-wrapper {
+        background-color: #ffffff;
+        padding: 30px;
+        margin-top: 50px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Title styling */
+    h2 {
+        text-align: center;
+        color: #333;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    /* Table styling */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    /* Table header style */
+    .table thead {
+        background-color: #4caf50;
+        color: white;
+    }
+
+    /* Table row hover effect */
+    .table tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    /* Button styling */
+    .btn {
+        padding: 8px 16px;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 14px;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        border: 1px solid #17a2b8;
+    }
+
+    .btn-info:hover {
+        background-color: #138496;
+        border-color: #138496;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .content-wrapper {
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .table th, .table td {
+            font-size: 0.9rem;
+            padding: 8px;
+        }
+
+        .btn {
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block contt %}
+    <div class="content-wrapper">
+        <h2>Historique de vos commandes</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date de commande</th>
+                    <th>Total</th>
+                    <th>Statut</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commande in commandes %}
+                    <tr>
+                        <td>{{ commande.date_commande }}</td>
+                        <td>{{ commande.total }} FCFA</td>
+                        <td>{{ commande.get_status_display }}</td>
+                        <td>
+                            <a href="{% url 'detail_commandeUti' commande.id %}" class="btn btn-info">Voir Détails</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

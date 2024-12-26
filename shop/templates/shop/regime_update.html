@@ -1,0 +1,99 @@
+{% extends 'shop/base2.html' %}
+
+{% block vm %}
+<style>
+    /* Zone de contenu principal (à côté de la sidebar) */
+.main-content {
+    margin-left: 220px; /* Décalage pour la sidebar */
+    padding: 30px;
+    /* background-color: #f8f9fa; Fond clair pour le contenu */
+    flex-grow: 1;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* Texte principal en blanc pour une bonne visibilité */
+h1, .form-label {
+    color: white !important;
+    /* Forcer la couleur blanche sur fond bleu */
+}
+
+/* Personnalisation du formulaire */
+.form-label {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.form-control {
+    border-radius: 0.5rem;
+    padding: 10px;
+    font-size: 1rem;
+    color: #333; /* Texte sombre dans le champ pour contraste */
+    background-color: #ffffff; /* Fond blanc pour les champs de saisie */
+    border: 1px solid #ccc; /* Bordure claire pour les champs */
+}
+
+/* Boutons */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white; /* Texte du bouton en blanc */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Espacement et alignement du titre */
+.d-flex {
+    margin-bottom: 20px;
+}
+
+/* Largeur maximale pour la page */
+.container {
+    max-width: 900px;
+}
+
+/* Mise en page responsive */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+</style>
+{% endblock vm %}
+
+{% block km %}
+<div class="main-content">
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Créer un regime alimentaire</h1>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="regime_name" class="form-label">Nom du regime</label>
+                <input type="text" class="form-control" id="nom" name="nom" value="{{ regi.nom }}" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

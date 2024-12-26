@@ -5,29 +5,27 @@
 
 {% block ac %}
 <style>
-    /* Mise en page générale pour le contenu */
 .row {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
     margin-top: 50px;
-    justify-content: flex-start; /* Aligne les éléments à gauche */
+    justify-content: flex-start;
 }
 
-/* Card principale */   
+/* Card principale */
 .card {
     background-color: #fff;
     border-radius: 8px;
-    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
     padding: 20px;
-    flex: 1 1 calc(100% - 40px); /* Prend la largeur disponible, mais avec marge */
+    flex: 1 1 calc(100% - 40px);
     margin-bottom: 20px;
-    max-width: 81%; /* Limite la largeur maximale de la carte */
-    width: 100%; /* La carte prend 100% de l'espace disponible jusqu'à 900px */
-    box-sizing: border-box; /* Assure que la largeur inclut le padding */
-    margin-left: auto; /* Cette ligne place la carte à droite */
-    margin-right: 0; /* Aucune marge à droite */
+     max-width: 95%;  /* increased max-width */
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: 0;
 }
 
 /* Header de la Card */
@@ -61,6 +59,7 @@
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
+    overflow-x: auto; /* Enable horizontal scrolling */
 }
 
 /* En-têtes de la table */
@@ -80,12 +79,14 @@
     vertical-align: middle;
     border-bottom: 1px solid #f4f6f9;
     color: #333;
+    white-space: nowrap;
 }
 
 .table td .product-img {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 5px;
+     object-fit: cover; /* Add this */
 }
 
 /* Progress bar */
@@ -111,33 +112,88 @@
     font-size: 16px;
 }
 
+/* Button styles */
+.btn {
+    padding: 5px 10px;  /* reduce padding */
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    text-align: center;
+    font-size: 10px;  /* reduce font-size */
+}
+
+/* Info button color */
+.btn-primary {
+    background-color: #17a2b8;
+    border: 1px solid #17a2b8;
+}
+.btn-danger {
+    background-color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.btn-primary:hover {
+    background-color: #138496;
+    border-color: #138496;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+}
+
+.table td .actions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+
 /* Responsivité */
 @media (max-width: 992px) {
     .card {
-        flex: 1 1 100%; /* Prend 100% de la largeur pour les écrans plus petits */
+        flex: 1 1 100%;
     }
 
     .table th, .table td {
         font-size: 12px;
         padding: 10px;
     }
+    .table td .product-img {
+        width: 40px; /* Reduced image size */
+        height: 40px; /* Reduced image size */
+    }
+
+     .btn {
+      font-size: 11px;
+    }
 }
 
 @media (max-width: 768px) {
     .row {
-        flex-direction: column; /* Empile les éléments en colonne sur petits écrans */
+        flex-direction: column;
     }
 
     .card {
         margin: 10px 0;
+           padding: 15px; /* reduce padding on smaller screen */
     }
 
     .table th, .table td {
         font-size: 10px;
         padding: 8px;
     }
-}
+    .table td .product-img {
+        width: 30px; /* Reduced image size */
+        height: 30px; /* Reduced image size */
+    }
+     .btn {
+        font-size: 9px;
+           padding: 4px 8px; /* reduce more on small screen */
+    }
 
+}
 </style>
 {% endblock ac %}
 
@@ -168,11 +224,10 @@
                 <table class="table align-items-center table-flush table-borderless">
                     <thead>
                         <tr>
-                            <th>Produit</th>
+                             <th>Produit</th>
                             <th>Nom</th>
                             <th>Prix</th>
                             <th>SmallDescription</th>
-                            <!-- <th>Categorie</th> -->
                             <th>Date</th>
                             <th>Actions</th>
                         </tr>
@@ -180,20 +235,20 @@
                     <tbody>
                         {% for pro in product %}
                         <tr>
-                            <td>
+                           <td>
                                 <img src="{{ pro.photo.url}}" class="product-img" alt="product img">
                             </td>
                             <td>{{ pro.name }}</td>
-
-                            <td>{{ pro.price }}</td>
+                            <td>{{ pro.price|floatformat:0 }} FCFA</td>
                             <td>{{ pro.smalldescription }}</td>
-                            <!-- <td>{{ pro.category }}</td> -->
                             <td>{{ pro.date_creation }}</td>
                             <td>
-                                <a href="{% url 'modification' product_id=pro.id %}"><button class="btn btn-primary">modifier</button></a>
-                                <a href="{% url 'delete_product' pro.id %}"><button class="btn btn-danger">supprimer</button></a>
+                                <div class="actions-container">
+                                     <a href="{% url 'modification' product_id=pro.id %}"><button class="btn btn-primary">modifier</button></a>
+                                    <a href="{% url 'delete_product' pro.id %}"><button class="btn btn-danger">supprimer</button></a>
+                                </div>
                             </td>
-                            <td>
+                             <td>
                                 <div class="progress shadow" style="height: 5px;">
                                     <div class="progress-bar" role="progressbar" style="width: 90%;"></div>
                                 </div>

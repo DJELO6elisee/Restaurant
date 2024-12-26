@@ -136,7 +136,7 @@
             <p><strong>Ville:</strong> {{ commande.ville }}</p>
         </div>
         <div class="order-total">
-            <p><strong>Total:</strong> <span class="total-price">{{ commande.total }}</span> FCFA</p>
+            <p><strong>Total:</strong> <span class="total-price">{{ commande.total|floatformat:0 }}</span> FCFA</p>
         </div>
     </div>
 
@@ -157,8 +157,8 @@
                 <tr>
                     <td>{{ detail.product.name }}</td>
                     <td>{{ detail.quantite }}</td>
-                    <td>{{ detail.prix }} FCFA</td>
-                    <td>{{ detail.prix_total }} FCFA</td>
+                    <td>{{ detail.prix|floatformat:0 }} FCFA</td>
+                    <td>{{ detail.prix_total|floatformat:0 }} FCFA</td>
                     <td><img src="{{ detail.image }}" alt="{{ detail.product.name }}" class="product-image"></td>
                 </tr>
                 {% endfor %}

@@ -40,21 +40,29 @@ class Product(models.Model):
         return self.name
 
 class Commande(models.Model):
-    items = models.CharField(max_length=20)  # Réduit de 30 à 20
-    nom = models.CharField(max_length=40)  # Réduit de 60 à 40
-    prenom = models.CharField(max_length=40)  # Réduit de 50 à 40
+    STATUS_CHOICES = [
+        ('pending', 'En attente'),
+        ('processing', 'En cours de traitement'),
+        ('shipped', 'Expédiée'),
+        ('delivered', 'Livrée'),
+    ]
+    items = models.CharField(max_length=20)
+    nom = models.CharField(max_length=40)
+    prenom = models.CharField(max_length=40)
     email = models.EmailField()
-    address = models.CharField(max_length=40)  # Réduit de 50 à 40
+    address = models.CharField(max_length=40)
     contact = models.CharField(max_length=15)
-    ville = models.CharField(max_length=40)  # Réduit de 50 à 40
+    ville = models.CharField(max_length=40)
     total = models.DecimalField(max_digits=10, decimal_places=2)
     date_commande = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='delivered')  # Nouveau champ
 
     class Meta:
         ordering = ['-date_commande']
 
     def __str__(self):
-        return self.nom
+        return f"Commande {self.id} - {self.nom} ({self.get_status_display()})"
+
 
 class DetailCommande(models.Model):
     commande = models.ForeignKey(Commande, on_delete=models.CASCADE, related_name='details')
@@ -67,17 +75,7 @@ class DetailCommande(models.Model):
     def __str__(self):
         return f"{self.quantite} x {self.product.name} - Commande {self.commande.id}"
 
-class Message(models.Model):
-    nom = models.CharField(max_length=40)  # Réduit de 60 à 40
-    email = models.EmailField()
-    message = models.TextField()
-    date_envoi = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        ordering = ['-date_envoi']
-
-    def __str__(self):
-        return self.nom
 
 class Order(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
@@ -86,7 +84,6 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.user.username} purchased {self.product.name} on {self.date_achat}"
-
 class ProfileUtilisateur(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     regime_alimentaire_prefere = models.CharField(max_length=20, choices=[  # Réduit de 70 à 20
@@ -101,4 +98,17 @@ class ProfileUtilisateur(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s profile"
+
+
+class Message(models.Model):
+    nom = models.CharField(max_length=40)  # Réduit de 60 à 40
+    email = models.EmailField()
+    message = models.TextField()
+    date_envoi = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date_envoi']
+
+    def __str__(self):
+        return self.nom
 

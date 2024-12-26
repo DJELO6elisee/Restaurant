@@ -2,7 +2,7 @@
 
   {% load static %}
 
-  {% block crea %}  
+  {% block crea %}
 
   <style>
 
@@ -16,15 +16,15 @@
   }
   h2, .form-label {
     color: white !important;
-    /* Forcer la couleur blanche sur fond bleu */ 
+    /* Forcer la couleur blanche sur fond bleu */
 }
   /* Titres */
    .container h2 {
       margin-bottom: 20px;
       font-weight: 700;
       color: #ffffff; /* Texte en bleu pour harmoniser avec le fond */
-   } 
-  
+   }
+
   /* Champs de formulaire */
   .container input,
   .container select,
@@ -37,7 +37,7 @@
       font-size: 16px;
       color: #333333; /* Texte en gris foncé pour contraster avec le fond */
       background-color: #ccc; /* Fond blanc
-   } 
+   }
   .form-label {
     font-weight: bold;
     font-size: 1.1rem;
@@ -45,7 +45,7 @@
 
   h2, .form-label {
     color: white !important;
-    /* Forcer la couleur blanche sur fond bleu */ 
+    /* Forcer la couleur blanche sur fond bleu */
 }
 
   /* .form-container label {
@@ -58,7 +58,7 @@
       color: #888888; /* Texte placeholder en gris clair */
       font-style: italic;
   }
-  
+
   /* Liste déroulante */
   .container select {
       color: #ffffff; /* Texte en gris foncé */
@@ -69,13 +69,13 @@
       background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path d="M0 0h10L5 6z" fill="gray"/></svg>') no-repeat right 10px center;
       background-size: 12px;
   }
-  
+
   /* Options dans la liste déroulante */
   .container select option {
       color: #333333; /* Texte en gris foncé */
       background-color: #ffffff; /* Fond blanc */
   }
-  
+
   /* Bouton de soumission */
   .btn-submit {
       background-color: green; /* Bleu pour le bouton */
@@ -89,10 +89,33 @@
   .container {
     max-width: 900px;
 }
-  
+
   .btn-submit:hover {
       background-color: #235b9e; /* Bleu foncé au survol */
   }
+
+/* Style pour rendre les checkbox plus grandes */
+input[type="checkbox"] {
+    transform: scale(1.5);  /* Augmente la taille des checkbox */
+    margin-right: 10px;  /* Ajoute un peu d'espace à droite de la checkbox */
+}
+
+/* Optionnel : ajoutez un peu d'espace entre les labels et les cases à cocher */
+label {
+    margin-right: 20px; /* Espace entre la case et le texte */
+    font-size: 16px;  /* Augmente légèrement la taille du texte */
+    display: inline-block;
+}
+
+/* Optionnel : personnaliser l'apparence de la checkbox */
+input[type="checkbox"]:checked {
+    background-color: #4CAF50; /* Couleur de fond quand cochée */
+    border-color: #4CAF50;     /* Bordure quand cochée */
+}
+
+input[type="checkbox"]:hover {
+    cursor: pointer;  /* Ajoute un effet de survol */
+}
 
   /* Mise en page responsive */
 @media (max-width: 768px) {
@@ -110,14 +133,14 @@
     }
 }
 
-</style>  
+</style>
 
     </style>
 
-    {% endblock crea %}  
+    {% endblock crea %}
 
 
-  {% block creation %}  
+  {% block creation %}
 <div class="main-content">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -148,6 +171,17 @@
                 </select>
             </div>
 
+            <!-- Regime Alimentaire -->
+            <div class="mb-3">
+                <label for="regime" class="form-label">Regime</label>
+                <select id="regime" name="regime" class="form-select" required>
+                    <option value="">Sélectionnez un regime</option>
+                    {% for regime in regimes %}
+                    <option value="{{ regime.id }}">{{ regime.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
             <!-- Petite description -->
             <div class="mb-3">
                 <label for="smalldescription" class="form-label">Petite Description</label>
@@ -171,7 +205,27 @@
                 <label for="status" class="form-label">Statut</label>
                 <input type="text" id="status" name="status" class="form-control" placeholder="Entrez le statut du produit" required>
             </div>
+            <div class="mb-3">
 
+            <div>
+            <label for="produit_frais">Produit frais</label>
+            <input type="checkbox" name="produit_frais" id="produit_frais">
+            </div>
+
+            <div>
+            <label for="produit_bio">Produit bio</label>
+            <input type="checkbox" name="produit_bio" id="produit_bio">
+            </div>
+
+            <div>
+            <label for="produit_vegan">Produit vegan</label>
+            <input type="checkbox" name="produit_vegan" id="produit_vegan">
+            </div>
+            <div>
+            <label for="produit_sans_gluten">Produit sans gluten</label>
+            <input type="checkbox" name="produit_sans_gluten" id="produit_sans_gluten">
+            </div>
+            </div>
             <!-- Bouton de soumission -->
             <div class="text-center">
                 <button type="submit" class="btn btn-submit">Créer le Produit</button>
@@ -180,6 +234,6 @@
     </div>
 </div>
 
-{% endblock creation %}  
+{% endblock creation %}
 
 

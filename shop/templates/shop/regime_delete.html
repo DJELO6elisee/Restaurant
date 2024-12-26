@@ -1,0 +1,16 @@
+{% extends 'shop/base2.html' %}
+
+{% block cf %}
+    <div class="content-wrapper">
+        <div class="form-container">
+            <h2>Confirmer la suppression</h2>
+            <p>Êtes-vous sûr de vouloir supprimer le regime alimentaire numéro "{{ del_regi.id }}" ?</p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+                <a href="{% url 'regime' %}" class="btn btn-secondary">Annuler</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

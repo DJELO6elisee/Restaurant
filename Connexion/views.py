@@ -55,11 +55,6 @@ def create(request):
             messages.error(request, "L'adresse email est invalide. Veuillez réessayer.")
             errors = True
 
-        # Vérification de l'existence du nom d'utilisateur et de l'email
-        # if CustomUser.objects.filter(username=username).exists():
-        #     messages.error(request, "Ce nom d'utilisateur existe déjà. Veuillez en choisir un autre.")
-        #     errors = True
-
         if CustomUser.objects.filter(email=email).exists():
             messages.error(request, "Cet email existe déjà. Veuillez en choisir un autre.")
             errors = True
@@ -75,6 +70,13 @@ def create(request):
 
     return render(request, 'Connexion/creation_compte.html')
 
+def create_superuser():
+    """
+    Fonction pour créer un superutilisateur si aucun n'existe.
+    """
+    if not CustomUser.objects.filter(username='admin').exists():
+        CustomUser.objects.create_superuser('kuyo', 'kuyo@gmail.com', '123abc!@#')
+        print("Superutilisateur créé.")
 
 def connexion(request):
     if request.method == 'POST':
@@ -89,8 +91,8 @@ def connexion(request):
             
             # Vérifier si l'utilisateur est un superutilisateur
             if user.is_staff:
-                return redirect('adminp')  # Remplacer par l'URL de la page superutilisateur
-            # Vérifier si l'utilisateur est un administrateur
+                return redirect('adminp')
+            
         
         else:
             messages.error(request, "Email ou mot de passe incorrect")

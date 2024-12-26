@@ -24,6 +24,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicons/favicon.ico' %}">
     <link rel="manifest" href="{% static 'img/favicons/manifest.json' %}">
     <link href="https://fonts.googleapis.com/css2?family=Gotham+Black&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <meta name="msapplication-TileImage" content="{% static 'img/favicons/mstile-150x150.png' %}">
     <meta name="theme-color" content="#ffffff">
@@ -35,11 +36,11 @@
     <link href="{% static 'css/theme.css' %}" rel="stylesheet" />
 
     {% block css %}
-    
+
     {% endblock css %}
 
     {% block css1 %}
-    
+
     {% endblock css1 %}
 
     {% block dd %}
@@ -53,6 +54,12 @@
     {% endblock aa %}
     {% block cb %}
     {% endblock cb %}
+    {% block ff %}
+    {% endblock ff %}
+    {% block d %}
+    {% endblock %}
+
+
 
 
 
@@ -97,6 +104,7 @@ header {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 /* Logo */
@@ -229,7 +237,7 @@ header {
   left: 35px;
 }
 
-/* Menu toggle pour mobile */
+ /*Menu toggle pour mobile */
 .menu-toggle {
   display: none;
   font-size: 2rem;
@@ -238,137 +246,130 @@ header {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .navbar {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-  }
+/*@media (max-width: 768px) {*/
+/*  .navbar {*/
+/*    display: none;*/
+/*    flex-direction: column;*/
+/*    width: 100%;*/
+/*  }*/
 
-  .navbar.active {
-    display: flex;
-  }
+/*    .navbar.show ul {*/
+        /* Show the nav when menu is toggled */
+/*        flex-direction: column;*/
+/*    }*/
 
-  .menu-toggle {
-    display: block;
-  }
+/*  .menu-toggle {*/
+/*    display: block;*/
+/*  }*/
 
-  .header-buttons {
-    flex-direction: column;
-    gap: 5px;
-  }
+/*  .header-buttons {*/
+/*    flex-direction: column;*/
+/*    gap: 5px;*/
+/*  }*/
 
-  .search {
-    margin-bottom: 10px;
-    width: 100%;
-  }
+/*  .search {*/
+/*    margin-bottom: 10px;*/
+/*    width: 100%;*/
+/*  }*/
 
-  .search input {
-    flex: 1;
-  }
-}
+/*  .search input {*/
+/*    flex: 1;*/
+/*  }*/
+/*}*/
 
 @media (max-width: 480px) {
-  /* Retirer la position fixe pour la navbar sur mobile */
-  header {
-    position: relative; /* Cela rétablit la position normale du header */
-    padding: 10px 15px;
-  }
+    .header-container{
+        flex-wrap: wrap;
+        /* Align items on top when wrapping */
+        align-items: flex-start;
+    }
+    .logo {
+         flex: 1 1 100%;
+         text-align: center;
+         font-size: 1.2em; /* make it smaller */
+         margin-bottom: 5px; /* Add some space below */
 
-  /* Ajouter un padding au body ou au conteneur pour éviter que le contenu ne soit caché sous la navbar */
-  body {
-    padding-top: 0; /* Pas de padding en haut puisque la navbar ne sera plus fixe */
-  }
+    }
+    .search {
+        flex: 1 1 100%;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+    .search input {
+          display: inline-block; /* Keep search on one line */
+        margin-bottom: 10px;
+      width: calc(70% - 10px);
+    }
+    .search button {
+      display: inline-block;
+    }
+    .header-buttons {
+          margin-top: 5px;
+            flex: 1 1 100%;
+          text-align: center;
+        }
+   .header-buttons a{
+      display: inline-block; /* Keep buttons inline */
+        margin: 5px;
+        font-size: 0.9em;
+    }
+    .navbar{
+        flex: 1 1 100%; /* Take up the full width */
+    }
+    .navbar ul {
+        display: none; /* Hide navigation by default */
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+        background-color: #444;
+        padding: 0 10px;
+    }
+    .navbar ul li{
+        margin: 10px 0;
+    }
+    .navbar ul li a {
+        display: block; /* Make links full width for easier touch */
+    }
+    .navbar ul li:hover .dropdown{
+      display: none;/* Disable dropdown on hover for mobiles */
+    }
+    .navbar ul li:hover > .dropdown{
+       display: block;
+    }
 
-  .header-container {
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-  }
+    .navbar.show ul {
+        display: flex; /* Show the nav when menu is toggled */
+         flex-direction: column;
+    }
+    .menu-toggle {
+        display: block; /* Show the menu toggle button */
+        position: absolute;
+        top: 5px;
+        left: 10px;
+    }
 
-  .logo {
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-  }
+    .input-group-icon {
+      display: flex;
+      justify-content: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
 
-  .menu-toggle {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 1.8rem;
-  }
+    .input-box{
+      padding: 10px;
+    }
 
-  .navbar {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .navbar.active {
-    display: flex;
-  }
-
-  .nav-list {
-    flex-direction: column;
-    gap: 10px;
-    padding: 0;
-  }
-
-  .nav-list li {
-    margin: 0;
-  }
-
-  .nav-list a {
-    font-size: 1rem;
-    padding: 8px 10px;
-  }
-
-  .search {
-    flex-direction: column;
-    gap: 5px;
-    width: 100%;
-  }
-
-  .search input {
-    width: 100%;
-    font-size: 0.9rem;
-  }
-
-  .search button {
-    width: 100%;
-    font-size: 0.9rem;
-    padding: 6px 0;
-  }
-
-  .header-buttons {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    width: 100%;
-  }
-
-  .header-buttons a {
-    width: 100%;
-    text-align: center;
-    font-size: 0.9rem;
-    padding: 8px;
-  }
-
-  .cart {
-    font-size: 1.2rem;
-  }
-
-  .cart-count {
-    font-size: 0.7rem;
-    top: -3px;
-    right: -3px;
-    padding: 2px 4px;
-  }
-
-  /* Ajuster la taille de la navbar pour qu'elle prenne moins de place sur les petits écrans */
-  header .logo a {
-    font-size: 1.4rem; /* Réduit la taille de la police pour les petits écrans */
-  }
+    .btn-primary {
+      white-space: nowrap;
+      padding: 10px 10px;
+    }
+    /* Main content styles */
+    main {
+      margin-top: 80px; /* Or more to push the content down below the fixed header. Use header height if needed. */
+    }
 }
+
+
 
 
 
@@ -381,47 +382,6 @@ h4.gotham-black {
   font-family: 'Gotham Black', sans-serif;
   font-style: italic;
 }
-
-/* Général */
-/* header {
-    width: 100%;
-    background-color: #f8f9fa;
-    padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-} */
-
-/* .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-} */
-
-/* Logo */
-/* .logo a {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    text-decoration: none;
-} */
-
-/* Navigation */
-/* .navbar {
-    flex: 1;
-} */
-
-/* .nav-list {
-    display: flex;
-    gap: 20px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-} */
-
 
 
 </style>
@@ -438,7 +398,7 @@ h4.gotham-black {
             <div class="logo">
                 <a href="{% url 'shop' %}">O'VIN_CANAN</a>
             </div>
-    
+
             <nav class="navbar">
                 <ul class="nav-list">
                     <li><a href="{% url 'shop' %}">Accueil</a></li>
@@ -456,35 +416,36 @@ h4.gotham-black {
                     <li><a href="#">Blog</a></li>
                 </ul>
             </nav>
-    
+            <form method="get">
+                {% csrf_token %}
             <div class="search">
-                <input type="text" placeholder="Rechercher...">
+                <input type="text" placeholder="Rechercher..." name="item_name">
                 <button>Rechercher</button>
             </div>
-    
+            </form>
             <div class="header-buttons">
                 <a href="{% url 'connexion' %}" class="login-button">Login</a>
                 <a href="{% url 'panini' %}" id="panier" class="cart">
-                    🛒
+                    <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">0</span>
                 </a>
             </div>
-    
+
             <!-- Bouton pour les petits écrans -->
             <div class="menu-toggle" id="menuToggle">
                 ☰
             </div>
         </div>
     </header>
-    
-      
+
+
 
         {% block index %}
-        
+
         {% endblock index %}
 
         {% block produit %}
-        
+
         {% endblock produit %}
 
         {% block cart %}
@@ -500,8 +461,10 @@ h4.gotham-black {
         {% endblock yy %}
 
         {% block detail %}
-        
+
         {% endblock detail %}
+        {% block contt %}
+        {% endblock %}
 
 
       <!-- ============================================-->
@@ -559,14 +522,17 @@ h4.gotham-black {
                     <path fill="#BDBDBD" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
                   </svg></a></div>
               <!-- <h3 class="text-500 my-4">Receive exclusive offers and <br />discounts in your mailbox</h3> -->
+
               <div class="row input-group-icon mb-5">
-                <div class="col-auto"><i class="fas fa-envelope input-box-icon text-500 ms-3"></i>
+                <div class="col-auto">
                   <input class="form-control input-box bg-800 border-0" type="email" placeholder="Enter Email" aria-label="email" />
                 </div>
                 <div class="col-auto">
                   <button class="btn btn-primary" type="submit">Subscribe</button>
                 </div>
               </div>
+
+
             </div>
           </div>
           <hr class="border border-800" />
@@ -575,7 +541,7 @@ h4.gotham-black {
               <p class="text-200 text-center text-md-start">Tout droit Reserver &copy; KKS-TECHNOLOGIE, 2024</p>
             </div>
             <div class="col-md-6 order-1">
-              
+
             </div>
           </div>
         </div><!-- end of .container-->
@@ -608,24 +574,24 @@ h4.gotham-black {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap" rel="stylesheet">
-  
+
     <script>
       // Initialiser ou récupérer le panier
       let panier = localStorage.getItem('panier') ? JSON.parse(localStorage.getItem('panier')) : {};
-  
+
       // Gestionnaire d'événement pour l'ajout au panier
       $(document).on('click', '.ted', function () {
           console.log('Ajouter');
-  
+
           // Récupérer l'ID du produit
           let item_Id = this.id.toString();
           console.log("ID produit :", item_Id);
-  
+
           // Vérifier si le produit existe déjà dans le panier
           if (panier[item_Id] !== undefined) {
               // Mettre à jour la quantité
               panier[item_Id].quantite += 1;
-  
+
               // Mettre à jour le prix si nécessaire
               let priceElement = document.getElementById("price" + item_Id);
               if (priceElement) {
@@ -639,12 +605,12 @@ h4.gotham-black {
               let priceElement = document.getElementById("price" + item_Id);
               let nameElement = document.getElementById("aa" + item_Id);
               let imgElement = document.getElementById("pp" + item_Id);
-  
+
               if (priceElement && nameElement && imgElement) {
                   let prix = parseFloat(priceElement.innerHTML.trim());
                   let nom = nameElement.innerHTML.trim();
                   let photoUrl = imgElement.src;
-  
+
                   // Ajouter au panier, en incluant l'ID
                   panier[item_Id] = {
                       id: item_Id,
@@ -657,24 +623,24 @@ h4.gotham-black {
                   console.error("Nom, prix ou image introuvable pour l'ID :", item_Id);
               }
           }
-  
+
           // Sauvegarder le panier dans le localStorage
           console.log("Panier actuel :", panier[item_Id]);
           localStorage.setItem('panier', JSON.stringify(panier));
-  
+
           // Mettre à jour l'indicateur de panier
           try {
               const cartIcon = document.getElementById("panier");
               const cartCountElement = cartIcon.querySelector(".cart-count");
-  
+
               if (!cartIcon || !cartCountElement) {
                   console.error("Élément d'icône du panier ou du compteur introuvable !");
                   return;
               }
-  
+
               // Calculer le nombre total d'articles dans le panier
               const totalItems = Object.values(panier).length;
-  
+
               // Mise à jour de la valeur du compteur
               cartCountElement.textContent = totalItems;
           } catch (error) {
@@ -701,11 +667,11 @@ h4.gotham-black {
     ratings.forEach(rating => {
         // Sélectionner les étoiles pour chaque produit
         const stars = rating.querySelectorAll('.star');
-        
+
         stars.forEach(star => {
             star.addEventListener('click', () => {
                 const value = parseInt(star.getAttribute('data-value'));
-                
+
                 // Réinitialiser toutes les étoiles de cette section seulement
                 stars.forEach(s => s.classList.remove('filled'));
 
@@ -723,17 +689,24 @@ h4.gotham-black {
     });
 });
 
-document.getElementById('menuToggle').addEventListener('click', function () {
+// document.getElementById('menuToggle').addEventListener('click', function () {
+//     const navbar = document.querySelector('.navbar');
+//     navbar.classList.toggle('active');
+// });
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const menuToggle = document.getElementById('menuToggle');
     const navbar = document.querySelector('.navbar');
-    navbar.classList.toggle('active');
+
+    menuToggle.addEventListener('click', function () {
+        navbar.classList.toggle('show'); // toggles the 'show' class, which displays the menu
+    });
 });
-
-
-
-
 </script>
 
-    
+
   {% block js %}
   {% endblock js %}
   {% block jss %}

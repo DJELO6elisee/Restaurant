@@ -275,16 +275,18 @@ body {
 
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
-    <div class="container">
+    <div class="container mt-3">
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcrumb__links">
-                    <a href="{% url 'shop' %}"><i class="fa fa-home"></i> Acceuil</a>
-                    <span>Panier d'achat</span>
+                    <botton class="btn btn-primary mt-5">
+                    <a href="{% url 'historique_commande' %}"><i class="fas fa-history"></i> Historique des Commandes</a>
+                    </botton>
+                    <!--<span>Panier d'achat</span>-->
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
 </div>
 <!-- Breadcrumb End -->
 
@@ -327,7 +329,7 @@ body {
                 </div>
             </div>
         </div>
-        
+
         <div class="row mt-4">
             <div class="col-md-6">
                 <div class="discount__content">
@@ -351,7 +353,7 @@ body {
                 </div>
             </div>
         </div>
-        
+
 
     </div>
 </section>
@@ -383,9 +385,9 @@ function renderCartTable() {
     // Parcourir les éléments du panier
     for (const item_Id in panier) {
         const item = panier[item_Id];
-        
+
         // Vérifier que l'élément contient les 4 propriétés nécessaires plus l'id du produit
-        if (!item || !item.nom || !item.prix || !item.quantite || !item.photo || !item.id) { 
+        if (!item || !item.nom || !item.prix || !item.quantite || !item.photo || !item.id) {
             console.warn(`Élément invalide dans le panier : ${item_Id}`);
             continue; // Passer à l'élément suivant s'il manque des données
         }
@@ -397,7 +399,7 @@ function renderCartTable() {
         const photoUrl = item.photo;
         const productId = item.id;  // ID du produit
         const prixTotal = prix * quantite;
-        
+
         subtotal += prixTotal;
 
         // Ajouter une ligne au tableau avec la photo
@@ -425,18 +427,18 @@ function renderCartTable() {
 // Fonction pour supprimer un produit
 document.addEventListener("click", function (e) {
     if (e.target.classList.contains("btn-delete")) {
-        const item_Id = e.target.getAttribute("data-id");
+        const productId = e.target.getAttribute("data-id");
 
         // Vérifier que l'ID existe dans le panier
-        if (panier[item_Id]) {
+        if (panier[productId]) {
             // Supprimer l'élément du panier
-            delete panier[item_Id];
+            delete panier[productId];
             // Sauvegarder dans le localStorage
             localStorage.setItem("panier", JSON.stringify(panier));
             // Rafraîchir l'affichage du panier
             renderCartTable();
         } else {
-            console.warn(`L'élément avec l'ID ${item_Id} n'existe pas dans le panier.`);
+            console.warn(`L'élément avec l'ID ${productId} n'existe pas dans le panier.`);
         }
     }
 });
@@ -444,26 +446,26 @@ document.addEventListener("click", function (e) {
 // Gestion de la modification des quantités
 document.addEventListener("input", function (e) {
     if (e.target.classList.contains("quantite-input")) {
-        const item_Id = e.target.getAttribute("data-id");
+        const productId = e.target.getAttribute("data-id");
         const nouvelleQuantite = parseInt(e.target.value);
 
         // Vérifier que la nouvelle quantité est valide
         if (isNaN(nouvelleQuantite) || nouvelleQuantite <= 0) {
             alert("La quantité doit être un nombre supérieur à zéro !");
-            e.target.value = panier[item_Id] ? panier[item_Id][2] : 1; // Remettre la quantité précédente en cas de saisie invalide
+            e.target.value = panier[productId] ? panier[productId].quantite : 1; // Remettre la quantité précédente en cas de saisie invalide
             return;
         }
 
         // Vérifier que l'élément existe dans le panier
-        if (panier[item_Id]) {
-            // Mettre à jour la quantité et le prix
-            panier[item_Id][2] = nouvelleQuantite;
+        if (panier[productId]) {
+            // Mettre à jour la quantité
+             panier[productId].quantite = nouvelleQuantite;
             // Sauvegarder dans le localStorage
             localStorage.setItem("panier", JSON.stringify(panier));
             // Rafraîchir l'affichage du panier
             renderCartTable();
         } else {
-            console.warn(`L'élément avec l'ID ${item_Id} n'existe pas dans le panier.`);
+            console.warn(`L'élément avec l'ID ${productId} n'existe pas dans le panier.`);
         }
     }
 });
@@ -473,4 +475,5 @@ document.addEventListener("DOMContentLoaded", function () {
     renderCartTable(); // Afficher le contenu du panier
 });
 </script>
+
 {% endblock js %}

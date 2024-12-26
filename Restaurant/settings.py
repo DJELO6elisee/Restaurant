@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-itl0z$9cvhq-^4=v&p%+6#t&t^7ycvp$39l+vtyng5cqmqpc)*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kuyoelisee01.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -54,6 +54,15 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # LOGIN_URL = '/connexion/'  # Remplacez par l'URL de votre page de connexion
+
+
+# Exemple pour utiliser Gmail pour l'envoi d'emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jeaneliseedjelo85@gmail.com'
+EMAIL_HOST_PASSWORD = 'arvsrjnedbmzbcot'
 
 
 MIDDLEWARE = [
@@ -105,13 +114,27 @@ WSGI_APPLICATION = 'Restaurant.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'kuyoelisee01$restaurant',  # Nom de votre base de données
+#         'USER': 'kuyoelisee01',
+#         'PASSWORD': 'bleaguibahi123',
+#         'HOST': 'kuyoelisee01.mysql.pythonanywhere-services.com',  # Localhost
+#         'PORT': '3306',  # Port par défaut
+#         'OPTIONS': {
+#             'charset': 'utf8mb4',  # Utilisation de utf8mb4 pour une meilleure compatibilité
+#             'sql_mode': 'STRICT_TRANS_TABLES',  # Mode strict pour éviter des erreurs inattendues
+#         },
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_db',  # Nom de votre base de données
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',  # Localhost
+        'HOST': 'Localhost',  # Localhost
         'PORT': '3306',  # Port par défaut
         'OPTIONS': {
             'charset': 'utf8mb4',  # Utilisation de utf8mb4 pour une meilleure compatibilité
@@ -160,7 +183,9 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = 'media/'
 
-MEDIA_ROOT = BASE_DIR/'media'
+# MEDIA_ROOT = "/home/kuyoelisee01/Restaurant/media"
+# STATIC_ROOT = "/home/kuyoelisee01/Restaurant/shop/static"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

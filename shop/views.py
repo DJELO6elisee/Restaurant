@@ -9,9 +9,15 @@ from .models import Product, Category, Commande, DetailCommande, Message, Regime
 import json
 from django.contrib.auth.decorators import login_required
 from Connexion.models import CustomUser
-from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
+
+
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
+import tempfile
+
 
 # Create your views here.
 def panini(request):
@@ -24,6 +30,7 @@ def confirmation(request, conf_id):
     commande = get_object_or_404(Commande, id=conf_id)
     return render(request, 'shop/confirmation.html', {'commande': commande})
 
+
 @login_required(login_url='connexion')
 def elisee(request):
     user = request.user
@@ -33,12 +40,13 @@ def elisee(request):
         prenom = request.POST.get('prenom')
         ville = request.POST.get('ville')
         address = request.POST.get('address')
+        addressli = request.POST.get('addressli')
         contact = request.POST.get('contact')
         email = request.POST.get('email')
         total = request.POST.get('total')
 
         # Valider les données du formulaire
-        if not (nom and prenom and ville and address and contact and email and total):
+        if not (nom and prenom and ville and address and addressli and contact and email and total):
             return HttpResponseBadRequest("Tous les champs sont requis.")
 
         # Récupérer et valider les données du panier
@@ -57,6 +65,7 @@ def elisee(request):
             prenom=prenom,
             ville=ville,
             address=address,
+            addressli=addressli,
             contact=contact,
             email=email,
             total=total
@@ -92,10 +101,27 @@ def elisee(request):
                 # Ignorer les données mal formées
                 continue
 
-        # Rediriger vers la page de confirmation
-        return redirect('confirmation', conf_id=commande.id)
+        # Générer le PDF de la commande
+        html_content = render_to_string('shop/confirmation.html', {
+            'commande': commande,
+            'details': commande.details.all()  # Récupérer les détails de la commande
+        })
+
+        # Créer la réponse pour le téléchargement du PDF
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="recu_{commande.id}.pdf"'
+
+        # Utiliser WeasyPrint pour générer le PDF
+        with tempfile.NamedTemporaryFile(delete=True) as temp_file:
+            HTML(string=html_content).write_pdf(target=temp_file.name)
+            response.write(temp_file.read())
+
+        # Retourner le PDF
+        return response
 
     return render(request, 'shop/checkout.html', {'user': user})
+
+
 
 def contact(request):
     saveMessage = None  # Initialisation de la variable pour éviter les erreurs
@@ -375,7 +401,7 @@ def delete_commande(request, commande_id):
     return render(request, 'shop/delete_commande.html', {'del_commande': del_commande})
 
 def send_status_update_email(commande):
-    subject = f"Statut de votre commande #{commande.id} mis à jour"
+    subject = "Le statut de votre commande a été mis à jour"
     message = f"Bonjour {commande.nom},\n\nLe statut de votre commande a été mis à jour.\n\nStatut actuel : {commande.get_status_display()}."
     from_email = 'jeaneliseedjelo85@gmail.com'  # Adresse email par défaut
     recipient_list = [commande.email]  # Liste des destinataires (ici l'email de l'utilisateur)
@@ -505,6 +531,7 @@ def sup_regime(request, delre_id):
         return redirect('regime')
     return render(request, 'shop/regime_delete.html', {'del_regi': del_regi})
 
+@login_required
 def historique_commande(request):
     # Filtrer les commandes de l'utilisateur connecté
     commandes = Commande.objects.filter(email=request.user.email)
@@ -532,6 +559,12 @@ def detail_commandeUti(request, commande_id):
     return render(request, 'shop/detail_commandeU.html', context)
 
 
+def recu(request, com_id):
+    commande = get_object_or_404(Commande, id=com_id)
+    details_commande = commande.details.all()
+
+    context = {'commande': commande, 'details_commande': details_commande}
+    return render(request, 'shop/recu.html', context)
 
 
 

@@ -230,7 +230,7 @@ body {
                         {% else %}
                             <span>Produit non disponible</span>
                         {% endif %}
-                        <a class="add-to-cart btn btn-danger btn-sm ted" href="#" id="{{ product.id }}" role="button">Ajouter <i class="fas fa-shopping-cart"></i></a>
+                        <a class="add-to-cart btn btn-danger btn-sm ted" id="{{ product.id }}" role="button">Ajouter <i class="fas fa-shopping-cart"></i></a>
                     </div>
                 </div>
             </div>
@@ -264,7 +264,7 @@ body {
                       <p class="fs-1">Profitez de la grande taille des sandwiches. Complétez votre repas avec une tranche parfaite. of sandwiches.</p>
                       <span id="price{{ product.id }}" style="color:black" class="card-text">    {{ product.price|floatformat:0 }}</span> fcfa
 
-                      <div class="d-grid bottom-0"><a class="btn btn-lg btn-primary mt-xl-6 ted" href="#" id="{{ product.id }}">AJOUTER AU <i class="fas fa-shopping-cart"></i><i class="fas fa-chevron-right ms-2"></i></a></div>
+                      <div class="d-grid bottom-0"><a class="btn btn-lg btn-primary mt-xl-6 ted" id="{{ product.id }}">AJOUTER AU <i class="fas fa-shopping-cart"></i><i class="fas fa-chevron-right ms-2"></i></a></div>
                     </div>
                   </div>
                 </div>

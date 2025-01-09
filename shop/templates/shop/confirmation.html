@@ -1,240 +1,86 @@
-{% extends "shop/base.html" %}
-{% load static %}
-
-
-
-{% block aa %}
-<style>
-    /* Style de la page de confirmation */
-.confirmation {
-    background-color: #f9f9f9;
-    padding: 50px 0;
-}
-
-
-
-
-/* Style pour la confirmation de commande */
-.confirmation__content {
-    background-color: #ffffff;
-    padding: 40px 30px;
-    border-radius: 8px;
-    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin: 50px auto;
-    text-align: center;
-}
-
-/* Titre principal */
-.confirmation__content h2 {
-    font-size: 36px;
-    font-weight: 700;
-    color: #2e3d49;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
-}
-
-/* Sous-titre */
-.confirmation__content p {
-    font-size: 18px;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 30px;
-}
-
-/* Titre du récapitulatif de commande */
-.confirmation__content h3 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #2d87f0;
-    margin-bottom: 15px;
-}
-
-/* Détails de la commande */
-.order__details {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 25px;
-    text-align: left;
-}
-
-/* Liste de produits */
-#order-summary {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size: 16px;
-    border-bottom: 2px solid #ddd;
-    margin-bottom: 15px;
-}
-
-/* Élément de liste de produits */
-#order-summary li {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    color: #333;
-}
-
-/* Style des éléments "Produit" et "Total" */
-.top__text, .top__text__right {
-    font-weight: 600;
-    color: #555;
-}
-
-/* Total de la commande */
-.order__details p {
-    font-size: 18px;
-    font-weight: 700;
-    color: #333;
-    margin-top: 20px;
-}
-
-#total {
-    font-size: 20px;
-    color: #2d87f0;
-    font-weight: 700;
-    padding-left: 5px;
-}
-
-
-.address-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    margin-top: 40px;
-    margin-bottom: 10px;
-    text-align: left;
-}
-
-.confirmation__button {
-    margin-top: 40px;
-}
-
-.site-btn {
-    background-color: #2d87f0;
-    color: #fff;
-    padding: 12px 40px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 4px;
-    text-decoration: none;
-    transition: background-color 0.3s;
-}
-
-.site-btn:hover {
-    background-color: #1d69c1;
-}
-
-@media (max-width: 768px) {
-    .confirmation__content {
-        padding: 30px;
-    }
-
-    .confirmation-title {
-        font-size: 28px;
-    }
-
-    .order-summary-title,
-    .order-total,
-    .address-title {
-        font-size: 18px;
-    }
-}
-
-</style>
-{% endblock aa %}
-
-{% block yy %}
-
-<section class="confirmation spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="confirmation__content">
-                    <h2>Merci pour votre commande!</h2>
-                    <p>Nous sommes ravis de vous avoir servi. Votre commande a été confirmée et sera livrée dans un délai d'un jour.</p>
-
-                    <h3>Récapitulatif de votre commande</h3>
-                    <div class="order__details">
-                        <ul id="order-summary">
-                            <li>
-                                <span class="top__text">Produit</span>
-                                <span class="top__text__right">Total</span>
-                            </li>
-                        </ul>
-
-                        <p><strong>Total de la commande : </strong><span id="total">0.00 fcfa</span></p>
-                    </div>
-                    <h3>Adresse de livraison</h3>
-                    <p><strong>Nom : </strong> {{ commande.nom|default:"N/A" }} {{ commande.prenom|default:"N/A" }}</p>
-                    <p><strong>Adresse : </strong> {{ commande.address|default:"Non spécifiée" }}</p>
-                    <p><strong>Téléphone : </strong> {{ commande.contact|default:"Non spécifié" }}</p>
-                    <p><strong>Email : </strong> {{ commande.email|default:"Non spécifié" }}</p>
-
-
-                    <div class="confirmation__button">
-                        <a href="{% url 'shop' %}" class="site-btn">Retour à la page d'accueil</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-{% endblock yy %}
-
-{% block zz %}
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    let panier = JSON.parse(localStorage.getItem('panier')) || {};
-    let orderSummary = document.getElementById("order-summary");
-    let totalElement = document.getElementById("total");
-
-    let total = 0;
-
-    // Vérifie si le panier est vide
-    if (Object.keys(panier).length === 0) {
-        console.warn("Le panier est vide.");
-        return;
-    }
-
-    // Parcourir les éléments du panier
-    for (const item_Id in panier) {
-        const item = panier[item_Id];
-
-        // Vérifier que l'élément contient les 4 propriétés nécessaires plus l'id du produit
-        if (!item || !item.nom || !item.prix || !item.quantite || !item.photo || !item.id) { 
-            console.warn(`Élément invalide dans le panier : ${item_Id}`);
-            continue; // Passer à l'élément suivant s'il manque des données
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reçu de la commande</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
         }
+        .confirmation__content {
+            width: 80%;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .confirmation__content h2, .confirmation__content h3 {
+            color: #2c3e50;
+        }
+        .confirmation__content p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+        .order__details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .order__details li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .order__details li span {
+            font-size: 16px;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: right;
+            margin-top: 20px;
+        }
+        .confirmation__content center {
+            margin-top: 20px;
+        }
+        .confirmation__content .order__details {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation__content">
+        <center><h2>Reçu de la commande !</h2></center>
+        <h2>Merci pour votre commande !</h2>
+        <p>Votre commande a été confirmée avec succès et sera livrée sous peu.</p>
 
-        // Traitement du panier
-        const nom = item.nom;
-        const prix = item.prix;
-        const quantite = item.quantite;
-        const photoUrl = item.photo;
-        const productId = item.id;  // ID du produit
-        const prixTotal = prix * quantite;
+        <h3>Détails de la commande</h3>
+        <div class="order__details">
+            <ul>
+                <li>
+                    <span><strong>Produit</strong></span>
+                    <span><strong>Prix Total</strong></span>
+                </li>
+                {% for item in details %}
+                <li>
+                    <span>{{ item.product.name }}</span>
+                    <span>{{ item.prix_total|floatformat:0 }} fcfa</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <p class="total">Total : {{ commande.total }} fcfa</p>
+        </div>
 
-        // Ajouter une ligne pour chaque produit dans le récapitulatif
-        const productRow = document.createElement("li");
-        productRow.innerHTML = `
-            <span>${nom}</span>
-            <span>${prixTotal.toFixed(2)} fcfa</span>
-        `;
-        orderSummary.appendChild(productRow);
-
-        // Mettre à jour le sous-total
-        total += prixTotal;
-    }
-
-    // Afficher le total de la commande
-    if (totalElement) {
-        totalElement.textContent = `${total.toFixed(2)} fcfa`;
-    }
-});
-
-</script>
-{% endblock zz %}
+        <center>
+            <p>Adresse de livraison: {{ commande.addressli }}</p>
+            <h3>Date de commande : {{ commande.date_commande }}</h3>
+        </center>
+    </div>
+</body>
+</html>

@@ -51,11 +51,12 @@ class Commande(models.Model):
     prenom = models.CharField(max_length=40)
     email = models.EmailField()
     address = models.CharField(max_length=40)
+    addressli = models.CharField(max_length=200, null=True)
     contact = models.CharField(max_length=15)
     ville = models.CharField(max_length=40)
     total = models.DecimalField(max_digits=10, decimal_places=2)
     date_commande = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='delivered')  # Nouveau champ
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')  # Nouveau champ
 
     class Meta:
         ordering = ['-date_commande']

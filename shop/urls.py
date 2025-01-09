@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index, produit, panini, sup_catego, detailPro, elisee, contact, detail_commandeUti, confirmation, historique_commande, adminp, table, creation, productlist, modification, delete_product, commande, detailCommande, message, delete_commande, category, create_cat, modif_cat, regime, create_regime, modif_regime, sup_regime
+from .views import index, produit, recu, panini, sup_catego, detailPro, elisee, contact, detail_commandeUti, confirmation, historique_commande, adminp, table, creation, productlist, modification, delete_product, commande, detailCommande, message, delete_commande, category, create_cat, modif_cat, regime, create_regime, modif_regime, sup_regime
 
 
 urlpatterns = [
@@ -23,6 +23,7 @@ urlpatterns = [
     path('historique_commande/', historique_commande, name='historique_commande'),
     path('detailPro/<int:de_id>/', detailPro, name='detailPro'),
     path('detail_commandeUti/<int:commande_id>/', detail_commandeUti, name='detail_commandeUti'),
+    path('recu/<int:com_id>/', recu, name='recu'),
 
 
 

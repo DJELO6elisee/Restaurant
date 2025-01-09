@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-itl0z$9cvhq-^4=v&p%+6#t&t^7ycvp$39l+vtyng5cqmqpc)*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kuyoelisee01.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -74,6 +74,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Configuration de la durée de vie de la session (en secondes)
+SESSION_COOKIE_AGE = 1800  # 30 minutes
+
+# Expiration de la session à la fermeture du navigateur
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Empêche le renouvellement automatique de la session à chaque requête
+SESSION_SAVE_EVERY_REQUEST = False
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-secondary',
@@ -128,10 +137,11 @@ WSGI_APPLICATION = 'Restaurant.wsgi.application'
 #         },
 #     }
 # }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_db',  # Nom de votre base de données
+        'NAME': 'restaurant',  # Nom de votre base de données
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'Localhost',  # Localhost
@@ -183,8 +193,8 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = 'media/'
 
-# MEDIA_ROOT = "/home/kuyoelisee01/Restaurant/media"
-# STATIC_ROOT = "/home/kuyoelisee01/Restaurant/shop/static"
+MEDIA_ROOT = "/home/kuyoelisee01/Restaurant/media"
+STATIC_ROOT = "/home/kuyoelisee01/Restaurant/shop/static"
 
 
 # Default primary key field type

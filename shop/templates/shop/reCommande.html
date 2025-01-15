@@ -73,10 +73,8 @@
         <div class="logo">
             <h1>O'VIN_CANAN</h1>
         </div>
+        <br/>
         <center><h2>Reçu de la commande !</h2></center>
-        <h2>Merci pour votre commande !</h2>
-        <p>Votre commande a été confirmée avec succès et sera livrée sous peu.</p>
-
         <h3>Détails de la commande</h3>
         <div class="order__details">
             <ul>
@@ -84,7 +82,7 @@
                     <span><strong>Produit</strong></span>
                     <span><strong>Prix Total</strong></span>
                 </li>
-                {% for item in details %}
+                {% for item in details_commande %}
                 <li>
                     <span>{{ item.product.name }}</span>
                     <span>{{ item.prix_total|floatformat:0 }} fcfa</span>

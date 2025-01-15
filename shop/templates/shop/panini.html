@@ -274,6 +274,8 @@ body {
 {% block cart %}
 
 <!-- Breadcrumb Begin -->
+{%if user.is_authenticated %}
+
 <div class="breadcrumb-option">
     <div class="container mt-3">
         <div class="row">
@@ -288,31 +290,32 @@ body {
         </div>
     </div>
 </div>
+{% endif %}
 <!-- Breadcrumb End -->
 
 <section class="shop-cart spad">
-        <div class="container">
-            <div class="shop__cart__table">
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>photo</th>
-                                <th>Produit</th>
-                                <th>Prix</th>
-                                <th>Quantité</th>
-                                <th>Total</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cart-items">
-                            <!-- Les éléments du panier seront ajoutés ici dynamiquement -->
-                        </tbody>
-                    </table>
-                </div>
+    <div class="container">
+        <div class="shop__cart__table">
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>photo</th>
+                            <th>Produit</th>
+                            <th>Prix</th>
+                            <th>Quantité</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-items">
+                        <!-- Les éléments du panier seront ajoutés ici dynamiquement -->
+                    </tbody>
+                </table>
             </div>
         </div>
-
+    </div>
+    {% if user.is_authenticated %}
         <div class="row mt-4">
             <div class="col-md-6">
                 <div class="cart__btn">
@@ -329,7 +332,6 @@ body {
                 </div>
             </div>
         </div>
-
         <div class="row mt-4">
             <div class="col-md-6">
                 <div class="discount__content">
@@ -340,24 +342,22 @@ body {
                     </form>
                 </div>
             </div>
-            {%if user.is_authenticated %}
             <div class="col-md-6">
                 <div class="cart__total__procced">
                     <h6><i class="fas fa-money-bill-alt"></i> Total du panier</h6>
                     <ul>
-                        <li>Sous-total: <span id="subtotal">$0.00</span></li>
-                        <li>Total: <span id="total">$0.00</span></li>
+                        <li>Sous-total: <span id="subtotal">$0</span></li>
+                        <li>Total: <span id="total">$0</span></li>
                     </ul>
-                    <a href="{% url 'elisee' %}">
-                        <i class="fas fa-credit-card"></i> Continuez la commande
-                    </a>
+                   <a href="{% url 'elisee' %}" id="continue-order-btn">
+                         <i class="fas fa-credit-card"></i> Continuez la commande
+                     </a>
                 </div>
             </div>
-            {% endif %}
         </div>
-
-
-    </div>
+    {% else %}
+       <center><p>viellez vous connecter avant de pouvoir ajouter dans votre panier</p></center>
+    {% endif %}
 </section>
 
 
@@ -409,11 +409,11 @@ function renderCartTable() {
         row.innerHTML = `
             <td><img src="${photoUrl}" alt="${nom}" class="img-fluid rounded-3" style="width: 60px; height: 60px;"></td> <!-- Affichage de la photo -->
             <td>${nom}</td>
-            <td>${prix.toFixed(2)} fcfa</td>
+            <td>${Math.floor(prix.toFixed(2))} fcfa</td>
             <td>
                 <input type="number" value="${quantite}" min="1" data-id="${productId}" class="quantite-input">
             </td>
-            <td>${prixTotal.toFixed(2)} fcfa</td>
+            <td>${Math.floor(prixTotal.toFixed(2))} fcfa</td>
             <td>
                 <button class="btn-delete" data-id="${productId}">Supprimer</button>
             </td>
@@ -422,8 +422,8 @@ function renderCartTable() {
     }
 
     // Mettre à jour les totaux
-    subtotalElement.textContent = `${subtotal.toFixed(2)} fcfa`;
-    totalElement.textContent = `${subtotal.toFixed(2)} fcfa`;
+    subtotalElement.textContent = `${Math.floor(subtotal.toFixed(2))} fcfa`;
+    totalElement.textContent = `${Math.floor(subtotal.toFixed(2))} fcfa`;
 }
 
 // Fonction pour supprimer un produit
@@ -476,6 +476,18 @@ document.addEventListener("input", function (e) {
 document.addEventListener("DOMContentLoaded", function () {
     renderCartTable(); // Afficher le contenu du panier
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+        const continueOrderButton = document.getElementById('continue-order-btn');
+        const cartItemsContainer = document.getElementById('cart-items');
+
+        continueOrderButton.addEventListener('click', function(event) {
+            if (cartItemsContainer.children.length === 0) {
+                event.preventDefault();
+                alert('Vous devez avoir des produits dans le panier.');
+            }
+        });
+    });
 </script>
 
 {% endblock js %}

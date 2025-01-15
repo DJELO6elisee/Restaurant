@@ -2,14 +2,14 @@ from django.db import models
 from Connexion.models import CustomUser
 
 class RegimeAlimentaire(models.Model):
-    nom = models.CharField(max_length=40)  # Réduit de 50 à 40
+    nom = models.CharField(max_length=200)  # Réduit de 50 à 40
     description = models.TextField()
 
     def __str__(self):
         return self.nom
 
 class Category(models.Model):
-    nom = models.CharField(max_length=40)  # Réduit de 50 à 40
+    nom = models.CharField(max_length=200)  # Réduit de 50 à 40
     date_ajout = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -19,14 +19,14 @@ class Category(models.Model):
         return self.nom
 
 class Product(models.Model):
-    name = models.CharField(max_length=40, db_index=True)  # Réduit de 50 à 40
+    name = models.CharField(max_length=200, db_index=True)  # Réduit de 50 à 40
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     regime = models.ForeignKey(RegimeAlimentaire, related_name='products', on_delete=models.CASCADE, null=True)
-    smalldescription = models.CharField(max_length=50)  # Réduit de 60 à 50
+    smalldescription = models.CharField(max_length=300)  # Réduit de 60 à 50
     description = models.TextField()
     photo = models.ImageField(upload_to='images/', blank=True)
-    status = models.CharField(max_length=40)  # Réduit de 50 à 40
+    status = models.CharField(max_length=100)  # Réduit de 50 à 40
     produit_frais = models.BooleanField(default=False)
     produit_bio = models.BooleanField(default=False)
     produit_vegan = models.BooleanField(default=False)
@@ -47,16 +47,17 @@ class Commande(models.Model):
         ('delivered', 'Livrée'),
     ]
     items = models.CharField(max_length=20)
-    nom = models.CharField(max_length=40)
-    prenom = models.CharField(max_length=40)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)  # Relation avec l'utilisateur
+    nom = models.CharField(max_length=200)
+    prenom = models.CharField(max_length=200)
     email = models.EmailField()
-    address = models.CharField(max_length=40)
+    address = models.CharField(max_length=200)
     addressli = models.CharField(max_length=200, null=True)
-    contact = models.CharField(max_length=15)
-    ville = models.CharField(max_length=40)
+    contact = models.CharField(max_length=20)
+    ville = models.CharField(max_length=200)
     total = models.DecimalField(max_digits=10, decimal_places=2)
     date_commande = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')  # Nouveau champ
+    status = models.CharField(max_length=150, choices=STATUS_CHOICES, default='pending')  # Nouveau champ
 
     class Meta:
         ordering = ['-date_commande']
@@ -87,7 +88,7 @@ class Order(models.Model):
         return f"{self.user.username} purchased {self.product.name} on {self.date_achat}"
 class ProfileUtilisateur(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    regime_alimentaire_prefere = models.CharField(max_length=20, choices=[  # Réduit de 70 à 20
+    regime_alimentaire_prefere = models.CharField(max_length=90, choices=[  # Réduit de 70 à 20
         ('vegan', 'Vegan'),
         ('vegetarien', 'Végétarien'),
         ('sans_gluten', 'Sans-Gluten'),
@@ -102,7 +103,7 @@ class ProfileUtilisateur(models.Model):
 
 
 class Message(models.Model):
-    nom = models.CharField(max_length=40)  # Réduit de 60 à 40
+    nom = models.CharField(max_length=200)  # Réduit de 60 à 40
     email = models.EmailField()
     message = models.TextField()
     date_envoi = models.DateTimeField(auto_now_add=True)

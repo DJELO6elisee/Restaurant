@@ -1,14 +1,20 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
-    
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f4f8;
+            background-image: url("{% static 'img/gallery/blanc2.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             margin: 0;
             display: flex;
             justify-content: center;
@@ -21,8 +27,8 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            max-width: 400px;
-            width: 100%;
+            max-width: 600px; /* Increased max-width to accommodate two columns of inputs*/
+            width: 95%; /* Adjusted width for better responsiveness*/
         }
 
         .form-header {
@@ -35,9 +41,11 @@
             color: #333;
         }
 
-        .registration-form .form-group {
-            margin-bottom: 15px;
-        }
+       .registration-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two columns of equal width */
+            gap: 15px; /* Space between grid items */
+       }
 
         .registration-form label {
             display: block;
@@ -46,13 +54,16 @@
             color: #555;
         }
 
-        .registration-form input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            color: #333;
+        /*.registration-form input {*/
+            width: calc(100% - 20px); /* Reduce width to account for padding*/
+             padding: 10px; /* Add padding to the input*/
+        /*    border: 1px solid #ddd;*/
+        /*    border-radius: 5px;*/
+        /*    font-size: 14px;*/
+        /*    color: #333;*/
+        /*}*/
+        .registration-form input::placeholder {
+            color: #aaa; /* Change placeholder color */
         }
 
         .registration-form input:focus {
@@ -61,19 +72,37 @@
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
         }
 
+        .form-group.password-group {
+          position: relative;
+        }
+
+        .registration-form input {
+            width: 100%;
+            padding: 10px;
+            padding-right: 30px; /* Give some padding so that the icon is displayed well*/
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
         .toggle-password {
             position: absolute;
             right: 10px;
-            top: 35px;
+            top: 52px;
+            transform: translateY(-50%);
             cursor: pointer;
             color: #aaa;
+            display: flex;
+            align-items: center;
+            pointer-events: none; /*Makes the icon not clickable*/
+        }
+        .toggle-password i {
+            font-size: 0.9em;
+            pointer-events:auto; /* Make the icon clickable*/
         }
 
-        .form-group {
-            position: relative;
-        }
-
-        .btn-submit {
+       .btn-submit {
             width: 100%;
             padding: 10px 15px;
             background: linear-gradient(45deg, #6a11cb, #2575fc);
@@ -83,8 +112,8 @@
             font-size: 16px;
             cursor: pointer;
             transition: background 0.3s;
+            grid-column: 1 / -1;
         }
-
         .btn-submit:hover {
             background: linear-gradient(45deg, #2575fc, #6a11cb);
         }
@@ -93,6 +122,7 @@
             text-align: center;
             margin-top: 15px;
             font-size: 14px;
+            grid-column: 1 / -1;
         }
 
         .form-footer a {
@@ -105,6 +135,29 @@
         .form-footer a:hover {
             color: #0056b3;
         }
+
+        @media (max-width: 768px) {
+        .registration-form {
+            grid-template-columns: 1fr; /* Single column on small screens */
+        }
+
+
+         .btn-submit {
+            grid-column: 1 / -1; /* Span all columns */
+        }
+        .form-footer {
+            grid-column: 1 / -1;
+        }
+        .form-container{
+            width:90%; /* Takes a smaller width to not fill the entire screen */
+            padding: 15px; /* Reduced padding */
+            display:flex;
+            flex-direction:column;
+            align-items: center;/* Center the element */
+            margin-top: 180px;
+        }
+    }
+
     </style>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
@@ -123,29 +176,47 @@
                     </div>
                 {% endfor %}
             {% endif %}
-        
+
             {% csrf_token %}
             <div class="form-group">
+                <label for="username">Nom</label>
+                <input type="text" id="username" name="username" placeholder="nom" required>
+            </div>
+             <div class="form-group">
                 <label for="first_name">Prénom</label>
-                <input type="text" id="username" name="username" placeholder="Entrez votre prénom" required>
+                <input type="text" id="first_name" name="first_name" placeholder="prénom" required>
             </div>
-            <div class="form-group">
-                <label for="last_name">Nom</label>
-                <input type="text" id="first_name" name="first_name" placeholder="Entrez votre nom" required>
-            </div>
-            <div class="form-group">
+           <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
             </div>
             <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
-                <span class="toggle-password" onclick="togglePassword('password')">👁</span>
+                <label for="contact">Numéro de téléphone</label>
+                <input type="text" id="contact" name="contact" placeholder="téléphone" required>
             </div>
             <div class="form-group">
+                <label for="adresse">Adresse</label>
+                <input type="text" type="text" id="adresse" name="adresse" placeholder="Adresse">
+            </div>
+            <div class="form-group">
+                <label for="adresse_livraison">Adresse de livraison</label>
+                <input type="text" id="adresse_livraison" name="adresse_livraison" placeholder="Adresse de livraison">
+            </div>
+
+
+            <div class="form-group password-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" placeholder="mot de passe" required>
+                <span class="toggle-password" onclick="togglePassword('password')">
+                   <i class="fas fa-eye"></i>
+                </span>
+            </div>
+            <div class="form-group password-group">
                 <label for="password_confirm">Confirmation du mot de passe</label>
-                <input type="password" id="password_confirm" name="password_confirm" placeholder="Confirmez votre mot de passe" required>
-                <span class="toggle-password" onclick="togglePassword('password_confirm')">👁</span>
+                <input type="password" id="password_confirm" name="password_confirm" placeholder="Confirmez MDP" required>
+                <span class="toggle-password" onclick="togglePassword('password_confirm')">
+                    <i class="fas fa-eye"></i>
+                </span>
             </div>
             <button type="submit" class="btn-submit">S'inscrire</button>
         </form>
@@ -154,12 +225,17 @@
         </div>
     </div>
     <script>
-        function togglePassword(fieldId) {
+         function togglePassword(fieldId) {
             const field = document.getElementById(fieldId);
+            const icon = field.nextElementSibling.querySelector('i'); //gets the span next element and the i inside.
             if (field.type === "password") {
                 field.type = "text";
+               icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
             } else {
                 field.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
             }
         }
     </script>

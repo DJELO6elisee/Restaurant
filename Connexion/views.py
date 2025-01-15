@@ -1,18 +1,14 @@
 from django.shortcuts import render, redirect
-
 import re
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.password_validation import validate_password
-
 from django.contrib import messages
-
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 from .models import CustomUser
-
-# Create your views here.
 
 def create(request):
     if request.method == 'POST':
@@ -20,6 +16,10 @@ def create(request):
         username = request.POST.get('username')
         first_name = request.POST.get('first_name')
         email = request.POST.get('email')
+        contact = request.POST.get('contact')
+        adresse = request.POST.get('adresse')
+        adresse_livraison = request.POST.get('adresse_livraison')
+
         password = request.POST.get('password')
         password_confirm = request.POST.get('password_confirm')
 
@@ -28,6 +28,9 @@ def create(request):
             'username': username,
             'first_name': first_name,
             'email': email,
+            'contact': contact,
+            'adresse': adresse,
+            'adresse_livraison': adresse_livraison,
         }
 
         # Initialiser une variable pour suivre les erreurs
@@ -55,6 +58,11 @@ def create(request):
             messages.error(request, "L'adresse email est invalide. Veuillez réessayer.")
             errors = True
 
+        # Vérification de l'existence du nom d'utilisateur et de l'email
+        # if CustomUser.objects.filter(username=username).exists():
+        #     messages.error(request, "Ce nom d'utilisateur existe déjà. Veuillez en choisir un autre.")
+        #     errors = True
+
         if CustomUser.objects.filter(email=email).exists():
             messages.error(request, "Cet email existe déjà. Veuillez en choisir un autre.")
             errors = True
@@ -64,7 +72,7 @@ def create(request):
             return render(request, 'Connexion/creation_compte.html', {'form_data': form_data})
 
         # Création de l'utilisateur
-        CustomUser.objects.create_user(username=username, first_name=first_name, email=email, password=password)
+        CustomUser.objects.create_user(username=username, first_name=first_name, email=email, contact=contact, adresse=adresse, adresse_livraison=adresse_livraison, password=password)
         messages.success(request, "Compte créé avec succès. Connectez-vous maintenant.")
         return redirect('connexion')
 
@@ -74,26 +82,36 @@ def create_superuser():
     """
     Fonction pour créer un superutilisateur si aucun n'existe.
     """
-    if not CustomUser.objects.filter(username='admin').exists():
-        CustomUser.objects.create_superuser('kuyo', 'kuyo@gmail.com', '123abc!@#')
+    # Créer un superutilisateur dans la base de données
+    if not CustomUser.objects.filter(email='kuyo@gmail.com').exists():
+        CustomUser.objects.create_superuser(email='kuyo@gmail.com', username='kuyo', password='123abc!@#')
         print("Superutilisateur créé.")
 
 def connexion(request):
+    # Créer un superutilisateur si nécessaire
+    create_superuser()
+
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
 
         # Authentification de l'utilisateur
-        user = authenticate(request, email=email, password=password)
+        # Modifiez ici si vous authentifiez avec email
+        user = authenticate(request, email=email, password=password)  # Utilisez 'username' ou ajustez la méthode
 
         if user is not None:
             login(request, user)  # Connexion de l'utilisateur
-            
+
+            # if user.is_superuser:  # Vérifie si l'utilisateur est un superutilisateur
+            #     return redirect('adminp')  # Redirige vers la page admin Django
+
             # Vérifier si l'utilisateur est un superutilisateur
-            if user.is_staff:
-                return redirect('adminp')
-            
-        
+            if user.is_staff:  # Vérifie si l'utilisateur est un superutilisateur
+                return redirect('adminp')  # Redirige vers la page admin Django
+
+            # Vous pouvez ajouter une redirection vers une page normale si l'utilisateur n'est pas un superutilisateur
+            return redirect('shop')  # Par exemple vers la page d'accueil
+
         else:
             messages.error(request, "Email ou mot de passe incorrect")
             return redirect('connexion')  # Rediriger vers la page de connexion en cas d'erreur
@@ -104,12 +122,12 @@ def connexion(request):
 def verification(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-         
-         
+
+
         if not email:
             messages.error(request, 'veillez entrer une adresse email valide')
             return redirect('verification')
-        
+
         user = CustomUser.objects.filter(email=email).first
 
         if user:
@@ -117,7 +135,7 @@ def verification(request):
         else:
             messages.error(request, 'cette adresse ne correspond a aucun compte')
             return redirect('verification')
-    
+
     return render(request, 'Connexion/verification_email.html')
 
 
@@ -127,7 +145,7 @@ def reset(request, email):
     except CustomUser.DoesNotExist:
         messages.error(request, 'Utilisateur introuvable')
         return redirect("verification")
-    
+
     if request.method == 'POST':
         password = request.POST.get('password')
         password_confirm = request.POST.get('password_confirm')
@@ -156,5 +174,4 @@ def deconnexion(request):
         logout(request)
         messages.success(request, 'Utilisateur deconnecter avec succes')
         return redirect('connexion')
-
 

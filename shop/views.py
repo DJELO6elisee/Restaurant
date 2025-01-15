@@ -12,6 +12,7 @@ from Connexion.models import CustomUser
 from django.core.mail import send_mail
 from django.conf import settings
 
+from django.utils import timezone
 
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -567,7 +568,135 @@ def recu(request, com_id):
     return render(request, 'shop/recu.html', context)
 
 
+def profile(request):
+    user = request.user  # Obtenir l'utilisateur actuel
+    formatted_join_date = "N/A"  # Valeur par défaut
+    formatted_last_login = "N/A"  # Valeur par défaut
+    user_nom = "inconnu"
+    user_prenom = "inconnu"
+    commande_contact = "N/A"  # Valeur par défaut
+    commande_ville = "N/A"  # Valeur par défaut
+
+    if user.is_authenticated:
+        join_date = user.date_joined  # Obtenir la date d'inscription
+        last_login = user.last_login  # Obtenir la dernière connexion
+
+        # Formater la date d'inscription
+        if join_date:
+            formatted_join_date = join_date.strftime("%B %d, %Y")
+
+        # Formater la dernière connexion
+        if last_login:
+            time_difference = timezone.now() - last_login
+            if time_difference.seconds < 60:
+                formatted_last_login = "A few seconds ago"
+            elif time_difference.seconds < 3600:
+                formatted_last_login = f"{time_difference.seconds // 60} minutes ago"
+            elif time_difference.days < 1:
+                formatted_last_login = f"{time_difference.seconds // 3600} hours ago"
+            else:
+                formatted_last_login = f"{time_difference.days} days ago"
+
+        # Obtenir les informations de l'utilisateur
+        user_nom = user.first_name if user.first_name else "inconnu"
+        user_prenom = user.username if user.username else "inconnu"
+
+        # Débogage pour afficher l'utilisateur dans les logs
+        print(f"Utilisateur connecté : {user}")
+
+        # Récupérer la commande la plus récente associée à l'utilisateur
+        commande = Commande.objects.filter(user=user).first()
+        if commande:
+            print(f"Commande trouvée : {commande}")
+            commande_contact = commande.contact
+            commande_ville = commande.ville
+        else:
+            print("Aucune commande trouvée pour cet utilisateur.")
+
+    # Préparer le contexte
+    context = {
+        'formatted_join_date': formatted_join_date,
+        'formatted_last_login': formatted_last_login,
+        'user_nom': user_nom,
+        'user_prenom': user_prenom,
+        'commande_contact': commande_contact,
+        'commande_ville': commande_ville,
+    }
+
+    return render(request, 'shop/profile.html', context)
 
 
 
+
+
+@login_required
+def profile_edit(request):
+    user = request.user
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        contact = request.POST.get('contact')
+        adresse_livraison = request.POST.get('adresse_livraison')
+        # Check if the email is taken by other users
+        if email and email != user.email and CustomUser.objects.filter(email=email).exists():
+             messages.error(request, "Cette adresse email est déjà utilisée par un autre utilisateur.")
+             context = {
+               'first_name' : first_name if first_name else user.first_name,
+               'username' : username if username else user.username,
+               'email' : email if email else user.email,
+               'contact' : contact if contact else user.contact,
+               'adresse_livraison' : adresse_livraison if adresse_livraison else user.adresse_livraison,
+             }
+
+        user.first_name = first_name if first_name else user.first_name
+        user.username = username if username else user.username
+        user.contact = contact if contact else user.contact
+        user.adresse_livraison = adresse_livraison if adresse_livraison else user.adresse_livraison
+        if email:
+            user.email = email
+        user.save()
+        messages.success(request, 'Profil mis à jour avec succès')
+        return redirect('profile')
+    context = {
+        'first_name' : user.first_name,
+        'username' : user.username,
+        'email' : user.email,
+        'contact' : user.contact,
+        'adresse_livraison' : user.adresse_livraison,
+    }
+
+    return render(request, 'shop/profile_edit.html', context)
+
+
+@login_required(login_url='connexion')
+def recuCommande(request, recu_id):
+    # Récupérer la commande en fonction de l'ID
+    commande = get_object_or_404(Commande, id=recu_id)
+
+    # Récupérer les détails associés à cette commande uniquement
+    details_commande = DetailCommande.objects.filter(commande=commande)
+
+    # Si le paramètre "pdf" est dans la requête, générer un PDF
+    if request.GET.get('pdf'):
+        # Rendre le contenu HTML du template pour le PDF
+        html_content = render_to_string('shop/reCommande.html', {
+            'commande': commande,
+            'details_commande': details_commande,
+        })
+
+        # Générer le PDF à partir du contenu HTML
+        pdf_file = HTML(string=html_content).write_pdf()
+
+        # Créer une réponse HTTP avec le PDF
+        response = HttpResponse(pdf_file, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="commande_{commande.nom}.pdf"'
+        return response
+
+    # Rendre le template HTML classique pour l'affichage
+    context = {
+        'commande': commande,
+        'details_commande': details_commande
+    }
+    return render(request, 'shop/reCommande.html', context)
 

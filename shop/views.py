@@ -5,7 +5,7 @@ from django.http import HttpResponseBadRequest
 from django.db.models import Sum
 # import logging
 
-from .models import Product, Category, Commande, DetailCommande, Message, RegimeAlimentaire
+from .models import Product, Category, Commande, DetailCommande, Message, RegimeAlimentaire, Article
 import json
 from django.contrib.auth.decorators import login_required
 from Connexion.models import CustomUser
@@ -45,10 +45,10 @@ def elisee(request):
         contact = request.POST.get('contact')
         email = request.POST.get('email')
         total = request.POST.get('total')
+        numero_destinataire = request.POST.get('numero_destinataire') or None
+        nom_prenom_destinataire = request.POST.get('nom_prenom_destinataire') or None
 
         # Valider les données du formulaire
-        if not (nom and prenom and ville and address and addressli and contact and email and total):
-            return HttpResponseBadRequest("Tous les champs sont requis.")
 
         # Récupérer et valider les données du panier
         try:
@@ -62,6 +62,7 @@ def elisee(request):
 
         # Créer une nouvelle commande
         commande = Commande.objects.create(
+            user=request.user,
             nom=nom,
             prenom=prenom,
             ville=ville,
@@ -69,7 +70,9 @@ def elisee(request):
             addressli=addressli,
             contact=contact,
             email=email,
-            total=total
+            total=total,
+            numero_destinataire=numero_destinataire,
+            nom_prenom_destinataire=nom_prenom_destinataire,
         )
 
         # Parcourir les éléments du panier et créer les détails de la commande
@@ -143,7 +146,21 @@ def message(request):
     return render(request, 'shop/message.html', {'messag': messag})
 
 def index(request):
-    produits_sous = Product.objects.filter(status='acceuil')
+    categories = Category.objects.all()[1:]
+
+    # Préparer une liste pour stocker les catégories avec leurs produits filtrés
+    categories_with_products = []
+
+    for category in categories:
+        # Récupérer les produits associés à la catégorie
+        produits_in_category = Product.objects.filter(category=category)[:4]
+
+        # Si des produits existent dans cette catégorie après le filtrage, on ajoute la catégorie et ses produits
+        if produits_in_category.exists():
+            categories_with_products.append({
+                'category': category,
+                'products': produits_in_category
+            })
 
     # Gestion de la recherche
     query = request.GET.get('item_name')  # Récupère la requête de recherche depuis les paramètres GET
@@ -152,7 +169,7 @@ def index(request):
     if query:
         # Rechercher dans tous les produits selon le nom
         search_results = Product.objects.filter(name__icontains=query)
-    return render(request, 'shop/index.html', {'produits_sous': produits_sous, 'search_results': search_results, 'query':query })
+    return render(request, 'shop/index.html', {'categories_with_products': categories_with_products, 'search_results': search_results, 'query':query })
 
 from django.db.models import Count
 
@@ -282,7 +299,6 @@ def creation(request):
         smalldescription = request.POST.get("smalldescription")
         description = request.POST.get("description")
         photo = request.FILES.get("photo")
-        status = request.POST.get("status")
 
         produit_frais = 'produit_frais' in request.POST  # Si la case est cochée
         produit_bio = 'produit_bio' in request.POST
@@ -312,7 +328,6 @@ def creation(request):
             smalldescription=smalldescription,
             description=description,
             photo=photo,
-            status=status,
             produit_frais=produit_frais,
             produit_bio=produit_bio,
             produit_vegan=produit_vegan,
@@ -402,41 +417,57 @@ def delete_commande(request, commande_id):
     return render(request, 'shop/delete_commande.html', {'del_commande': del_commande})
 
 def send_status_update_email(commande):
-    subject = "Le statut de votre commande a été mis à jour"
-    message = f"Bonjour {commande.nom},\n\nLe statut de votre commande a été mis à jour.\n\nStatut actuel : {commande.get_status_display()}."
+    """Envoie un email pour informer l'utilisateur d'une mise à jour du statut de sa commande."""
+    subject = "Mis à jour du statut de votre commande"
+    message = f"""Bonjour {commande.nom},
+
+    Le statut de votre commande a été mis à jour.
+
+    Statut actuel : {commande.get_status_display()}.
+
+    Merci de votre confiance à O'VIN CANAN.
+    """
     from_email = 'jeaneliseedjelo85@gmail.com'  # Adresse email par défaut
-    recipient_list = [commande.email]  # Liste des destinataires (ici l'email de l'utilisateur)
+    recipient_list = [commande.email]
 
-    # Envoi de l'email
-    send_mail(subject, message, from_email, recipient_list)
-
+    try:
+        send_mail(subject, message, from_email, recipient_list)
+    except Exception as e:
+        # Gestion des erreurs d'envoi d'email (facultatif)
+        print(f"Erreur lors de l'envoi de l'email : {e}")
 
 
 @login_required(login_url='connexion')
 def commande(request):
+    """Vue pour gérer les commandes et mettre à jour leur statut."""
     commandes = Commande.objects.all()
 
     if request.method == 'POST':
         commande_id = request.POST.get('commande_id')
         status = request.POST.get('status')
 
-        commande = Commande.objects.get(id=commande_id)
-        previous_status = commande.status  # On peut garder l'ancien statut si nécessaire
+        # Validation du statut
+        valid_status = [choice[0] for choice in Commande.STATUS_CHOICES]
+        if status not in valid_status:
+            messages.error(request, "Statut invalide.")
+            return redirect('commande')
+
+        # Récupération de la commande
+        commande = get_object_or_404(Commande, id=commande_id)
+        previous_status = commande.status
         commande.status = status
         commande.save()
 
-        # Ajouter un message pour l'utilisateur
-        messages.success(request, f"Le statut de votre commande a été mis à jour en '{status}'.")
+        # Ajout d'un message pour l'utilisateur
+        messages.success(request, f"Le statut de la commande {commande.id} a été mis à jour en '{status}'.")
 
-        # Si vous souhaitez envoyer un message par email à l'utilisateur
+        # Envoi de l'email si le statut a changé
         if previous_status != status:
             send_status_update_email(commande)
 
-        return redirect('commande')  # Rediriger vers la page des commandes après la mise à jour
+        return redirect('commande')
 
-    context = {
-        'commandes': commandes
-    }
+    context = {'commandes': commandes}
     return render(request, 'shop/commande.html', context)
 
 
@@ -534,8 +565,11 @@ def sup_regime(request, delre_id):
 
 @login_required
 def historique_commande(request):
-    # Filtrer les commandes de l'utilisateur connecté
-    commandes = Commande.objects.filter(email=request.user.email)
+    if request.user.is_authenticated:
+        # Récupérer toutes les commandes passées par l'utilisateur, peu importe l'email utilisé
+        commandes = Commande.objects.filter(user=request.user)
+    else:
+        commandes = Commande.objects.none()  # Aucune commande si pas connecté
 
     context = {
         'commandes': commandes
@@ -589,11 +623,11 @@ def profile(request):
         if last_login:
             time_difference = timezone.now() - last_login
             if time_difference.seconds < 60:
-                formatted_last_login = "A few seconds ago"
+                formatted_last_login = "Il y a quelques secondes"
             elif time_difference.seconds < 3600:
-                formatted_last_login = f"{time_difference.seconds // 60} minutes ago"
+                formatted_last_login = f"Il y a {time_difference.seconds // 60} minutes"
             elif time_difference.days < 1:
-                formatted_last_login = f"{time_difference.seconds // 3600} hours ago"
+                formatted_last_login = f"Il y a {time_difference.seconds // 3600} heures"
             else:
                 formatted_last_login = f"{time_difference.days} days ago"
 
@@ -699,4 +733,68 @@ def recuCommande(request, recu_id):
         'details_commande': details_commande
     }
     return render(request, 'shop/reCommande.html', context)
+
+def blog(request):
+    article_blog = Article.objects.all()
+    return render(request, 'shop/blog.html', {'article_blog': article_blog})
+
+def creationar(request):
+    if request.method == 'POST':
+        title = request.POST.get('title', '')
+        Smalldescription = request.POST.get('Smalldescription', '')
+        description = request.POST.get('description', '')
+        image = request.FILES.get('image')
+
+        blogs = Article.objects.create(title=title, Smalldescription=Smalldescription, description=description, image=image)
+        blogs.save()
+    return render(request, 'shop/creationar.html')
+
+def article(request):
+    art = Article.objects.all()
+    return render(request, 'shop/article.html', {'art': art})
+
+def modif_article(request, art_id):
+
+    get_article = get_object_or_404(Article, id=art_id)
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        Smalldescription = request.POST.get('Smalldescription')
+        description = request.POST.get('description')
+        image = request.FILES.get('image')
+
+        get_article.title = title
+        get_article.Smalldescription = Smalldescription
+        get_article.description = description
+        if image:
+            get_article.image = image
+
+        get_article.save()
+        return redirect('article')
+    return render(request, 'shop/modif_article.html', {'get_article': get_article})
+
+
+def blogDetail(request, bd_id):
+
+    blog_article = get_object_or_404(Article, id=bd_id)  # Récupère un seul article ou renvoie 404
+    autre_article = Article.objects.exclude(id=bd_id)[:5]  # Exclut l'article en cours et limite à 5
+
+
+    return render(request, 'shop/blog-detail.html', {'blog_article': blog_article, 'autre_article': autre_article})
+
+def suppresion_art(request, suart_id):
+    del_article = get_object_or_404(Article, id=suart_id)
+    titles = del_article.title
+    if request.method == 'POST':
+        del_article.delete()
+        return redirect('article')
+
+    return render(request, 'shop/sup_article.html', {'titles': titles})
+
+
+def propos(request):
+    return render(request, 'shop/apropos.html')
+
+def theme(request):
+    return render(request, 'shop/theme.html')
 

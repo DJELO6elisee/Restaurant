@@ -97,7 +97,14 @@
         <center>
             <p>Adresse de livraison: {{ commande.addressli }}</p>
             <h3>Date de commande : {{ commande.date_commande }}</h3>
-            <h3>Contact : {{ commande.contact }}</h3>
+
+            <h3>Contact :
+                        {% if commande.numero_destinataire %}
+                            {{ commande.numero_destinataire }}
+                        {% else %}
+                            {{ commande.contact }}
+                        {% endif %}
+                        </h3>
         </center>
     </div>
 </body>

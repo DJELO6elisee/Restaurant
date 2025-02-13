@@ -358,6 +358,39 @@ body {
 .close-btn:hover {
     background-color: #45a049;
 }
+/* Style général */
+#destinataire {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ddd; /* Bordure grise par défaut */
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    color: #333;
+
+    cursor: pointer;
+    box-shadow: none; /* Pas d'ombre par défaut */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Effet au survol */
+#destinataire:hover {
+    border-color: #aaa; /* Bordure légèrement plus foncée au survol */
+}
+
+/* Effet au focus (lors du clic) */
+#destinataire:focus {
+    border-color: #007BFF; /* Bordure bleue */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Effet lumineux au clic */
+    outline: none; /* Supprime le contour bleu par défaut */
+}
+
+/* Suppression de l'effet par défaut pour les anciens navigateurs */
+#destinataire:active,
+#destinataire:visited {
+    border-color: #ddd; /* Revenir à la couleur grise */
+    box-shadow: none;
+}
 
     </style>
 {% endblock css1 %}
@@ -365,21 +398,6 @@ body {
 
 {% block caisse %}
 
-
-    <!-- Breadcrumb Begin -->
-    <div class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__links">
-                        <a href="{% url 'shop' %}"><i class="fa fa-home"></i> Acceuil</a>
-                        <span>Panier d'achat</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Breadcrumb End -->
 
     <!-- Checkout Section Begin -->
 
@@ -395,7 +413,7 @@ body {
             <input type="hidden" name="panier" id="hidden-panier">
             <div class="row">
                 <div class="col-lg-8">
-                    <h5>Formulaire de commande</h5>
+                    <h5>Informations liées à la commande</h5>
                     <div class="row">
                         {% if user.is_authenticated %}
                         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -410,42 +428,64 @@ body {
                                 <input type="text" name="prenom" value="{{ user.username }}" required>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="checkout__form__input">
-                                <p>Email<span>*</span></p>
-                                <input type="email" name="email" value="{{ user.email }}" required>
-                            </div>
-                        </div>
 
                         <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="checkout__form__input">
+                            <div class="checkout__form__input" id="field_telephone">
                                 <p>Numéro de Téléphone<span>*</span></p>
-                                <input type="text" name="contact" required value="{{ user.contact }}">
+                                <input type="text" name="contact" required value="{{ user.contact }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="checkout__form__input">
+                                <p>Lieu d'habitation<span>*</span></p>
+                                <input type="text" name="ville" value="{{ user.adresse }}" required>
                             </div>
                         </div>
 
                         <div class="col-lg-12">
                             <div class="checkout__form__input">
-                                <p>Ville<span>*</span></p>
-                                <input type="text" name="ville" required>
+                                <p>Destinataire<span>*</span></p>
+                                <select id="destinataire" onchange="toggleFields()">
+                                    <option value="moi_meme">Moi-même</option>
+                                    <option value="autre">Autre</option>
+                                </select>
                             </div>
                             <div class="checkout__form__input">
-                                <p>Adresse<span>*</span></p>
-                                <input type="text" name="address" placeholder="Adresse de la Rue" required value="{{ user.adresse }}">
+                                <p>Email<span>*</span></p>
+                                <input type="email" name="email" value="{{ user.email }}" required>
                             </div>
-                             <div class="checkout__form__input">
+                            <div class="checkout__form__input">
                                 <p>Adresse de livraison<span>*</span></p>
                                 <input type="text" name="addressli" placeholder="Adresse de livraison" required value="{{ user.adresse_livraison }}">
                             </div>
+
+                            <div class="checkout__form__input">
+                                <!--<p>Adresse<span>*</span></p>-->
+                                <input type="hidden" name="address" placeholder="Adresse de la Rue" required value="{{ user.adresse }}">
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+
+                            <div class="checkout__form__input" id="field_numero_destinataire" style="display: none;">
+                                <p>Numéro du destinataire<span>*</span></p>
+                                <input type="text" name="numero_destinataire" placeholder="Numéro de téléphone du destinataire">
+                            </div>
                         </div>
 
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="checkout__form__input" id="field_nom_prenom_destinataire" style="display: none;">
+                                <p>Nom et Prénom du destinataire<span>*</span></p>
+                                <input type="text" name="nom_prenom_destinataire" placeholder="Nom et prénom du destinataire">
+                            </div>
+                        </div>
 
                         {% endif %}
                         <div class="col-lg-12">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="checkout__form__input">
-                                    <p>Total</p>
-                                    <input type="text" name="total" readonly>
+                                    <!--<p>Total</p>-->
+                                    <input type="hidden" name="total" readonly>
                                 </div>
                             </div>
                         </div>
@@ -453,7 +493,7 @@ body {
                 </div>
                 <div class="col-lg-4">
                     <div class="checkout__order">
-                        <h5>Votre Commande</h5>
+                        <h5>Details Commande</h5>
                         <div class="checkout__order__product">
                             <ul id="order-summary">
                                 <li>
@@ -464,8 +504,8 @@ body {
                         </div>
                         <div class="checkout__order__total">
                             <ul>
-                                <li>Subtotal <span id="subtotal">$ 0</span></li>
-                                <li>Total <span id="total">$ 0</span></li>
+                                <li>Total <span id="subtotal">0 fcfa</span></li>
+                                <li>Total <span id="total">0 fcfa</span></li>
                             </ul>
                         </div>
                         <div class="checkout__order__widget">
@@ -474,7 +514,7 @@ body {
                                <input type="checkbox" id="check-payment">
                             </label>
                         </div>
-                         <button type="submit" class="site-btn">Commander</button>
+                         <button type="submit" class="site-btn">Envoyer</button>
                     </div>
                 </div>
             </div>
@@ -644,6 +684,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
   });
+
+    function toggleFields() {
+        const destinataireSelect = document.getElementById('destinataire');
+        const emailInput = document.querySelector('input[name="email"]');
+        const addressLiInput = document.querySelector('input[name="addressli"]');
+         const telephoneInput = document.getElementById('field_telephone');
+          const numeroDestinataireInput = document.getElementById('field_numero_destinataire');
+        const nomPrenomDestinataireInput = document.getElementById('field_nom_prenom_destinataire');
+
+
+        if (destinataireSelect.value === 'autre') {
+            emailInput.value = '';
+            emailInput.placeholder = "Entrer l'email du destinataire";
+            addressLiInput.value = '';
+            addressLiInput.placeholder = "Adresse de livraison du destinataire";
+             telephoneInput.style.display = 'none';
+             numeroDestinataireInput.style.display = 'block';
+            nomPrenomDestinataireInput.style.display = 'block';
+
+
+        } else {
+            emailInput.value = "{{ user.email }}";
+            emailInput.placeholder = ""; // You can remove the placeholder or keep it as needed
+            addressLiInput.value = "{{ user.adresse_livraison }}";
+            addressLiInput.placeholder = "Adresse de livraison"; // You can remove the placeholder or keep it as needed
+            telephoneInput.style.display = 'block';
+             numeroDestinataireInput.style.display = 'none';
+            nomPrenomDestinataireInput.style.display = 'none';
+        }
+    }
+    // Run the toggleFields function initially to set correct state on page load
+    toggleFields();
 </script>
 
     {% endblock jss %}

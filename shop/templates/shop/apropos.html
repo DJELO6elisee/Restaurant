@@ -1,0 +1,102 @@
+{% extends 'shop/base.html' %}
+
+{% block h %}
+    <style>
+        /*body {*/
+        /*    font-family: Arial, sans-serif;*/
+        /*    background-color: #f4f4f4;*/
+        /*    color: #333;*/
+        /*    margin: 0;*/
+        /*    padding: 0;*/
+        /*}*/
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-top: 0;
+        }
+        p {
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Deux colonnes */
+            gap: 20px; /* Espacement entre les éléments */
+        }
+        .content-grid section {
+            margin-bottom: 0; /* Supprime la marge entre les sections */
+        }
+        .menu h2 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .menu ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .menu ul li:last-child {
+            border-bottom: none;
+        }
+        .full-width {
+            grid-column: span 2; /* Prend toute la largeur */
+        }
+    </style>
+{% endblock %}
+
+{% block g %}
+    <div class="container">
+        <div class="content-grid">
+            <!-- À propos de nous -->
+            <section class="full-width">
+                <h2>À propos de nous</h2>
+                <p>Bienvenue chez <strong>O'VIN CANAN</strong>, un restaurant dédié à la cuisine diététique et aux produits sains. Nous croyons qu'une alimentation équilibrée est la clé d'une vie épanouie. Nos plats sont préparés avec des ingrédients naturels, biologiques et faibles en calories, sans compromis sur le goût. Que vous soyez en quête de perte de poids, de meilleures habitudes alimentaires ou simplement d'une expérience culinaire saine, nous sommes là pour vous accompagner.</p>
+            </section>
+
+            <!-- Notre Menu -->
+            <section class="menu">
+                <h2>Notre Menu</h2>
+                <ul>
+                    <li><strong>Petits déjeuners</strong> - Smoothies protéinés, Bowl de fruits frais, Porridge à l'avoine</li>
+                    <li><strong>Entrées</strong> - Salade de quinoa, Velouté de légumes, Tartare d'avocat</li>
+                    <li><strong>Plats principaux</strong> - Poulet grillé aux herbes, Buddha bowl, Lasagnes de courgettes</li>
+                    <li><strong>Desserts</strong> - Mousse au chocolat noir, Tarte aux fruits sans sucre, Yaourt glacé maison</li>
+                    <li><strong>Boissons</strong> - Jus pressés à froid, Infusions détox, Eaux aromatisées naturelles</li>
+                </ul>
+            </section>
+
+            <!-- Nos Engagements -->
+            <section>
+                <h2>Nos Engagements</h2>
+                <ul>
+                    <li>Utiliser des ingrédients 100% naturels et biologiques.</li>
+                    <li>Proposer des plats faibles en calories mais riches en saveurs.</li>
+                    <li>Respecter les régimes spécifiques (sans gluten, vegan, sans lactose, etc.).</li>
+                    <li>Promouvoir une alimentation saine et durable.</li>
+                </ul>
+            </section>
+
+            <!-- Horaires d'ouverture -->
+            <section>
+                <h2>Horaires d'ouverture</h2>
+                <p>Lundi - Vendredi : 11h00 - 20h00</p>
+                <p>Samedi - Dimanche : 10h00 - 21h00</p>
+            </section>
+
+            <!-- Contactez-nous -->
+            <section class="full-width">
+                <h2>Contactez-nous</h2>
+                <p>Adresse : </p>
+                <p>Téléphone : </p>
+                <p>Email : </p>
+            </section>
+        </div>
+    </div>
+{% endblock %}

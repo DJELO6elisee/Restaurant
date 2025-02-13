@@ -1,9 +1,8 @@
 from django.urls import path
-from .views import index, produit, recu, panini, profile, recuCommande, profile_edit, sup_catego, detailPro, elisee, contact, detail_commandeUti, confirmation, historique_commande, adminp, table, creation, productlist, modification, delete_product, commande, detailCommande, message, delete_commande, category, create_cat, modif_cat, regime, create_regime, modif_regime, sup_regime
 
-
+from .views import index, produit, propos, blog, creationar, article, modif_article, recu, panini, profile, recuCommande, profile_edit, sup_catego, detailPro, elisee, contact, detail_commandeUti, confirmation, historique_commande, adminp, table, creation, productlist, modification, delete_product, commande, detailCommande, message, delete_commande, category, create_cat, modif_cat, regime, create_regime, modif_regime, sup_regime
+from .views import suppresion_art, theme, blogDetail
 urlpatterns = [
-
     path('', index, name='shop'),
     path('articles/', produit, name='produit'),
     path('panini/', panini, name='panini'),
@@ -20,6 +19,14 @@ urlpatterns = [
     path('regime/', regime, name='regime'),
     path('profile/', profile, name='profile'),
     path('profile_edit/', profile_edit, name='profile_edit'),
+    path('blog/', blog, name='blog'),
+    path('creationar/', creationar, name='creationar'),
+    path('article/', article, name='article'),
+    path('modif_article/<int:art_id>', modif_article, name='modif_article'),
+    path('suppresion_art/<int:suart_id>', suppresion_art, name='delete_article'),
+    path('propos/', propos, name='propos'),
+    path('theme/', theme, name='theme'),
+    path('blogDetail/<int:bd_id>/', blogDetail, name='blogDetail'),
 
     path('create_cat/', create_cat, name='create_cat'),
     path('create_regime/', create_regime, name='create_regime'),

@@ -1,0 +1,602 @@
+{% extends 'shop/base.html' %}
+
+
+ {% block cvb %}
+
+ <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+
+<style>
+    .blog-posts article {
+      background-color: var(--surface-color);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      height: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .blog-posts .post-img {
+      max-height: 240px;
+      margin: -30px -30px 15px -30px;
+      overflow: hidden;
+    }
+
+    .blog-posts .post-category {
+      font-size: 16px;
+      color: color-mix(in srgb, var(--default-color), transparent 40%);
+      margin-bottom: 10px;
+    }
+
+    .blog-posts .title {
+      font-size: 20px;
+      font-weight: 700;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+
+    .blog-posts .title a {
+      color: var(--heading-color);
+      transition: 0.3s;
+    }
+
+    .blog-posts .title a:hover {
+      color: var(--accent-color);
+    }
+
+    .blog-posts .post-author-img {
+      width: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+
+    .blog-posts .post-author {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .blog-posts .post-date {
+      font-size: 14px;
+      color: color-mix(in srgb, var(--default-color), transparent 40%);
+      margin-bottom: 0;
+    }
+
+    /*--------------------------------------------------------------
+    # Blog Pagination Section
+    --------------------------------------------------------------*/
+    .blog-pagination {
+      padding-top: 0;
+      color: color-mix(in srgb, var(--default-color), transparent 40%);
+    }
+
+    .blog-pagination ul {
+      display: flex;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .blog-pagination li {
+      margin: 0 5px;
+      transition: 0.3s;
+    }
+
+    .blog-pagination li a {
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--accent-color);
+    }
+
+    .blog-pagination li a.active,
+    .blog-pagination li a:hover {
+      background: var(--accent-color);
+      color: var(--contrast-color);
+    }
+
+    .blog-pagination li a.active a,
+    .blog-pagination li a:hover a {
+      color: var(--contrast-color);
+    }
+
+    /*--------------------------------------------------------------
+    # Blog Details Section
+    --------------------------------------------------------------*/
+    .blog-details {
+      padding-bottom: 30px;
+    }
+
+    .blog-details .article {
+      background-color: var(--surface-color);
+      padding: 30px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .blog-details .post-img {
+      margin: -30px -30px 20px -30px;
+      overflow: hidden;
+    }
+
+    .blog-details .title {
+      color: var(--heading-color);
+      font-size: 28px;
+      font-weight: 700;
+      padding: 0;
+      margin: 30px 0;
+    }
+
+    .blog-details .content {
+      margin-top: 20px;
+    }
+
+    .blog-details .content h3 {
+      font-size: 22px;
+      margin-top: 30px;
+      font-weight: bold;
+    }
+
+    .blog-details .content blockquote {
+      overflow: hidden;
+      background-color: color-mix(in srgb, var(--default-color), transparent 95%);
+      padding: 60px;
+      position: relative;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .blog-details .content blockquote p {
+      color: var(--default-color);
+      line-height: 1.6;
+      margin-bottom: 0;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 22px;
+    }
+
+    .blog-details .content blockquote:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background-color: var(--accent-color);
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .blog-details .meta-top {
+      margin-top: 20px;
+      color: color-mix(in srgb, var(--default-color), transparent 40%);
+    }
+
+    .blog-details .meta-top ul {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+    }
+
+    .blog-details .meta-top ul li+li {
+      padding-left: 20px;
+    }
+
+    .blog-details .meta-top i {
+      font-size: 16px;
+      margin-right: 8px;
+      line-height: 0;
+      color: color-mix(in srgb, var(--default-color), transparent 40%);
+    }
+
+    .blog-details .meta-top a {
+      color: color-mix(in srgb, var(--default-color), transparent 40%);
+      font-size: 14px;
+      display: inline-block;
+      line-height: 1;
+    }
+
+    .blog-details .meta-bottom {
+      padding-top: 10px;
+      border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+    }
+
+    .blog-details .meta-bottom i {
+      color: color-mix(in srgb, var(--default-color), transparent 40%);
+      display: inline;
+    }
+
+    .blog-details .meta-bottom a {
+      color: color-mix(in srgb, var(--default-color), transparent 40%);
+      transition: 0.3s;
+    }
+
+    .blog-details .meta-bottom a:hover {
+      color: var(--accent-color);
+    }
+
+    .blog-details .meta-bottom .cats {
+      list-style: none;
+      display: inline;
+      padding: 0 20px 0 0;
+      font-size: 14px;
+    }
+
+    .blog-details .meta-bottom .cats li {
+      display: inline-block;
+    }
+
+    .blog-details .meta-bottom .tags {
+      list-style: none;
+      display: inline;
+      padding: 0;
+      font-size: 14px;
+    }
+
+    .blog-details .meta-bottom .tags li {
+      display: inline-block;
+    }
+
+    .blog-details .meta-bottom .tags li+li::before {
+      padding-right: 6px;
+      color: var(--default-color);
+      content: ",";
+    }
+
+    .blog-details .meta-bottom .share {
+      font-size: 16px;
+    }
+
+    .blog-details .meta-bottom .share i {
+      padding-left: 5px;
+    }
+
+    /*--------------------------------------------------------------
+    # Blog Comments Section
+    --------------------------------------------------------------*/
+    .blog-comments {
+      padding: 10px 0;
+    }
+
+    .blog-comments .comments-count {
+      font-weight: bold;
+    }
+
+    .blog-comments .comment {
+      margin-top: 30px;
+      position: relative;
+    }
+
+    .blog-comments .comment .comment-img {
+      margin-right: 14px;
+    }
+
+    .blog-comments .comment .comment-img img {
+      width: 60px;
+    }
+
+    .blog-comments .comment h5 {
+      font-size: 16px;
+      margin-bottom: 2px;
+    }
+
+    .blog-comments .comment h5 a {
+      font-weight: bold;
+      color: var(--default-color);
+      transition: 0.3s;
+    }
+
+    .blog-comments .comment h5 a:hover {
+      color: var(--accent-color);
+    }
+
+    .blog-comments .comment h5 .reply {
+      padding-left: 10px;
+      color: color-mix(in srgb, var(--default-color), transparent 20%);
+    }
+
+    .blog-comments .comment h5 .reply i {
+      font-size: 20px;
+    }
+
+    .blog-comments .comment time {
+      display: block;
+      font-size: 14px;
+      color: color-mix(in srgb, var(--default-color), transparent 40%);
+      margin-bottom: 5px;
+    }
+
+    .blog-comments .comment.comment-reply {
+      padding-left: 40px;
+    }
+    </style>
+
+
+{% endblock %}
+
+
+    {% block blog %}
+
+      <main class="main">
+
+
+        <!-- Blog Posts Section -->
+        <section id="blog-posts" class="blog-posts section">
+
+          <div class="container">
+            <div class="row gy-4">
+
+        {% for item in article_blog %}
+              <div class="col-lg-4">
+                <article>
+
+                  <div class="post-img">
+                    <a href="{% url 'blogDetail' item.id %}"><img src="{{ item.image.url }}" alt="" class="img-fluid"></a>
+                  </div>
+
+
+                  <h2 class="title">
+                    <a href="{% url 'blogDetail' item.id %}">{{ item.title }}</a>
+                  </h2>
+
+                  <p class="post-category">{{ item.Smalldescription }}</p>
+
+
+                  <div class="d-flex align-items-center">
+                    <img src="{{ item.image.url }}" alt="" class="img-fluid post-author-img flex-shrink-0">
+                    <div class="post-meta">
+                      <p class="post-author">Ovin Canan</p>
+                      <p class="post-date">
+                    <time datetime="{{ item.date_add }}">{{ item.date_add|date:"d F Y à H:i" }}</time>
+                      </p>
+                    </div>
+                  </div>
+
+                </article>
+              </div>
+            {% endfor %}
+
+            </div>
+          </div>
+
+        </section><!-- /Blog Posts Section -->
+
+      </main>
+
+      <!-- Scroll Top -->
+      <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+      <!-- Preloader -->
+      <div id="preloader"></div>
+
+
+    {% endblock blog %}
+
+    {% block nm %}
+
+<script>
+
+    (function() {
+      "use strict";
+
+      function toggleScrolled() {
+        const selectBody = document.querySelector('body');
+        const selectHeader = document.querySelector('#header');
+        if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
+        window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
+      }
+
+      document.addEventListener('scroll', toggleScrolled);
+      window.addEventListener('load', toggleScrolled);
+
+      /**
+       * Mobile nav toggle
+       */
+      const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+
+      function mobileNavToogle() {
+        document.querySelector('body').classList.toggle('mobile-nav-active');
+        mobileNavToggleBtn.classList.toggle('bi-list');
+        mobileNavToggleBtn.classList.toggle('bi-x');
+      }
+      if (mobileNavToggleBtn) {
+        mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
+      }
+
+      /**
+       * Hide mobile nav on same-page/hash links
+       */
+      document.querySelectorAll('#navmenu a').forEach(navmenu => {
+        navmenu.addEventListener('click', () => {
+          if (document.querySelector('.mobile-nav-active')) {
+            mobileNavToogle();
+          }
+        });
+
+      });
+
+      /**
+       * Toggle mobile nav dropdowns
+       */
+      document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
+        navmenu.addEventListener('click', function(e) {
+          e.preventDefault();
+          this.parentNode.classList.toggle('active');
+          this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
+          e.stopImmediatePropagation();
+        });
+      });
+
+      /**
+       * Preloader
+       */
+      const preloader = document.querySelector('#preloader');
+      if (preloader) {
+        window.addEventListener('load', () => {
+          preloader.remove();
+        });
+      }
+
+      /**
+       * Scroll top button
+       */
+      let scrollTop = document.querySelector('.scroll-top');
+
+      function toggleScrollTop() {
+        if (scrollTop) {
+          window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
+        }
+      }
+      scrollTop.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+
+      window.addEventListener('load', toggleScrollTop);
+      document.addEventListener('scroll', toggleScrollTop);
+
+      /**
+       * Animation on scroll function and init
+       */
+      function aosInit() {
+        AOS.init({
+          duration: 600,
+          easing: 'ease-in-out',
+          once: true,
+          mirror: false
+        });
+      }
+      window.addEventListener('load', aosInit);
+
+      /**
+       * Initiate glightbox
+       */
+      const glightbox = GLightbox({
+        selector: '.glightbox'
+      });
+
+      /**
+       * Initiate Pure Counter
+       */
+      new PureCounter();
+
+      /**
+       * Init isotope layout and filters
+       */
+      document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
+        let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
+        let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
+        let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
+
+        let initIsotope;
+        imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
+          initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
+            itemSelector: '.isotope-item',
+            layoutMode: layout,
+            filter: filter,
+            sortBy: sort
+          });
+        });
+
+        isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
+          filters.addEventListener('click', function() {
+            isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
+            this.classList.add('filter-active');
+            initIsotope.arrange({
+              filter: this.getAttribute('data-filter')
+            });
+            if (typeof aosInit === 'function') {
+              aosInit();
+            }
+          }, false);
+        });
+
+      });
+
+      /**
+       * Frequently Asked Questions Toggle
+       */
+      document.querySelectorAll('.faq-item h3, .faq-item .faq-toggle').forEach((faqItem) => {
+        faqItem.addEventListener('click', () => {
+          faqItem.parentNode.classList.toggle('faq-active');
+        });
+      });
+
+      /**
+       * Init swiper sliders
+       */
+      function initSwiper() {
+        document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+          let config = JSON.parse(
+            swiperElement.querySelector(".swiper-config").innerHTML.trim()
+          );
+
+          if (swiperElement.classList.contains("swiper-tab")) {
+            initSwiperWithCustomPagination(swiperElement, config);
+          } else {
+            new Swiper(swiperElement, config);
+          }
+        });
+      }
+
+      window.addEventListener("load", initSwiper);
+
+      /**
+       * Correct scrolling position upon page load for URLs containing hash links.
+       */
+      window.addEventListener('load', function(e) {
+        if (window.location.hash) {
+          if (document.querySelector(window.location.hash)) {
+            setTimeout(() => {
+              let section = document.querySelector(window.location.hash);
+              let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
+              window.scrollTo({
+                top: section.offsetTop - parseInt(scrollMarginTop),
+                behavior: 'smooth'
+              });
+            }, 100);
+          }
+        }
+      });
+
+      /**
+       * Navmenu Scrollspy
+       */
+      let navmenulinks = document.querySelectorAll('.navmenu a');
+
+      function navmenuScrollspy() {
+        navmenulinks.forEach(navmenulink => {
+          if (!navmenulink.hash) return;
+          let section = document.querySelector(navmenulink.hash);
+          if (!section) return;
+          let position = window.scrollY + 200;
+          if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+            document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
+            navmenulink.classList.add('active');
+          } else {
+            navmenulink.classList.remove('active');
+          }
+        })
+      }
+      window.addEventListener('load', navmenuScrollspy);
+      document.addEventListener('scroll', navmenuScrollspy);
+
+    })();
+</script
+
+    {% endblock %}

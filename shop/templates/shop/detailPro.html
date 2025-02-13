@@ -134,27 +134,21 @@
     font-weight: bold;
     margin-top: 10px;
 }
+.rating .star {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #ddd;
+  transition: color 0.3s;
+}
+
+.rating .star.filled {
+  color: #ffc107;
+}
 
 </style>
 {% endblock cb %}
 
 {% block detail %}
-
-    <!-- Breadcrumb Begin -->
-    <div class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__links">
-                        <a href="{% url 'shop' %}"><i class="fa fa-home"></i>Acceuil</a>
-                        <!--<a href="#">Femmes</a>-->
-                        <span>datail du produit</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Breadcrumb End -->
 
     <!-- Product Details Section Begin -->
     <section class="product-details spad">
@@ -166,35 +160,27 @@
                         <div class="product__details__slider__content">
                             <div class="product__details__pic__slider owl-carousel">
                                 <img data-hash="product-1" class="product__big__img" src="{{ detailpro.photo.url }}" alt="{{ detailpro.name}}">
-                                <!-- <img data-hash="product-2" class="product__big__img" src="{% static 'img/product/details/product-3.jpg' %}" alt="">
-                                <img data-hash="product-3" class="product__big__img" src="{% static 'img/product/details/product-2.jpg' %}" alt="">
-                                <img data-hash="product-4" class="product__big__img" src="{% static 'img/product/details/product-4.jpg' %}" alt=""> -->
+
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-6">
                     <div class="product__details__text">
-                        <!-- <h3 id="aa{{ product.id }}" >nom</h3> -->
                         <h3><span></span>{{ detailpro.smalldescription }}</h3>
-                        <div class="rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <span>( 138 reviews )</span>
+                        <div class="rating d-flex" data-product-id="{{ detailpro.id }}">
+                            {% for i in "12345" %}
+                                <span
+                                  class="star {% if forloop.counter <= product.rating %}filled{% else %}empty{% endif %}"
+                                  data-value="{{ forloop.counter }}">
+                                  ★
+                                </span>
+                            {% endfor %}
                         </div>
-                        <div class="product__details__price" id="price{{ detailpro.id }}">{{ detailpro.price|floatformat:0 }} <span>fcfa</span></div>
+                    </div>
+                    <div class="product__details__price" id="price{{ detailpro.id }}">{{ detailpro.price|floatformat:0 }} </div>
                         <p>Un plat délicieux est une harmonie parfaite de saveurs et de textures, où chaque ingrédient se complète pour offrir une expérience gustative inoubliable. Frais, équilibré et soigneusement préparé, il éveillera vos sens à chaque bouchée, combinant croquant, fondant et des arômes savoureux qui se mêlent parfaitement</p>
-                        <div class="product__details__button">
-
-                            </div>
-                            <!--<ul>-->
-                            <!--    <li><a href="#"><span class="icon_heart_alt"></span></a></li>-->
-                            <!--    <li><a href="#"><span class="icon_adjust-horiz"></span></a></li>-->
-                            <!--</ul>-->
-                        </div>
                         <div class="product__details__widget">
                             <ul>
                                 <li>
@@ -205,8 +191,6 @@
                                         </label>
                                     </div>
                                 </li>
-
-
                                 <li>
                                     <span>Promotions:</span>
                                     <p>Possibilité de Livraison</p>
@@ -239,9 +223,6 @@
                         <h5>PRODUITS SIMILAIRES</h5>
                     </div>
                 </div>
-                <!--<div class="related-products">-->
-                <!--    <h4>Produits similaires</h4>-->
-                <!--<div class="row">-->
                     {% for related_product in related_products %}
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="product__item">
@@ -249,18 +230,22 @@
                                 <div class="label new">Nouveau</div>
                                 <ul class="product__hover">
                                     <img src="{{ related_product.photo.url }}" alt="{{ related_product.name}}">
-                                    <!--<li><a href="{{ related_product.photo.url }}" class="image-popup"><span class="arrow_expand"></span></a></li>-->
                                 </ul>
-                            </div>
-                            <div class="product__item__text">
                                 <h6><a href="{% url 'detailPro' related_product.id %}">{{ related_product.name }}</a></h6>
-                                <div class="rating">
+                                <div class="rating d-flex justify-content-center" data-product-id="{{ detailpro.id }}">
                                     {% for i in "12345" %}
-                                        <i class="fa fa-star {% if i <= related_product.rating %}filled{% else %}empty{% endif %}"></i>
+                                        <span
+                                          class="star {% if forloop.counter <= product.rating %}filled{% else %}empty{% endif %}"
+                                          data-value="{{ forloop.counter }}">
+                                          ★
+                                        </span>
                                     {% endfor %}
                                 </div>
-                                <div class="product__price">{{ related_product.price|floatformat:0 }}</div>fcfa
+                                <div class="product__price">{{ related_product.price|floatformat:0 }}</div><span>fcfa</span>
                             </div>
+                            <!--<div class="product__item__text">-->
+
+                            <!--</div>-->
                         </div>
                     </div>
                     {% endfor %}

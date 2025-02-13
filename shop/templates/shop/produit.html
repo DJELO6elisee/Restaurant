@@ -4,6 +4,11 @@
 
 
 {% block dd %}
+
+ <link href="https://fonts.googleapis.com" rel="preconnect">
+ <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
 <style>
  /* Style général pour la page des produits */
 .product-card {
@@ -55,12 +60,13 @@
 }
 
 .view-details, .add-to-cart {
- font-size: 0.9rem;
- padding: 8px 12px;
+ font-size: 0.5rem;
+ padding: 8px 30px;
 }
 
 /* Réagir à la navbar fixe */
 body {
+ font-style: italic;
  padding-top: 100px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
 }
 
@@ -68,7 +74,7 @@ body {
 .view-details {
  display: none;
  margin-top: 10px;
- padding: 10px 20px;
+ padding: 8px 30px;
  background-color: #007BFF;
  border: none;
  color: white;
@@ -79,7 +85,7 @@ body {
 .add-to-cart {
  display: none;
  margin-top: 10px;
- padding: 10px 20px;
+ padding: 8px 30px;
  background-color: #007BFF;
  border: none;
  color: white;
@@ -123,18 +129,18 @@ body {
 @media (max-width: 768px) {
  .view-details,
  .add-to-cart {
-   font-size: 0.9rem; /* Réduction de la taille sur les tablettes */
-   padding: 12px 30px;
+   font-size: 0.7rem; /* Réduction de la taille sur les tablettes */
+   padding: 4px 10px;
  }
 }
 
 @media (max-width: 576px) {
  .view-details,
  .add-to-cart {
-   font-size: 0.9rem; /* Taille ajustée pour une meilleure lisibilité */
-   padding: 10px 20px; /* Réduction de l'espacement pour éviter les débordements */
+   font-size: 0.7rem; /* Taille ajustée pour une meilleure lisibilité */
+   padding: 4px 10px; /* Réduction de l'espacement pour éviter les débordements */
    margin: 5px 2px; /* Ajout d'un espacement entre les boutons */
-   width: 48%; /* Chaque bouton occupe environ la moitié de la largeur */
+   width: 100%; /* Chaque bouton occupe environ la moitié de la largeur */
  }
 
  .product-card .d-flex {
@@ -150,6 +156,9 @@ body {
  }
 }
 
+h4, h3 {
+    font-size: 15px;
+}
 /* Adaptation de la disposition sur mobile */
 @media (max-width: 480px) {
  body {
@@ -295,7 +304,7 @@ body {
        <h2>Résultats pour "{{ query }}" :</h2>
        <div class="row">
        {% for product in search_results %}
-       <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+       <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-4">  <!-- Deux produits par ligne sur mobile -->
            <!-- Carte de produit -->
            <div class="product-card shadow">
                <div class="card-content">
@@ -321,8 +330,19 @@ body {
                        {% endfor %}
                    </div>
 
+
                    <!-- Boutons d'action -->
-                   <div class="d-flex justify-content-between align-items-center mt-3">
+                   <div class="d-flex flex-column d-sm-none justify-content-between align-items-center mt-3">
+                       {% if product.id %}
+                           <a class="view-details btn btn-primary btn-sm mb-2" href="{% url 'detailPro' product.id %}" role="button">Voir +</a>
+                       {% else %}
+                           <span>Produit non disponible</span>
+                       {% endif %}
+                       <a class="add-to-cart btn btn-danger btn-sm ted" id="{{ product.id }}" role="button">Ajouter <i class="fas fa-shopping-cart"></i></a>
+                   </div>
+
+                   <!-- Boutons d'action en mode desktop -->
+                   <div class="d-flex d-none d-sm-flex justify-content-between align-items-center mt-3">
                        {% if product.id %}
                            <a class="view-details btn btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir +</a>
                        {% else %}
@@ -351,7 +371,7 @@ body {
          <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">Produits recommandés pour vous</h4>
          <div class="row gx-4 gy-5">
            {% for product in recommended_products %}
-             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+             <div class="col-6 col-sm-6 col-md-4 col-lg-3">  <!-- Deux produits par ligne sur mobile -->
                <!-- Carte de produit -->
                <div class="product-card shadow">
                  <div class="card-content">
@@ -370,14 +390,21 @@ body {
                        </span>
                      {% endfor %}
                    </div>
-                   <div class="d-flex justify-content-between align-items-center mt-3">
-                   {% if product.id %}
-                     <a class="view-details btn btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir + </a>
-                   {% else %}
-                     <!-- Afficher un message ou un lien de remplacement si l'ID est manquant -->
-                     <span>Produit non disponible</span>
-                   {% endif %}
-                   <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" id="{{ product.id }}" role="button">Ajouter 🛒</a>
+                   <div class="d-flex flex-column d-sm-none justify-content-between align-items-center mt-3">
+                     {% if product.id %}
+                       <a class="view-details btn btn-primary btn-sm mb-2" href="{% url 'detailPro' product.id %}" role="button">Voir +</a>
+                     {% else %}
+                       <span>Produit non disponible</span>
+                     {% endif %}
+                     <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" id="{{ product.id }}" role="button">Ajouter</a>
+                   </div>
+                   <div class="d-flex d-none d-sm-flex justify-content-between align-items-center mt-3">
+                     {% if product.id %}
+                       <a class="view-details btn btn-lg btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir +</a>
+                     {% else %}
+                       <span>Produit non disponible</span>
+                     {% endif %}
+                     <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" id="{{ product.id }}" role="button">Ajouter</a>
                    </div>
                  </div>
                </div>
@@ -389,8 +416,6 @@ body {
        <p></p>
      {% endif %}
 
-
-
      <!-- Boucle pour afficher les produits par catégorie -->
    <!-- Ajouter une variable JavaScript pour indiquer si l'utilisateur est connecté -->
 <script>
@@ -398,12 +423,14 @@ body {
 </script>
 
 <!-- Boucle pour afficher les produits par catégorie -->
+<h4 class="fw-bold fs-3 fs-lg-5 lh-sm">Produits par catégorie</h4>
 {% for category_data in categories_with_products %}
    <div class="col-12">
-       <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">{{ category_data.category.nom }}</h4>
+
+       <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">{{ category_data.category.nom }}</h5>
        <div class="row gx-4 gy-5">
            {% for product in category_data.products %}
-               <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+               <div class="col-6 col-sm-6 col-md-4 col-lg-3">  <!-- Deux produits par ligne sur mobile -->
                    <!-- Carte de produit -->
                    <div class="product-card shadow">
                        <div class="card-content">
@@ -422,14 +449,23 @@ body {
                                    </span>
                                {% endfor %}
                            </div>
-                           <div class="d-flex justify-content-between align-items-center mt-3">
+                           <div class="d-flex flex-column d-sm-none justify-content-between align-items-center mt-3">
                                {% if product.id %}
-                                   <a class="view-details btn btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir + </a>
+                                   <a class="view-details btn btn-primary btn-sm mb-2" href="{% url 'detailPro' product.id %}" role="button">Voir +</a>
                                {% else %}
                                    <span>Produit non disponible</span>
                                {% endif %}
 
-                               <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" id="{{ product.id }}" role="button">Ajouter 🛒</a>
+                               <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" id="{{ product.id }}" role="button">Ajouter</a>
+                           </div>
+                           <div class="d-flex d-none d-sm-flex justify-content-between align-items-center mt-3">
+                               {% if product.id %}
+                                   <a class="view-details btn btn-lg btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir +</a>
+                               {% else %}
+                                   <span>Produit non disponible</span>
+                               {% endif %}
+
+                               <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" id="{{ product.id }}" role="button">Ajouter</a>
                            </div>
                        </div>
                    </div>
@@ -439,8 +475,8 @@ body {
    </div>
 {% endfor %}
 
-
 </section>
+
 
 
 

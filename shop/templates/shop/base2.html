@@ -75,6 +75,14 @@
   {% block pp %}
   {% endblock pp %}
 
+  {% block lkj %}
+  {% endblock lkj %}
+
+  {% block z %}
+  {% endblock z %}
+
+  {% block xc %}
+  {% endblock xc %}
 
 
 </head>
@@ -129,6 +137,18 @@
       <li>
         <a href="{% url 'regime' %}">
           <i class="fa-solid fa-utensils"></i> <span>Regime Alimantaire</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'creationar' %}">
+          <i class="fa-solid fa-plus"></i> <span>Creer un article</span>
+          <small class="badge float-right badge-light">New</small>
+        </a>
+      </li>
+
+      <li>
+        <a href="{% url 'article' %}">
+          <i class="fa-solid fa-utensils"></i> <span>Article</span>
         </a>
       </li>
 
@@ -279,12 +299,16 @@
     {% endblock am %}
     {% block cf %}
     {% endblock %}
+    {% block bg %}
+    {% endblock bg %}
+    {% block e %}
+    {% endblock e %}
 
+    {% block elisee %}
+    {% endblock elisee %}
 
-
-
-
-
+    {% block mg %}
+    {% endblock mg %}
 
 
 	<footer class="footer">

@@ -26,7 +26,7 @@ class Product(models.Model):
     smalldescription = models.CharField(max_length=300)  # Réduit de 60 à 50
     description = models.TextField()
     photo = models.ImageField(upload_to='images/', blank=True)
-    status = models.CharField(max_length=100)  # Réduit de 50 à 40
+    status = models.CharField(max_length=100, null=True)  # Réduit de 50 à 40
     produit_frais = models.BooleanField(default=False)
     produit_bio = models.BooleanField(default=False)
     produit_vegan = models.BooleanField(default=False)
@@ -55,6 +55,8 @@ class Commande(models.Model):
     addressli = models.CharField(max_length=200, null=True)
     contact = models.CharField(max_length=20)
     ville = models.CharField(max_length=200)
+    numero_destinataire = models.CharField(max_length=200, null=True)
+    nom_prenom_destinataire = models.CharField(max_length=200, null=True)
     total = models.DecimalField(max_digits=10, decimal_places=2)
     date_commande = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=150, choices=STATUS_CHOICES, default='pending')  # Nouveau champ
@@ -113,4 +115,18 @@ class Message(models.Model):
 
     def __str__(self):
         return self.nom
+
+class Article(models.Model) :
+    title = models.CharField(max_length=200)
+    Smalldescription = models.TextField(null=True)
+    description = models.TextField()
+    image = models.ImageField(upload_to='images/')
+    date_add = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date_add']
+
+    def __str__(self):
+        return self.title
+
 

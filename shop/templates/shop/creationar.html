@@ -1,0 +1,142 @@
+{% extends 'shop/base2.html' %}
+
+{% block lkj %}
+    <style>
+           /* Reset CSS */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+        background-color: #f9f9f9;
+        color: #333;
+        display: flex;
+       }
+    .main-container {
+        display: flex; /* Use flexbox for main layout */
+        width: 100%; /* Make sure main-container takes up full width*/
+     }
+    .sidebar {
+        width: 250px; /* Set sidebar width */
+        padding: 20px;
+        background-color: #2b548a;
+        color: #fff;
+        flex-shrink: 0;/* prevent sidebar from shrinking */
+      }
+   .content-area {
+        flex-grow: 1; /* Allow content area to grow */
+        padding: 20px; /* Add some padding for the content area */
+    }
+
+    /* Formulaire */
+    .form-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 85%;
+        max-width: 600px; /* Increased max width */
+        margin: 0 auto; /* Center with margin auto */
+        margin-top: 80px;
+        margin-bottom: 60px;
+    }
+
+    .form-container h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        text-align: center;
+        color: blue;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 1rem;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    .form-group input[type="text"],
+    .form-group textarea,
+    .form-group input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    .form-group input[type="file"] {
+        padding: 5px;
+    }
+
+    .form-group button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .form-group button:hover {
+        background: #555;
+    }
+    </style>
+    {% endblock lkj %}
+
+
+{% block bg %}
+    <!-- Formulaire de création d'article -->
+    <div class="form-container">
+        <h1>Créer un Nouvel Article</h1>
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+            <!-- Champ Titre -->
+            <div class="form-group">
+                <label for="titre">Titre de l'article</label>
+                <input type="text" id="title" name="title" placeholder="Entrez le titre de l'article" required>
+            </div>
+            <div class="form-group">
+                <label for="titre">Petite description</label>
+                <input type="text" id="Smalldescription" name="Smalldescription" placeholder="Entrez une petite description" required>
+            </div>
+
+            <!-- Champ Description -->
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" placeholder="Écrivez la description de l'article" required></textarea>
+            </div>
+
+            <!-- Champ Image -->
+            <div class="form-group">
+                <label for="image">Image de l'article</label>
+                <input type="file" id="image" name="image" required>
+            </div>
+
+            <!-- Bouton de soumission -->
+            <div class="form-group">
+                <button type="submit">Publier l'article</button>
+            </div>
+        </form>
+    </div>
+{% endblock bg %}
+

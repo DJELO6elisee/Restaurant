@@ -3,8 +3,13 @@
 {% load static %}
 
 {% block ff %}
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
 <style>
-    .product-card {
+  /* Style général pour la page des produits */
+.product-card {
   background: #fff;
   border-radius: 10px;
   padding: 15px;
@@ -53,21 +58,34 @@
 }
 
 .view-details, .add-to-cart {
-  font-size: 0.9rem;
-  padding: 8px 12px;
+  font-size: 0.5rem;
+  padding: 8px 20px;
 }
-
+h4, h3 {
+     font-size: 15px;
+ }
 /* Réagir à la navbar fixe */
 body {
+  font-style: italic;
   padding-top: 100px; /* Ajustez cette valeur en fonction de la hauteur de votre navbar */
 }
 
 /* Adaptation de l'affichage des boutons au survol */
-.view-details,
+.view-details {
+  display: none;
+  margin-top: 10px;
+  padding: 8px 20px;
+  background-color: #007BFF;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
 .add-to-cart {
   display: none;
   margin-top: 10px;
-  padding: 10px 20px;
+  padding: 8px 20px;
   background-color: #007BFF;
   border: none;
   color: white;
@@ -111,16 +129,30 @@ body {
 @media (max-width: 768px) {
   .view-details,
   .add-to-cart {
-    font-size: 0.9rem; /* Réduction de la taille sur les tablettes */
-    padding: 12px 30px;
+    font-size: 0.7rem; /* Réduction de la taille sur les tablettes */
+    padding: 4px 10px;
   }
 }
 
 @media (max-width: 576px) {
   .view-details,
   .add-to-cart {
-    font-size: 0.8rem; /* Réduction de la taille sur les petits écrans */
-    padding: 15px 50px;
+    font-size: 0.7rem; /* Taille ajustée pour une meilleure lisibilité */
+    padding: 4px 10px; /* Réduction de l'espacement pour éviter les débordements */
+    margin: 5px 2px; /* Ajout d'un espacement entre les boutons */
+    width: 100%; /* Chaque bouton occupe environ la moitié de la largeur */
+  }
+
+  .product-card .d-flex {
+    display: flex;
+    /*flex-wrap: wrap; /* Permet aux boutons de passer sur deux lignes si nécessaire
+    justify-content: space-between; /* Espace égal entre les boutons */
+    gap: 5px; /* Espacement supplémentaire entre les boutons */
+  }
+  .view-details,
+  .add-to-cart {
+    display: inline-block;
+
   }
 }
 
@@ -137,58 +169,280 @@ body {
   .product-img {
     max-height: 200px; /* Réduire la taille de l'image */
   }
-  .view-details,
-  .add-to-cart {
-    display: inline-block;
 
-  }
 
 }
+/* Style général pour les cartes de catégories */
+.category-card {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 20px;
+}
+.category-card:hover {
+  transform: translateY(-10px);
+
+}
+
+.category-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.category-title {
+  font-size: 1rem;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #333;
+  text-transform: capitalize;
+}
+
+/* Style de survol */
+.category-card:hover .category-circle {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles de responsive */
+@media (max-width: 768px) {
+  .category-title {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-title {
+    font-size: 0.9rem;
+  }
+}
+
+    .carousel-item {
+        /*display: flex;*/
+        align-items: center;
+        justify-content: center;
+    }
+    .carousel-content {
+        display: flex;
+        /*align-items: center;*/
+        justify-content: space-between;
+        width: 100%;
+        /*max-width: 1200px;*/
+        background: white;
+        border-radius: 10px;
+
+
+    }
+    .carousel-text {
+        width: 50%;
+        padding: 20px;
+        margin-top: 80px;
+    }
+    .carousel-text h3 {
+        font-size: 24px;
+        font-weight: bold;
+        color: black;
+    }
+    .carousel-text p {
+        font-size: 16px;
+        color: black;
+    }
+    .carousel-image {
+        width: 50%;
+    }
+    .carousel-image img {
+        max-width: 100%;
+
+    }
+
+    @media (max-width: 768px) {
+      .carousel-item {
+        margin-top: 50px;
+        align-items: center;
+
+      }
+
+      .carousel-content {
+        align-items: center;
+
+      }
+      .carousel-text {
+        width: 50%;
+        padding: 20px;
+
+       }
+    }
+
+
+
 </style>
+
+<style type="text/tailwindcss">
+@layer base {
+:root {
+--background: 0 0% 100%;
+--foreground: 240 10% 3.9%;
+--card: 0 0% 100%;
+--card-foreground: 240 10% 3.9%;
+--popover: 0 0% 100%;
+--popover-foreground: 240 10% 3.9%;
+--primary: 240 5.9% 10%;
+--primary-foreground: 0 0% 98%;
+--secondary: 240 4.8% 95.9%;
+--secondary-foreground: 240 5.9% 10%;
+--muted: 240 4.8% 95.9%;
+--muted-foreground: 240 3.8% 46.1%;
+--accent: 240 4.8% 95.9%;
+--accent-foreground: 240 5.9% 10%;
+--destructive: 0 84.2% 60.2%;
+--destructive-foreground: 0 0% 98%;
+--border: 240 5.9% 90%;
+--input: 240 5.9% 90%;
+--ring: 240 5.9% 10%;
+--radius: 0.5rem;
+				}
+				.dark {
+					--background: 240 10% 3.9%;
+--foreground: 0 0% 98%;
+--card: 240 10% 3.9%;
+--card-foreground: 0 0% 98%;
+--popover: 240 10% 3.9%;
+--popover-foreground: 0 0% 98%;
+--primary: 0 0% 98%;
+--primary-foreground: 240 5.9% 10%;
+--secondary: 240 3.7% 15.9%;
+--secondary-foreground: 0 0% 98%;
+--muted: 240 3.7% 15.9%;
+--muted-foreground: 240 5% 64.9%;
+--accent: 240 3.7% 15.9%;
+--accent-foreground: 0 0% 98%;
+--destructive: 0 62.8% 30.6%;
+--destructive-foreground: 0 0% 98%;
+--border: 240 3.7% 15.9%;
+--input: 240 3.7% 15.9%;
+--ring: 240 4.9% 83.9%;
+				}
+			}
+
+ </style>
+
 {% endblock ff %}
+
 {% block index %}
 
 
-
-     <section class="py-5 overflow-hidden bg-primary" id="home">
-
-        <div class="container">
-          <div class="row flex-center">
-            <div class="col-md-5 col-lg-6 order-0 order-md-1 mt-8 mt-md-0"><a class="img-landing-banner" href="#!"><img class="img-fluid" src="{% static 'img/gallery/dietetique-transformed.jpeg' %}" alt="hero-header" style="border-radius: 50px;"/></a></div>
-            <div class="col-md-7 col-lg-6 py-8 text-md-start text-center">
-              <h1 class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light">Envie de manger sainement ?</h1>
-              <h1 class="text-800 mb-5 fs-4">Découvrez nos produits diététiques, alliés<br class="d-none d-xxl-block" /> de votre équilibre au quotidien.</h1>
-              <div class="card w-xxl-75">
-                <div class="card-body">
-                  <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <button class="nav-link active mb-3" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fas fa-motorcycle me-2"></i>Livraison Possible</button>
-                    </div>
-                  </nav>
-                  <div class="tab-content mt-3" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-
-                    </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                      <form class="row gx-4 gy-2 align-items-center">
-                        <div class="col">
-                          <div class="input-group-icon"><i class="fas fa-map-marker-alt text-danger input-box-icon"></i>
-                            <label class="visually-hidden" for="inputPickup">Address</label>
-                            <input class="form-control input-box form-foodwagon-control" id="inputPickup" type="text" placeholder="Enter Your Address" />
-                          </div>
-                        </div>
-                        <div class="d-grid gap-3 col-sm-auto">
-                          <button class="btn btn-danger" type="submit">Find Food</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="carousel-content">
+                <div class="carousel-text">
+                    <h3>Un aliment paléolithique</h3>
+                    <p>produit naturel et non transformé, consommé par nos ancêtres chasseurs-cueilleurs. Il inclut viandes maigres, poissons, fruits, légumes.</p>
                 </div>
-              </div>
+                <div class="carousel-image">
+                    <img src="{% static "img/gallery/vegetari.jpg" %}" alt="Image 1">
+                </div>
             </div>
-          </div>
         </div>
-      </section>
+        <div class="carousel-item">
+            <div class="carousel-content">
+                <div class="carousel-text">
+                    <h3>Un aliment sans gluten</h3>
+                    <p>Un aliment adapté aux personnes sensibles à cette protéine présente dans le blé, l'orge et le seigle, un aliment saint.</p>
+                </div>
+                <div class="carousel-image">
+                    <img src="{% static "img/gallery/sans_gluten.jpg" %}" alt="Image 2">
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="carousel-content">
+                <div class="carousel-text">
+                    <h3>Un aliment sans gluten</h3>
+                    <p>Un aliment adapté aux personnes sensibles à cette protéine présente dans le blé, l'orge et le seigle, un aliment saint.</p>
+                </div>
+                <div class="carousel-image">
+                    <img src="{% static "img/gallery/sans_gluten.jpg" %}" alt="Image 3">
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev"  type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+
+</div>
+
+    <!--<section class="py-0 overflow-hidden" id="home"  style="height: 85vh;"> <!-- Changer py-5 en py-0 pour enlever les marges -->
+    <!--    <div class="container-fluid h-100"> <!-- Utilisation de container-fluid pour prendre toute la largeur -->
+    <!--        <div id="customCarousel" class="carousel slide" data-bs-ride="carousel" style="height: 100%;">-->
+    <!--            <div class="carousel-indicators">-->
+    <!--                <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>-->
+    <!--                <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>-->
+    <!--                <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>-->
+    <!--            </div>-->
+    <!--            <div class="carousel-inner" style="height: 100%;">-->
+                    <!-- Slide 1 -->
+    <!--                <div class="carousel-item active">-->
+    <!--                    <div class="slide-content" style="background-image: url('{% static "img/gallery/vegetari.jpg" %}');"></div>-->
+    <!--                    <div class="row">-->
+    <!--                        <div class="col-12 text-center">-->
+    <!--                            <h1 class="display-3 text-light mb-3">Un aliment paléolithique</h1>-->
+    <!--                            <p class="text-light mb-5">produit naturel et non transformé, consommé par nos ancêtres chasseurs-cueilleurs. Il inclut viandes maigres, poissons, fruits, légumes, noix et graines, excluant les produits transformés.</p>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+                    <!-- Slide 2 -->
+    <!--                <div class="carousel-item">-->
+    <!--                    <div class="slide-content" style="background-image: url('{% static "img/gallery/sans_gluten.jpg" %}');"></div>-->
+    <!--                    <div class="row">-->
+    <!--                        <div class="col-12 text-center">-->
+    <!--                            <h1 class="display-3 text-light mb-3">Un aliment sans gluten</h1>-->
+    <!--                            <p class="text-light mb-5">Un aliment adapté aux personnes sensibles à cette protéine présente dans le blé, l'orge et le seigle.</p>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+                    <!-- Slide 3 -->
+    <!--                <div class="carousel-item">-->
+    <!--                    <div class="slide-content" style="background-image: url('{% static "img/gallery/vegetarien.jpg" %}');"></div>-->
+    <!--                    <div class="row">-->
+    <!--                        <div class="col-12 text-center">-->
+    <!--                            <h1 class="display-3 text-light mb-3">Aliment végétarien</h1>-->
+    <!--                            <p class="text-light mb-5">aliment ne contenant pas de viande ni de poisson, mais peut inclure des produits d'origine animale comme les œufs, le lait et le fromage.</p>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+                <!-- Carousel controls -->
+    <!--            <button class="carousel-control-prev" type="button" data-bs-target="#customCarousel" data-bs-slide="prev">-->
+    <!--                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+    <!--                <span class="visually-hidden">Previous</span>-->
+    <!--            </button>-->
+    <!--            <button class="carousel-control-next" type="button" data-bs-target="#customCarousel" data-bs-slide="next">-->
+    <!--                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+    <!--                <span class="visually-hidden">Next</span>-->
+    <!--            </button>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--</section>-->
+
+
+
+
+
 
     <section class="pb-3 pt-5">
 
@@ -248,243 +502,73 @@ body {
         </div>
     </section>
 
-    {% for product in produits_sous %}
-    <section class="pb-3 pt-5">
 
-        <div class="container">
-          <div class="row">
+
+<section id="testimonial" class="py-4 overflow-hidden no-scroll">
+<div class="container">
+    <div class="row h-100 mt-1">
+
+        <script>
+        const userIsAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};
+        </script>
+        <!-- Boucle pour afficher les produits par catégorie -->
+        <h4 class="fw-bold fs-3 fs-lg-5 lh-sm">Produits par catégorie</h4>
+        {% for category_data in categories_with_products %}
             <div class="col-12">
-              <div class="card card-span mb-3 shadow-lg">
-                <div class="card-body py-0">
-                  <div class="row justify-content-center">
-                    <div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1"><img id="pp{{ product.id }}" class="img-fluid w-100 fit-cover h-100 rounded-top rounded-md-end rounded-md-top-0" src="{{ product.photo.url }}" alt="..." /></div>
-                    <div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
-                      <h1 class="card-title mt-xl-5 mb-4" id="aa{{ product.id }}">{{ product.smalldescription }}</h1>
-                      <h1><span class="text-primary"> {{ product.name }}</span></h1>
-                      <p class="fs-1">Profitez de la grande taille des sandwiches. Complétez votre repas avec une tranche parfaite. of sandwiches.</p>
-                      <!--<span id="price{{ product.id }}" style="color:black" class="card-text">    {{ product.price|floatformat:0 }}</span> fcfa-->
 
-                      <!--<div class="d-grid bottom-0"><a class="btn btn-lg btn-primary mt-xl-6 ted" id="{{ product.id }}">AJOUTER AU <i class="fas fa-shopping-cart"></i><i class="fas fa-chevron-right ms-2"></i></a></div>-->
-                    </div>
-                  </div>
+                <h5 class="fw-bold fs-3 fs-lg-5 lh-sm">{{ category_data.category.nom }}</h5>
+                <div class="row gx-4 gy-5">
+                    {% for product in category_data.products %}
+                        <div class="col-6 col-sm-6 col-md-4 col-lg-3">  <!-- Deux produits par ligne sur mobile -->
+                            <!-- Carte de produit -->
+                            <div class="product-card shadow">
+                                <div class="card-content">
+                                    <img id="pp{{ product.id }}" class="product-img img-fluid rounded" src="{{ product.photo.url }}" alt="{{ product.name }}">
+                                    <h3 id="aa{{ product.id }}" class="product-name text-center mt-3">{{ product.name }}</h3>
+                                    <p id="price{{ product.id }}" class="product-price text-center text-success fw-bold">
+                                        {{ product.price|floatformat:0 }} fcfa
+                                    </p>
+
+                                    <div class="rating d-flex justify-content-center" data-product-id="{{ product.id }}">
+                                        {% for i in "12345" %}
+                                            <span
+                                                class="star {% if forloop.counter <= product.rating %}filled{% else %}empty{% endif %}"
+                                                data-value="{{ forloop.counter }}">
+                                                ★
+                                            </span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="d-flex flex-column d-sm-none justify-content-between align-items-center mt-3">
+                                        {% if product.id %}
+                                            <a class="view-details btn btn-primary btn-sm mb-2" href="{% url 'detailPro' product.id %}" role="button">Voir +</a>
+                                        {% else %}
+                                            <span>Produit non disponible</span>
+                                        {% endif %}
+
+                                        <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" id="{{ product.id }}" role="button">Ajouter</a>
+                                    </div>
+                                    <div class="d-flex d-none d-sm-flex justify-content-between align-items-center mt-3">
+                                        {% if product.id %}
+                                            <a class="view-details btn btn-lg btn-primary btn-sm" href="{% url 'detailPro' product.id %}" role="button">Voir +</a>
+                                        {% else %}
+                                            <span>Produit non disponible</span>
+                                        {% endif %}
+
+                                        <a class="add-to-cart btn btn-lg btn-danger btn-sm ted" id="{{ product.id }}" role="button">Ajouter</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
+        {% endfor %}
+    </div>
+</div>
+</section>
 
 
-    </section>
-    {% endfor %}
 
-      <section class="py-0 overflow-hidden">
-
-        <div class="container">
-          <div class="row flex-center mb-6">
-            <div class="col-lg-7">
-              <h5 class="fw-bold fs-3 fs-lg-5 lh-sm text-center text-lg-start">Ce que nous proposons</h5>
-            </div>
-            <div class="col-lg-4 text-lg-end text-center"><a class="btn btn-lg text-800 me-2" href="#" role="button">VOIR PLUS <i class="fas fa-chevron-right ms-2"></i></a></div>
-            <div class="col-lg-auto position-relative">
-              <button class="carousel-control-prev s-icon-prev carousel-icon" type="button" data-bs-target="#carouselSearchByFood" data-bs-slide="prev"><span class="carousel-control-prev-icon hover-top-shadow" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
-              <button class="carousel-control-next s-icon-next carousel-icon" type="button" data-bs-target="#carouselSearchByFood" data-bs-slide="next"><span class="carousel-control-next-icon hover-top-shadow" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>
-            </div>
-          </div>
-          <div class="row flex-center">
-            <div class="col-12">
-              <div class="carousel slide" id="carouselSearchByFood" data-bs-touch="false" data-bs-interval="false">
-                <div class="carousel-inner">
-                  <div class="carousel-item active" data-bs-interval="10000">
-                    <div class="row h-60 align-items-center">
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
-                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/search-pizza.png' %}" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">pizza</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
-                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/burger.png' %}" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Burger</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
-                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/noodles.png' %}" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Noodles</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
-                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/sub-sandwich.png' %}" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">sandwiches</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
-                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/chowmein.png' %}" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Chowmein</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-60">
-                        <div class="card card-span h-60 rounded-circle"><img class="img-fluid rounded-circle h-60" src="{% static 'img/gallery/steak.png' %}" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Steak</h5>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="carousel-item" data-bs-interval="5000">
-                    <div class="row h-100 align-items-center">
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="{% static 'img/gallery/search-pizza.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">pizza</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/burger.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Burger</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/noodles.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Noodles</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/sub-sandwich.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Sub-sandwiches</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/chowmein.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Chowmein</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/steak.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Steak</h5>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="carousel-item" data-bs-interval="3000">
-                    <div class="row h-100 align-items-center">
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/search-pizza.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">pizza</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/burger.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Burger</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/noodles.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Noodles</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/sub-sandwich.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Sub-sandwiches</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/chowmein.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Chowmein</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/steak.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Steak</h5>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="carousel-item">
-                    <div class="row h-100 align-items-center">
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/search-pizza.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">pizza</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/burger.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Burger</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/noodles.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Noodles</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/sub-sandwich.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Sub-sandwiches</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/chowmein.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Chowmein</h5>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6 col-md-4 col-xl mb-5 h-100">
-                        <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="assets/img/gallery/steak.png" alt="..." />
-                          <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">Steak</h5>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div><!-- end of .container-->
-
-      </section>
 
       <section class="py-0">
         <div class="bg-holder" style="background-image:url({% static 'img/gallery/cta-two-bg.png' %});background-position:center;background-size:cover;">
@@ -501,4 +585,111 @@ body {
           </section>
 
 
+<!-- Modal Bootstrap -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Header de la modale -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="authModalLabel">Connexion requise</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <!-- Corps de la modale -->
+
+                <div class="modal-body">
+                    <p>Vous devez être connecté pour ajouter un produit au panier. Veuillez vous connecter ou créer un compte pour continuer.</p>
+                </div>
+
+                <div class="modal-footer">
+                    <a href="{% url 'connexion' %}" class="btn btn-primary">Se connecter</a>
+                    <button type="button" class="btn btn-secondary close-modal-btn">Fermer</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 {% endblock index %}
+
+{% block jn %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Vérifie si l'utilisateur est authentifié
+        if (!userIsAuthenticated) {
+            // Sélectionner tous les boutons "Ajouter"
+            const addToCartButtons = document.querySelectorAll(".add-to-cart");
+
+            // Ajouter un écouteur d'événement à chaque bouton
+            addToCartButtons.forEach(button => {
+                button.addEventListener("click", function (event) {
+                    event.preventDefault(); // Empêche l'action par défaut
+                    event.stopPropagation(); // Empêche la propagation de l'événement
+
+                    // Afficher la modale Bootstrap
+                    const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+                    authModal.show();
+                });
+            });
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const closeModalButtons = document.querySelectorAll(".close-modal-btn");
+
+        closeModalButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const authModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('authModal'));
+                authModal.hide(); // Ferme la modale
+            });
+        });
+    });
+
+</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+		<script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+		<script type="text/javascript">
+			window.tailwind.config = {
+				darkMode: ['class'],
+				theme: {
+					extend: {
+						colors: {
+							border: 'hsl(var(--border))',
+							input: 'hsl(var(--input))',
+							ring: 'hsl(var(--ring))',
+							background: 'hsl(var(--background))',
+							foreground: 'hsl(var(--foreground))',
+							primary: {
+								DEFAULT: 'hsl(var(--primary))',
+								foreground: 'hsl(var(--primary-foreground))'
+							},
+							secondary: {
+								DEFAULT: 'hsl(var(--secondary))',
+								foreground: 'hsl(var(--secondary-foreground))'
+							},
+							destructive: {
+								DEFAULT: 'hsl(var(--destructive))',
+								foreground: 'hsl(var(--destructive-foreground))'
+							},
+							muted: {
+								DEFAULT: 'hsl(var(--muted))',
+								foreground: 'hsl(var(--muted-foreground))'
+							},
+							accent: {
+								DEFAULT: 'hsl(var(--accent))',
+								foreground: 'hsl(var(--accent-foreground))'
+							},
+							popover: {
+								DEFAULT: 'hsl(var(--popover))',
+								foreground: 'hsl(var(--popover-foreground))'
+							},
+							card: {
+								DEFAULT: 'hsl(var(--card))',
+								foreground: 'hsl(var(--card-foreground))'
+							},
+						},
+					}
+				}
+			}
+		</script>
+{% endblock %}

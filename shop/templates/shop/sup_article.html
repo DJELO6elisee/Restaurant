@@ -1,0 +1,16 @@
+{% extends 'shop/base2.html' %}
+
+{% block elisee %}
+    <div class="content-wrapper">
+        <div class="form-container">
+            <h2>Confirmer la suppression</h2>
+            <p>Êtes-vous sûr de vouloir supprimer l'article : "{{ titles }}" ?</p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+                <a href="{% url 'article' %}" class="btn btn-secondary">Annuler</a>
+            </form>
+        </div>
+    </div>
+{% endblock elisee %}
